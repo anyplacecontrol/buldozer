@@ -1,0 +1,250 @@
+/* login page */
+
+#main {
+  height: 100vh !important;
+}
+
+/* main */
+
+.animated, .animated:after, .animated:before {
+  transition: all .15s ease-in-out;
+}
+
+
+/* table */
+
+.table__tr .row-number {
+  width: 60px !important;
+  color: #8893a3;
+}
+
+.table__tr.active .row-number {
+  color: #fff;
+}
+
+/* end table */
+
+
+/* helpers */
+
+.pointer {
+  cursor: pointer;
+}
+
+.text-primary {
+  color: #8893a3;
+}
+
+.font-bold {
+  font-weight: bold;
+}
+
+.bottom-line {
+  border-bottom: 1px solid #ebeff2;
+  padding-bottom: 25px;
+}
+
+.mt-10 {
+  margin-top: 10px;
+}
+
+.mt-20 {
+  margin-top: 20px;
+}
+
+.my-20 {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.mt-25 {
+  margin-top: 25px;
+}
+
+.mt-30 {
+  margin-top: 30px;
+}
+
+
+/* variation/metric page */
+.cut-weight-block > .block-set__input {
+  width: 20.8% !important;
+}
+
+.cut-weight-block > .block-set__input.numeric-block {
+  width: 10% !important;
+}
+
+
+/* filters */
+.filter__tooltip {
+  border: 2px solid #7d7053;
+  width: 16px;
+  height: 16px;
+}
+
+.filter__tooltip--icon {
+  font-size: 10px;
+  font-weight: bold;
+}
+
+/* store */
+
+.workday-block {
+  margin-bottom: 15px;
+}
+
+.workday-title {
+  font-size: 17px;
+  color: #8893a3;
+  width: 40px;
+}
+
+.workday-input {
+  width: 120px;
+}
+
+.workday-button {
+  width: 180px;
+  padding-right: 20px;
+}
+
+@media (max-width: 1280px) {
+  .workday-input {
+    width: 85px;
+  }
+
+  .workday-tumbler {
+    margin-top: 10px;
+  }
+
+  .special-day-block .workday-input, .special-day-block span.text-primary {
+    margin-bottom: 15px;
+  }
+}
+
+
+/* other */
+
+.mobile-order__total {
+  background: url(https://img.icons8.com/material-sharp/24/000000/us-dollar.png) 15px 50% no-repeat #fff;
+  background-size: 17px 17px;
+  border: 1px solid #d0d5dd;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(120, 126, 130, 0.25);
+  font-size: 17px;
+  line-height: 1;
+  width: 100%;
+  height: 36px;
+}
+
+.sensor-column {
+  max-width: 250px;
+  min-width: 200px !important;
+  width: 10%;
+}
+
+.payment-button {
+  background: #fff;
+  border: 1px solid #d0d5dd;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px hsla(204, 4%, 49%, 0.25);
+  color: #6a757b;
+  cursor: pointer;
+  font: 17px/34px brandon_grotesquemedium;
+  height: 36px;
+  padding: 0 15px;
+  position: relative;
+}
+
+.payment-button:before {
+  background-size: 20px 20px;
+  content: "";
+  width: 20px;
+  height: 20px;
+  top: 0;
+  bottom: 0;
+  left: 15px;
+  margin: auto;
+  position: absolute;
+  z-index: 1;
+}
+
+.payment-button:hover {
+  background: #2f3d57;
+  border: 1px solid #2f3d57;
+  box-shadow: 0 2px 6px hsla(204, 4%, 49%, 0.5);
+  color: #fff;
+}
+
+.payment-button:first-of-type {
+  margin-right: 15px;
+}
+
+
+/* dashboard */
+
+.text-blue {
+  color: rgb(61, 145, 255) !important;
+}
+
+/* full panel */
+.dashboard-full-panel, .dashboard-sensors-panel {
+  width: 100%;
+}
+
+.dashboard-full-panel .dashboard__block,
+.dashboard-sensors-panel .dashboard__block {
+  overflow-x: auto;
+}
+
+.dashboard-full-panel .dashboard__table,
+.dashboard-sensors-panel .dashboard__table {
+  display: table;
+}
+
+.dashboard-full-panel .dashboard__table:first-child,
+.dashboard-sensors-panel .dashboard__table:first-child {
+  margin-top: 20px;
+  margin-bottom: -10px;
+}
+
+.dashboard-full-panel .dashboard__table:last-child,
+.dashboard-sensors-panel .dashboard__table:last-child {
+  border-spacing: 0 .7em;
+}
+
+.dashboard-full-panel .dashboard__tr,
+.dashboard-sensors-panel .dashboard__tr {
+  display: table-row;
+}
+
+.dashboard-full-panel .dashboard__td,
+.dashboard-sensors-panel .dashboard__td {
+  display: table-cell;
+}
+
+.dashboard-full-panel .dashboard__td.temperature-cell,
+.dashboard-sensors-panel .dashboard__td.sensors-cell {
+  min-width: 240px;
+}
+
+.dashboard-full-panel .dashboard__td:first-child,
+.dashboard-sensors-panel .dashboard__td:first-child {
+  min-width: 200px;
+}
+
+/* other panels */
+.dashboard__td:first-child {
+  min-width: 100px;
+}
+
+.dashboard__full-info--box:not(.dashboard-full-panel):not(.dashboard-sensors-panel) {
+  width: 50%;
+}
+
+@media (max-width: 1280px) {
+  .dashboard__full-info--box:not(.dashboard-full-panel):not(.dashboard-sensors-panel) {
+    width: 100%;
+  }
+}
