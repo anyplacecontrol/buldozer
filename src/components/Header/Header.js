@@ -61,23 +61,11 @@ export class Header_ extends React.Component {
             </div>
 
             <div className="header__right flex animated">
-              <OutsideClickHandler onOutsideClick={this.onOutsideUserMenuClick}>
-                <div
-                  className="user active animated"
-                  onClick={this.onUserIconClick}
-                >
-                  <img
-                    className="user__image animated"
-                    src={require("../../assets/img/del/user-photo.jpg")}
-                    alt="user photo"
-                  />
-                  {this.state.isUserMenuVisible && (
+              <OutsideClickHandler onOutsideClick={this.onOutsideUserMenuClick}>                                              
                     <UserMenu 
                     authEmail={window.authEmail} 
                     onLogOutClick={this.onLogOutClick}
-                    />
-                  )}
-                </div>
+                    />                  
               </OutsideClickHandler>
             </div>
           </div>

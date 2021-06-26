@@ -427,25 +427,6 @@ export function BaseViewReducer(
   }
 }
 
-export function translateField(viewItem, func_changeFieldValue, newValue) {
-  let translations = JSON.parse(JSON.stringify(viewItem.translations || {}));
-  let lang = viewItem.language;
-
-  if (!func_changeFieldValue) throw "wrong arguments";
-
-  if (lang === "en") {
-    let itemCopy = {...viewItem};
-    func_changeFieldValue(itemCopy, newValue);
-    return itemCopy;
-  }
-
-  func_changeFieldValue(
-    dataFuncs.getTranslatedViewItem(lang, translations),
-    newValue
-  );
-
-  return {...viewItem, translations};
-}
 
 //*******************************************************************************
 //ACTION CREATORS

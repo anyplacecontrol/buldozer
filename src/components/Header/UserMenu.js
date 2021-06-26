@@ -18,7 +18,7 @@ export const UserMenu = props => {
         </li> */}
         <li className="user__sub--item animated">
           <a className="user__sub--link pointer animated" onClick={()=>props.onLogOutClick()}>
-            {"Log out " + props.authEmail}
+            {"Выйти: " + props.authEmail}
           </a>
         </li>
       </ul>
