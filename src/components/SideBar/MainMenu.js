@@ -138,22 +138,7 @@ export class MainMenu extends React.Component {
           routeNames.ROUTE_NAMES.bundleView,
         ];
       }
-
-      // todo: delete later
-      if (
-        window.authEmail === 'ramy@applestonemeat.com' ||
-        window.authEmail === 'munger@applestonemeat.com' ||
-        window.authEmail === 'terry@applestonemeat.com' ||
-        window.authEmail === 'hilaryt@applestonemeat.com' ||
-        window.authEmail === 'ann@applestonemeat.com' ||
-        window.authEmail === 'erica@applestonemeat.com' ||
-        window.authEmail === 'sam@applestonemeat.com' ||
-        window.authEmail === 'sarah@applestonemeat.com' ||
-        window.authEmail === 'emily@applestonemeat.com'
-      ) {
-        hiddenMenuSubItems.push(routeNames.ROUTE_NAMES.carousel);
-      }
-
+     
       if (hiddenMenuItems.includes(item.path)) {
         continue;
       }

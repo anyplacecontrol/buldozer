@@ -1,10 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { ICertificateView } from "../../redux/modules/certificateViewRedux";
+import * as dataFuncs from "../../utils/dataFuncs";
 
 export class CertificateGeneral extends React.Component {
   render() {
-    let isEditExisting = this.props.certificate.id != "";
+    let isEditExisting = this.props.certificate.createdUser != null;
+
+    if (this.props.certificate.isValidated) {
+      console.log( this.props.certificate.amount != "2");
+    }
 
     return (
       <div className="block-set__box flex animated">
@@ -45,11 +50,83 @@ export class CertificateGeneral extends React.Component {
                 </div>
               </div>
             )}
+            {/* Дата активации   */}
+            {isEditExisting ? (
+              <div className="block-set__item--inner flex w100 animated">
+                <div className="block-set__sub-title flex w100 animated">
+                  Дата активации
+                </div>
+                <div className="block-set__content flex w100 animated">
+                  <div className="block-set__info flex animated">
+                    <div className="block-set__info--title animated">
+                      {dataFuncs.truncateDateTime(
+                        this.props.certificate.activeFromDate
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ) : null}
+            {/* Кем добавлено */}
+            {isEditExisting ? (
+              <div className="block-set__item--inner flex w100 animated">
+                <div className="block-set__sub-title flex w100 animated">
+                  Кем добавлено
+                </div>
+                <div className="block-set__content flex w100 animated">
+                  <div className="block-set__info flex animated">
+                    <div className="block-set__info--title animated">
+                      {this.props.certificate.createdUser
+                        ? this.props.certificate.createdUser.email
+                        : null}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ) : null}
+            {/* Номинал */}
+            <div className="block-set__item--inner flex w100 animated">
+              <div className="block-set__sub-title flex w100 animated">
+                Номинал
+              </div>
+              <div className="block-set__content flex w100 animated">
+                <input
+                  className={
+                    !this.props.certificate.isValidated ||
+                    this.props.certificate.amount != "" ||
+                    this.props.certificate.amount === 0
+                      ? "block-set__input animated"
+                      : "block-set__input animated  is--error"
+                  }
+                  value={this.props.certificate.amount}
+                  onChange={e => this.props.onChangeAmount(e.target.value)}
+                />
+              </div>
+            </div>
           </div>
 
           {/*------- Right panel-------- */}
 
           <div className="block-set__item flex animated">
+            {/* Срок действия */}
+            <div className="block-set__item--inner flex w100 animated">
+              <div className="block-set__sub-title flex w100 animated">
+                Срок действия (месяцы)
+              </div>
+              <div className="block-set__content flex w100 animated">
+                <input
+                  className={
+                    !this.props.certificate.isValidated ||
+                    this.props.certificate.validityPeriodInMonths != ""
+                      ? "block-set__input animated"
+                      : "block-set__input animated  is--error"
+                  }
+                  value={this.props.certificate.validityPeriodInMonths}
+                  onChange={e => this.props.onChangeValidityPeriod(e.target.value)}
+                />
+              </div>
+            </div>
+
             {/* Активность */}
             <div className="block-set__item--inner flex w100 animated">
               <div className="block-set__sub-title flex w100 animated">
@@ -72,6 +149,21 @@ export class CertificateGeneral extends React.Component {
                 </div>
               </div>
             </div>
+            {/* Погашеность */}
+            <div className="block-set__item--inner flex w100 animated">
+                <div className="block-set__sub-title flex w100 animated">
+                Погашеность
+                </div>
+                <div className="block-set__content flex w100 animated">
+                  <div className="block-set__info flex animated">
+                    <div className="block-set__info--title animated">
+                      {this.props.certificate.isRedeemed
+                        ? "Погашено"
+                        : "Не погашено"}
+                    </div>
+                  </div>
+                </div>
+              </div>
           </div>
         </div>
       </div>
@@ -82,5 +174,7 @@ export class CertificateGeneral extends React.Component {
 CertificateGeneral.propTypes = {
   certificate: ICertificateView,
   onChangeId: PropTypes.func.isRequired,
-  onTriggerIsActive: PropTypes.func.isRequired
+  onTriggerIsActive: PropTypes.func.isRequired,
+  onChangeAmount: PropTypes.func.isRequired,
+  onChangeValidityPeriod: PropTypes.func.isRequired,
 };

@@ -201,18 +201,18 @@ export function dateRangeToISOFormat(date1, date2) {
 export function timestampToShortDate(timestamp) {
   const time = new Date(timestamp * 1000);
   const months = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec"
+    "Янв",
+    "Фев",
+    "Мар",
+    "Апр",
+    "Май",
+    "Июн",
+    "Июл",
+    "Авг",
+    "Сен",
+    "Окт",
+    "Ноя",
+    "Дек"
   ];
   const year = time
     .getFullYear()
@@ -229,18 +229,18 @@ export function timestampToShortDate(timestamp) {
 export function timestampToDate(timestamp) {
   const time = new Date(timestamp * 1000);
   const months = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec"
+    "Янв",
+    "Фев",
+    "Мар",
+    "Апр",
+    "Май",
+    "Июн",
+    "Июл",
+    "Авг",
+    "Сен",
+    "Окт",
+    "Ноя",
+    "Дек"
   ];
   const year = time.getFullYear();
   const month = months[time.getMonth()];

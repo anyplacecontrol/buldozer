@@ -8,11 +8,19 @@ import { BaseView } from "../../components/BaseView/BaseView";
 
 export class certificateView_ extends React.Component {
   onChangeId = newValue => {
-    //this.props.dispatch(kioskViewActions.changeInventoryNumber(newValue));
+    this.props.dispatch(certificateViewActions.changeId(newValue));
   };
 
-  onTriggerIsActive = newValue => {
-    //this.props.dispatch(kioskViewActions.changeInventoryNumber(newValue));
+  onTriggerIsActive = () => {
+    this.props.dispatch(certificateViewActions.triggerIsActive());
+  };
+
+  onChangeAmount  = newValue => {
+    this.props.dispatch(certificateViewActions.changeAmount(newValue));
+  };
+
+  onChangeValidityPeriod = newValue => {
+    this.props.dispatch(certificateViewActions.changeValidityPeriod(newValue));
   };
 
   render() {
@@ -22,6 +30,8 @@ export class certificateView_ extends React.Component {
           certificate={this.props.certificate}
           onChangeId={this.onChangeId}
           onTriggerIsActive={this.onTriggerIsActive}
+          onChangeAmount={this.onChangeAmount}
+          onChangeValidityPeriod={this.onChangeValidityPeriod}
         />
       </BaseView>
     );
@@ -30,7 +40,7 @@ export class certificateView_ extends React.Component {
 
 certificateView_.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  certificate: certificateViewRedux.ICertificateView
+  certificate: certificateViewRedux.ICertificateView,  
 };
 
 function mapStateToProps(state) {

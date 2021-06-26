@@ -5,7 +5,7 @@ export const FAKE_CERTIFICATES = [
     activeFromDate: "2021-06-17T12:54:51.000000Z",
     activeToDate: "2022-03-17T12:54:51.000000Z",
     isActive: false,    
-    createdBy: {
+    createdUser: {
       id: 6,
       //name: "Иванова Вероника Евгеньевна",
       email: "vladimirova.anzelika@example.org",
@@ -13,7 +13,7 @@ export const FAKE_CERTIFICATES = [
       //isActive: true,
       //createdDate: "2021-06-17T12:54:51.000000Z"
     },
-    is_redeemed: false,
+    isRedeemed: false,
     amount: 1000,
         
     //createdDate: "2021-06-17T12:54:58.000000Z",

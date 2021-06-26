@@ -24,15 +24,19 @@ export const ICertificateView = PropTypes.shape({
   activeFromDate: PropTypes.string.isRequired, //api field: active_from_date
   validityPeriodInMonths: PropTypes.number.isRequired, //api field validity_period_in_months
   isActive: PropTypes.bool, //api field is_active
-  createdBy: IUser, //api field: user_id
+  createdUser: IUser, //api field: user_id
   amount: PropTypes.number.isRequired,
-  is_redeemed: PropTypes.bool
+  isRedeemed: PropTypes.bool
 });
 
 //*******************************************************************************
 const PREFIX = "certificateView/";
 
-const CHANGE_CREATED_BY = PREFIX + "CHANGE_CREATED_BY";
+// const CHANGE_CREATED_BY = PREFIX + "CHANGE_CREATED_BY";
+const CHANGE_ID = PREFIX + "CHANGE_ID";
+const CHANGE_IS_ACTIVE = PREFIX + "CHANGE_IS_ACTIVE";
+const CHANGE_AMOUNT = PREFIX + "CHANGE_AMOUNT";
+const CHANGE_VALIDITY_PERIOD = PREFIX + "CHANGE_VALIDITY_PERIOD";
 
 //*******************************************************************************
 
@@ -42,9 +46,9 @@ export const certificateViewInitialState = {
   activeFromDate: dataFuncs.dateRangeToISOFormat(Date.now()),
   validityPeriodInMonths: 12,
   isActive: false,
-  createdBy: null,
+  createdUser: null,
   amount: 0,
-  is_redeemed: false
+  isRedeemed: false
 };
 
 //*******************************************************************************
@@ -62,11 +66,35 @@ export default function reducer(
 
   if (result) return result;
 
-  switch (action.type) {    
-    case CHANGE_CREATED_BY:
+  switch (action.type) {
+    // case CHANGE_CREATED_BY:
+    //   return {
+    //     ...state,
+    //     createdUser: action.payload,
+    //   };
+
+    case CHANGE_ID:
       return {
         ...state,
-        createdBy: action.payload,        
+        id: action.payload
+      };
+
+    case CHANGE_AMOUNT:
+      return {
+        ...state,
+        amount: action.payload
+      };
+
+    case CHANGE_IS_ACTIVE:
+      return {
+        ...state,
+        isActive: action.payload
+      };
+
+    case CHANGE_VALIDITY_PERIOD:
+      return {
+        ...state,
+        validityPeriodInMonths: action.payload
       };
 
     default:
@@ -79,15 +107,35 @@ export default function reducer(
 class CertificateViewActions extends BaseViewActions {
   // Public Action Creators
 
-  // triggerHideSleepScreen = () => {
-  //   return (dispatch, getState) => {
-  //     let currentValue = this._getStateSlice(getState()).hideSleepScreen;
-  //     dispatch({
-  //       type: CHANGE_HIDE_SLEEP_SCREEN,
-  //       value: !currentValue
-  //     });
-  //   }
-  // }
+  changeId = payload => {
+    return {
+      type: CHANGE_ID,
+      payload: payload
+    };
+  };
+
+  triggerIsActive = () => {
+    return async (dispatch, getState) => {
+      dispatch({
+        type: CHANGE_IS_ACTIVE,
+        payload: !getState().certificateView.isActive
+      });
+    };
+  };
+
+  changeAmount = payload => {
+    return {
+      type: CHANGE_AMOUNT,
+      payload: payload
+    };
+  };
+
+  changeValidityPeriod = payload => {
+    return {
+      type: CHANGE_VALIDITY_PERIOD,
+      payload: payload
+    };
+  };
 
   // Protected Action Creators
 
@@ -95,15 +143,13 @@ class CertificateViewActions extends BaseViewActions {
     return async (dispatch, getState) => {
       //we need to remember some previous values,
       //because there is separate API to change them
-
-      let certificateObj = this._getStateSlice(getState());
-      if (this._isNewItem(certificateObj)) {
-        await dispatch({
-          type: CHANGE_CREATED_BY,
-          payload: { id: window.myUser.id, email: window.myUser.email }
-        });
-      }
-
+      // let certificateObj = this._getStateSlice(getState());
+      // if (this._isNewItem(certificateObj)) {
+      //   await dispatch({
+      //     type: CHANGE_CREATED_BY,
+      //     payload: { id: window.myUser.id, email: window.authEmail }
+      //   });
+      // }
       // let existingItem = dataFuncs.getItemById(
       //   certificateObj.id,
       //   getState().certificates.items
@@ -132,11 +178,11 @@ class CertificateViewActions extends BaseViewActions {
   }
 
   _validateView(itemObj) {
-    //return viewValidators.validateCertificateView(itemObj);
+    return viewValidators.validateCertificateView(itemObj);
   }
 
   _isNewItem(itemObj) {
-    return itemObj.id == "";
+    return itemObj.createdUser == null;
   }
 
   _getStateSlice = state => {
