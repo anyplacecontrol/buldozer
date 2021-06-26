@@ -19,7 +19,7 @@ export const FAKE_RESTAURANTS = [
     }
   ];
   
-  export const FAKE_KIOSKS_RESPONSE = {
+  export const FAKE_RESTAURANTS_RESPONSE = {
       items: FAKE_RESTAURANTS,
       count: FAKE_RESTAURANTS.length,
       topRowNumber: 0

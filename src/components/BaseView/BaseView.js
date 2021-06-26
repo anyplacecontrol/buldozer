@@ -16,15 +16,7 @@ export class BaseView_ extends React.Component {
     await this.props.dispatch(this.props.actionsProvider.initializeView());
     //set previous values of some state fields
     await this.props.dispatch(this.props.actionsProvider.initializeView_end());
-  }
-
-  async componentDidUpdate() {
-    if (!this.props.actionsProvider) return;
-
-    this.stateSlice = await this.props.dispatch(
-      this.props.actionsProvider._returnStateSlice()
-    );
-  }
+  }      
 
   componentWillUnmount = async () => {
     this._isUnmounted = true;
@@ -57,18 +49,7 @@ export class BaseView_ extends React.Component {
       ? this.props.actionsProvider._TABLE_ACTIONS_PROVIDER.ALLOW_ADD_ITEM
       : false;
 
-    let caption = "Создать " + this.props.viewName;
-
-    if (this.props.actionsProvider && this.stateSlice) {
-      if (
-        !this.props.actionsProvider._isNewItem(
-          this.stateSlice          
-        )
-      ) {
-        if (isSubmit) caption = "Изменить " + this.props.viewName;
-        else caption = "Посмотреть " + this.props.viewName;
-      }
-    }
+    let caption = this.props.viewName;        
 
     return (
       <>
@@ -118,7 +99,7 @@ BaseView_.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    alert: state.ui.alert,    
+    alert: state.ui.alert,        
   };
 }
 

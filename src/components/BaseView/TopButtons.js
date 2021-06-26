@@ -23,7 +23,7 @@ export class TopButtons extends React.Component {
               type="button"
               onClick={this.props.onCancelClick}
             >
-              Cancel
+              Отменить
             </button>
           )}
           {this.props.onSubmitClick && (
@@ -32,7 +32,7 @@ export class TopButtons extends React.Component {
               type="button"
               onClick={this.props.onSubmitClick}
             >
-              Submit
+              Применить
             </button>
           )}
         </div>

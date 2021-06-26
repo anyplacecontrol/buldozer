@@ -94,7 +94,7 @@ class CertificatesActions extends BaseTableActions {
 
       let filterItems = [
         { ...tableFilters.FILTER_ID },
-        { ...tableFilters.FILTER_IS_ACTIVE },
+        { ...tableFilters.FILTER_ISACTIVE },
         { ...tableFilters.FILTER_ACTIVATION_DATE },
         { ...tableFilters.FILTER_VALIDITY_DATE },
         {
@@ -107,7 +107,7 @@ class CertificatesActions extends BaseTableActions {
         },
         {
           ...tableFilters.FILTER_RECIPIENT,
-          items: [...getState().recipients.items]
+          items: [ { name: "Все", value: null }, ...getState().recipients.items]
         }
       ];
 
@@ -140,7 +140,7 @@ class CertificatesActions extends BaseTableActions {
 
   goto_editItem(itemId) {
     return async dispatch => {
-      //dispatch(routing.goto_EditItem(ROUTE_NAMES.kioskView, itemId));
+      dispatch(routing.goto_EditItem(ROUTE_NAMES.certificateView, itemId));
     };
   }
 

@@ -40,7 +40,7 @@ export async function getFilteredItems(
         endpoint
       );
 
-    req = req + "&sort_by=" + sortBy.accessorSort + "&sort_order=" + sortOrder;    
+    req = req + "&sortBy=" + sortBy.accessorSort + "&sortOrder=" + sortOrder;    
   }
 
   let Json = await fetchJSON(req);

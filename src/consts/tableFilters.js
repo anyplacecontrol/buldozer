@@ -37,10 +37,10 @@ export const FILTER_ID = _addDefaultValue({
   value: ""
 });
 
-export const FILTER_IS_ACTIVE = _addDefaultValue({
+export const FILTER_ISACTIVE = _addDefaultValue({
   type: "selectBox",
-  apiParamName: "is_active",
-  labelText: "Активность серт.",
+  apiParamName: "isActive",
+  labelText: "Активность",
   items: [
     { name: "Все", value: null },
     { name: "Только активные", value: "true" },
@@ -53,21 +53,21 @@ export const FILTER_IS_ACTIVE = _addDefaultValue({
 
 export const FILTER_ACTIVATION_DATE = _addDefaultValue({
   type: "dateRange",
-  apiParamName: "activation_date",
+  apiParamName: "activationDate",
   labelText: "Дата активации серт.",
   value: {startDate: null, endDate: null}
 });
 
 export const FILTER_VALIDITY_DATE = _addDefaultValue({
   type: "dateRange",
-  apiParamName: "validity_date",
+  apiParamName: "validityDate",
   labelText: "Срок действия серт.",
   value: {startDate: null, endDate: null}
 });
 
 export const FILTER_ISSUING_RESTAURANT = _addDefaultValue({
   type: "multiSelectBox",
-  apiParamName: "issuing_restaurants",
+  apiParamName: "issuingRestaurants",
   labelText: "Ресторан-эмитент",
   items: [ ], //items are store objects
   accessorText: item => item.name,
@@ -78,7 +78,7 @@ export const FILTER_ISSUING_RESTAURANT = _addDefaultValue({
 
 export const FILTER_REDEEMER_RESTAURANT = _addDefaultValue({
   type: "multiSelectBox",
-  apiParamName: "redeemer_restaurants",
+  apiParamName: "redeemerRestaurants",
   labelText: "Ресторан погашающий",
   items: [ ], //items are store objects
   accessorText: item => item.name,
@@ -88,7 +88,7 @@ export const FILTER_REDEEMER_RESTAURANT = _addDefaultValue({
 
 export const FILTER_RECIPIENT = _addDefaultValue({
   type: "selectBox",
-  apiParamName: "recipient_id",
+  apiParamName: "recipientId",
   labelText: "Контрагент",
   items: [ ], //items are store objects
   accessorText: item => item.name,
@@ -116,18 +116,6 @@ export const FILTER_CREATED_DATE = _addDefaultValue({
 //------------------------------------------------------------------
 // Контрагенты
 
-export const FILTER_ISACTIVE = _addDefaultValue({
-  type: "selectBox",
-  apiParamName: "isActive ",
-  labelText: "Активность",
-  items: [
-    { name: "Только активные", value: "true" },
-    { name: "Только неактивные", value: "false" }
-  ], //items are store objects
-  accessorText: item => item.name,
-  accessorApi: item => item.value,
-  value: ""
-});
 
 //------------------------------------------------------------------
 // Администраторы

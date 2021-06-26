@@ -30,35 +30,35 @@ export const COLUMN_ID = {
 
 export const COLUMN_ACTIVE_FROM = {
   accessor: item => dataFuncs.truncateDate(item.activeFromDate),  
-  accessorSort: "active_from_date",
+  accessorSort: "activeFromDate",
   text: "Активация",
   className: "date"
 };
 
 export const COLUMN_ACTIVE_TO = {
   accessor: item => dataFuncs.truncateDate(item.activeToDate),      
-  accessorSort: "active_to_date",
+  accessorSort: "activeToDate",
   text: "Срок дейст.",
   className: "date"
 };
 
 export const COLUMN_IS_ACTIVE = {
   accessor: item => (item.isActive ? "Да" : "Нет"),  
-  accessorSort: "is_active",
+  accessorSort: "isActive",
   text: "Активность",
   className: "status"  
 }
 
 export const COLUMN_ISSUING_RESTAURANT = {  
   accessor: item => (item.issuingRestaurant ? item.issuingRestaurant.name : ""),  
-  accessorSort: "issuing_restaurant_id",
+  accessorSort: "issuingRestaurant",
   text: "Рест. эмит.",
   className: "name"  
 }
 
 export const COLUMN_REDEEMER_RESTAURANT = {  
   accessor: item => (item.redeemerRestaurant ? item.redeemerRestaurant.name : ""),  
-  accessorSort: "redeemer_restaurant_id",
+  accessorSort: "redeemerRestaurant",
   text: "Рест. погас.",
   className: "name"  
 }

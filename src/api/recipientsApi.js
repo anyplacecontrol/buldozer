@@ -1,4 +1,4 @@
-import { FAKE_RECIPIENTS } from "../fakeDb/fakeRecipients";
+import { FAKE_RECIPIENTS, FAKE_RECIPIENTS_RESPONSE } from "../fakeDb/fakeRecipients";
 import * as baseAPI from "./baseApi";
 import { fetchJSON, throwFetchError } from "../utils/fetchUtils.js";
 import * as constants from "../consts/constants";
@@ -30,7 +30,7 @@ export async function getItems(
     itemsPerPage,
     sortBy,
     sortOrder,
-    FAKE_RECIPIENTS
+    FAKE_RECIPIENTS_RESPONSE
   );
   return result;
 }

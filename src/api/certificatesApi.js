@@ -20,10 +20,10 @@ export async function getItems(
 ) {
   delete filter.notImplemented;
 
-  if (filter.is_active === "true")
-    filter.is_active = true;
-  if (filter.is_active === "false")
-    filter.is_active = false;  
+  if (filter.isActive === "true")
+    filter.isActive = true;
+  if (filter.isActive === "false")
+    filter.isActive = false;  
 
   let result = await baseAPI.getFilteredItems(
     certificates_endPoint,
