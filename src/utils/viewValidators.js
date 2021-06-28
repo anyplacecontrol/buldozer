@@ -1,4 +1,4 @@
-import {isEmpty} from "./serviceFunctions";
+import { isEmpty } from "./serviceFunctions";
 import * as serviceFuncs from "./serviceFunctions";
 
 function isNumeric(n) {
@@ -14,9 +14,9 @@ export function isEmptyOrLongString(value) {
   if (value.length > 255) return true;
 }
 
-export function isLongString(value) {
+export function isLongString(value, charsNum = 255) {
   if (isEmptyString(value)) return false;
-  if (value.length > 255) return true;
+  if (value.length > charsNum) return true;
 }
 
 function splitCommaToArray(str) {
@@ -24,12 +24,11 @@ function splitCommaToArray(str) {
 
   let newStr = str.replace(/(\r\n|\n|\r)/gm, ",");
   let strArr = newStr.split(",");
-  strArr = strArr.filter(function (value, index, arr) {
+  strArr = strArr.filter(function(value, index, arr) {
     return value != "";
   });
   return strArr;
 }
-
 
 export function getEmailValidationError(emailAddress) {
   if (isEmptyString(emailAddress)) return null;
@@ -69,28 +68,46 @@ export function getEmailsValidationError(emails) {
   return null;
 }
 
+export function getSelectBoxClass(viewItem, isError) {
+  let result = "w100";
+
+  if (!viewItem.isValidated || !isError) return result;
+  else return result + " is--error";
+}
+
 //=========================================================================
 
 export function validateCertificateView(certificateView) {
-
-  if (isEmptyString(certificateView.id) ||
-      isEmptyString(certificateView.amount) ||
-      isEmptyString(certificateView.validityPeriodInMonths) 
-      )
+  if (
+    isEmptyString(certificateView.id) ||
+    isEmptyString(certificateView.amount) ||
+    isEmptyString(certificateView.validityPeriodInMonths)
+  )
     throw "Проверка не удалась: пустые поля";
 
   if (
     isLongString(certificateView.id) ||
-    isLongString(certificateView.amount) || 
-    isLongString(certificateView.validityPeriodInMonths) 
+    isLongString(certificateView.amount) ||
+    isLongString(certificateView.validityPeriodInMonths)     
   ) {
     throw "Проверка не удалась: слишком длинные поля (>255 символов)";
   }
 
+  if (
+    isLongString(certificateView.recipientComment, 500)    
+  ) {
+    throw "Проверка не удалась: слишком длинный комментарий (>500 символов)";
+  }  
+
   if (!isNumeric(certificateView.validityPeriodInMonths))
     throw "Проверка не удалась: 'срок действия' не является числом";
 
+  if (
+    certificateView.validityPeriodInMonths < 0 ||
+    certificateView.validityPeriodInMonths > 36
+  )
+    throw "Проверка не удалась: 'срок действия' в недопустимых границах";
   return {
-    ...certificateView 
+    ...certificateView
   };
 }

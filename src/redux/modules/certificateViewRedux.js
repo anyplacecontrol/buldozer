@@ -11,12 +11,11 @@ import {
   IBaseView
 } from "./baseViewRedux";
 import * as dataFuncs from "../../utils/dataFuncs";
+import { IUserView } from "../../redux/modules/userViewRedux";
+import { IRecipientView } from "./recipientViewRedux";
+import { IServiceType } from "./serviceTypesRedux";
 
 //*******************************************************************************
-
-export const IUser = PropTypes.shape({
-  email: PropTypes.string
-});
 
 export const ICertificateView = PropTypes.shape({
   ...IBaseView,
@@ -24,9 +23,13 @@ export const ICertificateView = PropTypes.shape({
   activeFromDate: PropTypes.string.isRequired, //api field: active_from_date
   validityPeriodInMonths: PropTypes.number.isRequired, //api field validity_period_in_months
   isActive: PropTypes.bool, //api field is_active
-  createdUser: IUser, //api field: user_id
+  createdUser: IUserView, //api field: user_id
   amount: PropTypes.number.isRequired,
-  isRedeemed: PropTypes.bool
+  isRedeemed: PropTypes.bool,
+
+  recipient: IRecipientView,
+  recipientComment: PropTypes.string,
+  serviceType: IServiceType
 });
 
 //*******************************************************************************
@@ -37,6 +40,9 @@ const CHANGE_ID = PREFIX + "CHANGE_ID";
 const CHANGE_IS_ACTIVE = PREFIX + "CHANGE_IS_ACTIVE";
 const CHANGE_AMOUNT = PREFIX + "CHANGE_AMOUNT";
 const CHANGE_VALIDITY_PERIOD = PREFIX + "CHANGE_VALIDITY_PERIOD";
+const CHANGE_RECIPIENT_COMMENT = PREFIX + "CHANGE_RECIPIENT_COMMENT";
+const CHANGE_RECIPIENT = PREFIX + "CHANGE_RECIPIENT";
+const CHANGE_SERVICE_TYPE = PREFIX + "CHANGE_SERVICE_TYPE";
 
 //*******************************************************************************
 
@@ -48,7 +54,11 @@ export const certificateViewInitialState = {
   isActive: false,
   createdUser: null,
   amount: 0,
-  isRedeemed: false
+  isRedeemed: false,
+
+  recipient: null,
+  recipientComment: null,
+  serviceType: null
 };
 
 //*******************************************************************************
@@ -85,6 +95,12 @@ export default function reducer(
         amount: action.payload
       };
 
+    case CHANGE_RECIPIENT_COMMENT:
+      return {
+        ...state,
+        recipientComment: action.payload
+      };
+
     case CHANGE_IS_ACTIVE:
       return {
         ...state,
@@ -95,6 +111,18 @@ export default function reducer(
       return {
         ...state,
         validityPeriodInMonths: action.payload
+      };
+
+    case CHANGE_RECIPIENT:
+      return {
+        ...state,
+        recipient: action.payload ? { ...action.payload } : null
+      };
+
+    case CHANGE_SERVICE_TYPE:
+      return {
+        ...state,
+        serviceType: action.payload ? { ...action.payload } : null
       };
 
     default:
@@ -133,6 +161,27 @@ class CertificateViewActions extends BaseViewActions {
   changeValidityPeriod = payload => {
     return {
       type: CHANGE_VALIDITY_PERIOD,
+      payload: payload
+    };
+  };
+
+  changeRecipientComment = payload => {
+    return {
+      type: CHANGE_RECIPIENT_COMMENT,
+      payload: payload
+    };
+  };
+
+  changeRecipient = payload => {
+    return {
+      type: CHANGE_RECIPIENT,
+      payload: payload
+    };
+  };
+
+  changeServiceType = payload => {
+    return {
+      type: CHANGE_SERVICE_TYPE,
       payload: payload
     };
   };

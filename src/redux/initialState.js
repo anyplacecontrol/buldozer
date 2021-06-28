@@ -6,6 +6,7 @@ import {restaurantsInitialState} from "./modules/restaurantsRedux";
 import { recipientsInitialState } from "./modules/recipientsRedux";
 import { usersInitialState } from "./modules/usersRedux";
 import { certificateViewInitialState } from "./modules/certificateViewRedux";
+import {serviceTypesInitialState} from "./modules/serviceTypesRedux"
 
 export const initialState = {
   ui: uiInitialState,
@@ -16,5 +17,7 @@ export const initialState = {
 
   restaurants: restaurantsInitialState,
   recipients: recipientsInitialState,
-  users: usersInitialState
+  users: usersInitialState,
+
+  serviceTypes: serviceTypesInitialState
 };

@@ -12,6 +12,7 @@ import * as routing from "./routingRedux";
 import * as uiActions from "./uiRedux";
 import {restaurantsActions} from "./restaurantsRedux";
 import {recipientsActions} from "./recipientsRedux";
+import {serviceTypesActions} from "./serviceTypesRedux";
 import * as consts from "../../consts/constants";
 
 //*******************************************************************************
@@ -88,8 +89,23 @@ class CertificatesActions extends BaseTableActions {
         resolve();
       });
 
+      let p3 = new Promise(async (resolve, reject) => {
+        if (
+          !getState().serviceTypes.items ||
+          getState().serviceTypes.items.length === 0
+        ) {
+          try {
+            await dispatch(
+              serviceTypesActions.fetchItems(0, false, false, null, true)
+            );
+          } catch (e) {
+          }
+        }
+        resolve();
+      });
+
       dispatch(uiActions.showBackdrop(true));
-      await Promise.all([p1, p2]);
+      await Promise.all([p1, p2, p3]);
       dispatch(uiActions.showBackdrop(false));
 
       let filterItems = [

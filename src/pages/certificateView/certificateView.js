@@ -2,9 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import * as certificateViewRedux from "../../redux/modules/certificateViewRedux";
-import {certificateViewActions}  from "../../redux/modules/certificateViewRedux";
+import { certificateViewActions } from "../../redux/modules/certificateViewRedux";
 import { CertificateGeneral } from "./CertificateGeneral";
+import { CertificateRecipient } from "./CertificateRecipient";
 import { BaseView } from "../../components/BaseView/BaseView";
+import { recipientsActions } from "../../redux/modules/recipientsRedux";
+import { IRecipientView } from "../../redux/modules/recipientViewRedux";
+import { serviceTypesActions, IServiceType } from "../../redux/modules/serviceTypesRedux";
 
 export class certificateView_ extends React.Component {
   onChangeId = newValue => {
@@ -15,12 +19,24 @@ export class certificateView_ extends React.Component {
     this.props.dispatch(certificateViewActions.triggerIsActive());
   };
 
-  onChangeAmount  = newValue => {
+  onChangeAmount = newValue => {
     this.props.dispatch(certificateViewActions.changeAmount(newValue));
   };
 
   onChangeValidityPeriod = newValue => {
     this.props.dispatch(certificateViewActions.changeValidityPeriod(newValue));
+  };
+
+  onChangeRecipient = newValue => {
+    this.props.dispatch(certificateViewActions.changeRecipient(newValue));
+  };
+
+  onRecipientCommentChange = newValue => {
+    this.props.dispatch(certificateViewActions.changeRecipientComment(newValue));
+  };
+
+  onChangeServiceType = newValue => {
+    this.props.dispatch(certificateViewActions.changeServiceType(newValue));
   };
 
   render() {
@@ -33,6 +49,15 @@ export class certificateView_ extends React.Component {
           onChangeAmount={this.onChangeAmount}
           onChangeValidityPeriod={this.onChangeValidityPeriod}
         />
+
+        <CertificateRecipient
+          certificate={this.props.certificate}
+          allRecipients={this.props.allRecipients}
+          allServiceTypes={this.props.allServiceTypes}
+          onChangeRecipient={this.onChangeRecipient}
+          onRecipientCommentChange={this.onRecipientCommentChange}
+          onChangeServiceType={this.onChangeServiceType}
+        />
       </BaseView>
     );
   }
@@ -40,12 +65,16 @@ export class certificateView_ extends React.Component {
 
 certificateView_.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  certificate: certificateViewRedux.ICertificateView,  
+  certificate: certificateViewRedux.ICertificateView,
+  allRecipients: PropTypes.arrayOf(IRecipientView).isRequired,
+  allServiceTypes: PropTypes.arrayOf(IServiceType).isRequired,
 };
 
 function mapStateToProps(state) {
   return {
-    certificate: state.certificateView
+    certificate: state.certificateView,
+    allRecipients: recipientsActions.getItems(state),
+    allServiceTypes: serviceTypesActions.getItems(state),
   };
 }
 

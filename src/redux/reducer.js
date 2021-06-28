@@ -9,6 +9,8 @@ import restaurants from "./modules/restaurantsRedux";
 import recipients from "./modules/recipientsRedux";
 import users from "./modules/usersRedux";
 
+import serviceTypes from "./modules/serviceTypesRedux"
+
 const reducers = {
   ui,
   routing,  
@@ -17,7 +19,9 @@ const reducers = {
 
   restaurants,
   recipients,
-  users
+  users,
+
+  serviceTypes
 };
 
 export default combineReducers(reducers);

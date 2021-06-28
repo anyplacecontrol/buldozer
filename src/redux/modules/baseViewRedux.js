@@ -64,14 +64,12 @@ export class BaseViewTypes {
 
 export const IBaseView = {
   isChecked: PropTypes.bool,
-  isValidated: PropTypes.bool,
-  language: PropTypes.string
+  isValidated: PropTypes.bool,  
 };
 
 export const BaseViewInitialState = {
   isChecked: false,
-  isValidated: false,
-  language: "en"
+  isValidated: false,  
 };
 
 //*******************************************************************************

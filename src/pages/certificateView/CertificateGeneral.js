@@ -5,11 +5,7 @@ import * as dataFuncs from "../../utils/dataFuncs";
 
 export class CertificateGeneral extends React.Component {
   render() {
-    let isEditExisting = this.props.certificate.createdUser != null;
-
-    if (this.props.certificate.isValidated) {
-      console.log( this.props.certificate.amount != "2");
-    }
+    let isEditExisting = this.props.certificate.createdUser != null;  
 
     return (
       <div className="block-set__box flex animated">
