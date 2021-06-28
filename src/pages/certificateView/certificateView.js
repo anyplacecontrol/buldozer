@@ -5,10 +5,16 @@ import * as certificateViewRedux from "../../redux/modules/certificateViewRedux"
 import { certificateViewActions } from "../../redux/modules/certificateViewRedux";
 import { CertificateGeneral } from "./CertificateGeneral";
 import { CertificateRecipient } from "./CertificateRecipient";
+import { CertificateRestaurants } from "./CertificateRestaurants";
 import { BaseView } from "../../components/BaseView/BaseView";
 import { recipientsActions } from "../../redux/modules/recipientsRedux";
+import { restaurantsActions } from "../../redux/modules/restaurantsRedux";
 import { IRecipientView } from "../../redux/modules/recipientViewRedux";
-import { serviceTypesActions, IServiceType } from "../../redux/modules/serviceTypesRedux";
+import {
+  serviceTypesActions,
+  IServiceType
+} from "../../redux/modules/serviceTypesRedux";
+import { IRestaurantView } from "../../redux/modules/restaurantViewRedux";
 
 export class certificateView_ extends React.Component {
   onChangeId = newValue => {
@@ -32,11 +38,17 @@ export class certificateView_ extends React.Component {
   };
 
   onRecipientCommentChange = newValue => {
-    this.props.dispatch(certificateViewActions.changeRecipientComment(newValue));
+    this.props.dispatch(
+      certificateViewActions.changeRecipientComment(newValue)
+    );
   };
 
   onChangeServiceType = newValue => {
     this.props.dispatch(certificateViewActions.changeServiceType(newValue));
+  };
+
+  onChangeIssuingRestaurant  = newValue => {
+   this.props.dispatch(certificateViewActions.changeIssuingRestaurant(newValue));
   };
 
   render() {
@@ -58,6 +70,14 @@ export class certificateView_ extends React.Component {
           onRecipientCommentChange={this.onRecipientCommentChange}
           onChangeServiceType={this.onChangeServiceType}
         />
+
+        <CertificateRestaurants
+          certificate={this.props.certificate}
+          allRestaurants={this.props.allRestaurants}          
+          onChangeIssuingRestaurant={this.onChangeIssuingRestaurant}
+        />
+
+
       </BaseView>
     );
   }
@@ -68,6 +88,7 @@ certificateView_.propTypes = {
   certificate: certificateViewRedux.ICertificateView,
   allRecipients: PropTypes.arrayOf(IRecipientView).isRequired,
   allServiceTypes: PropTypes.arrayOf(IServiceType).isRequired,
+  allRestaurants: PropTypes.arrayOf(IRestaurantView).isRequired,
 };
 
 function mapStateToProps(state) {
@@ -75,6 +96,7 @@ function mapStateToProps(state) {
     certificate: state.certificateView,
     allRecipients: recipientsActions.getItems(state),
     allServiceTypes: serviceTypesActions.getItems(state),
+    allRestaurants: restaurantsActions.getItems(state),
   };
 }
 

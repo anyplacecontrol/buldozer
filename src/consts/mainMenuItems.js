@@ -1,10 +1,9 @@
-import {ROUTE_NAMES} from "./routeNames";
+import { ROUTE_NAMES } from "./routeNames";
 
 export const MAIN_MENU_ITEMS = [
-  
   {
     name: "Сертификаты",
-    cssCls: "kiosk",
+    cssCls: "certificates",
     path: ROUTE_NAMES.certificates,
     comment: "",
     items: [
@@ -12,14 +11,14 @@ export const MAIN_MENU_ITEMS = [
         name: "Сертификаты",
         path: ROUTE_NAMES.certificateView,
         isHidden: true,
-        comment: "",
+        comment: ""
       }
     ]
   },
 
   {
     name: "Контрагенты",
-    cssCls: "kiosk",
+    cssCls: "customers",
     path: ROUTE_NAMES.recipients,
     comment: "",
     items: [
@@ -27,14 +26,14 @@ export const MAIN_MENU_ITEMS = [
         name: "Контрагенты",
         path: ROUTE_NAMES.recipientView,
         isHidden: true,
-        comment: "",
+        comment: ""
       }
     ]
   },
 
   {
     name: "Рестораны",
-    cssCls: "kiosk",
+    cssCls: "stores",
     path: ROUTE_NAMES.restaurants,
     comment: "",
     items: [
@@ -42,14 +41,14 @@ export const MAIN_MENU_ITEMS = [
         name: "Контрагенты",
         path: ROUTE_NAMES.restaurantView,
         isHidden: true,
-        comment: "",
+        comment: ""
       }
     ]
   },
 
   {
     name: "Администраторы",
-    cssCls: "kiosk",
+    cssCls: "users",
     path: ROUTE_NAMES.users,
     comment: "",
     items: [
@@ -57,9 +56,8 @@ export const MAIN_MENU_ITEMS = [
         name: "Администраторы",
         path: ROUTE_NAMES.userView,
         isHidden: true,
-        comment: "",
+        comment: ""
       }
     ]
   }
-
 ];

@@ -190,14 +190,14 @@ export class Filter extends React.Component {
               className="filter__cancel animated"
               onClick={this.props.onCancelFilterClick}
             >
-              Cancel
+              Отменить
             </div>
           )}
           <div
             className="filter__submit animated"
             onClick={this.props.onApplyFilterClick}
           >
-            {this.props.buttonText ? this.props.buttonText : "Применить фильтр"}
+            {this.props.buttonText ? this.props.buttonText : "Применить"}
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {NavLink} from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import * as routeNames from "../../consts/routeNames";
 
 export class MainMenu extends React.Component {
@@ -79,7 +79,7 @@ export class MainMenu extends React.Component {
 
   renderItems = () => {
     let jsxArr = [];
-    let userRole = 'Guest';
+    let userRole = "Guest";
     if (window.myUser && window.myUser.role) {
       userRole = window.myUser.role.name;
     }
@@ -88,8 +88,8 @@ export class MainMenu extends React.Component {
       let item = this.props.items[i];
 
       if (
-        userRole !== 'SuperAdmin'
-        && item.path === routeNames.ROUTE_NAMES.statusesProducts
+        userRole !== "SuperAdmin" &&
+        item.path === routeNames.ROUTE_NAMES.statusesProducts
       ) {
         continue;
       }
@@ -108,7 +108,7 @@ export class MainMenu extends React.Component {
           routeNames.ROUTE_NAMES.orders,
           routeNames.ROUTE_NAMES.orderView,
           routeNames.ROUTE_NAMES.mobileOrders,
-          routeNames.ROUTE_NAMES.mobileOrderView,
+          routeNames.ROUTE_NAMES.mobileOrderView
         ];
       } else if (userRole === "tester") {
         hiddenMenuItems = [
@@ -116,29 +116,29 @@ export class MainMenu extends React.Component {
           routeNames.ROUTE_NAMES.customers,
           routeNames.ROUTE_NAMES.cookingTips,
           routeNames.ROUTE_NAMES.emails,
-          routeNames.ROUTE_NAMES.users,
+          routeNames.ROUTE_NAMES.users
         ];
 
         hiddenMenuSubItems = [
           routeNames.ROUTE_NAMES.tags,
           routeNames.ROUTE_NAMES.taxView,
-          routeNames.ROUTE_NAMES.bundleView,
+          routeNames.ROUTE_NAMES.bundleView
         ];
       } else if (userRole === "mobile") {
         hiddenMenuItems = [
           routeNames.ROUTE_NAMES.dashboard,
           routeNames.ROUTE_NAMES.cookingTips,
           routeNames.ROUTE_NAMES.emails,
-          routeNames.ROUTE_NAMES.users,
+          routeNames.ROUTE_NAMES.users
         ];
 
         hiddenMenuSubItems = [
           routeNames.ROUTE_NAMES.tags,
           routeNames.ROUTE_NAMES.taxView,
-          routeNames.ROUTE_NAMES.bundleView,
+          routeNames.ROUTE_NAMES.bundleView
         ];
       }
-     
+
       if (hiddenMenuItems.includes(item.path)) {
         continue;
       }
@@ -146,10 +146,7 @@ export class MainMenu extends React.Component {
       //if item does not contain sub-items
       if (!item.items && !item.isHidden) {
         jsxArr.push(
-          <li
-            key={"item_" + i}
-            className={this.getLiClassName(item)}
-          >
+          <li key={"item_" + i} className={this.getLiClassName(item)}>
             <div
               onClick={() => this.onClick(item.path)}
               className={this.getLinkClassName(item)}
@@ -190,10 +187,7 @@ export class MainMenu extends React.Component {
 
       //item that contains subitems
       jsxArr.push(
-        <li
-          key={"item_" + i}
-          className={this.getLiWithSubitemsClassName(item)}
-        >
+        <li key={"item_" + i} className={this.getLiWithSubitemsClassName(item)}>
           {/* item */}
           <div
             onClick={() => this.onClick(item.path)}
@@ -203,9 +197,9 @@ export class MainMenu extends React.Component {
           </div>
 
           {/* subitems */}
-          <ul className="main-menu__sub animated">
-            {innerJsxArr}
-          </ul>
+          {innerJsxArr.length>0 ? (
+            <ul className="main-menu__sub animated">{innerJsxArr}</ul>
+          ) : null}
         </li>
       );
     }

@@ -107,7 +107,7 @@ export class CertificateRecipient extends React.Component {
                   placeholder=""
                   className="block-set__text-area animated"
                   type="text"
-                  value={this.props.certificate.recipientComment}
+                  value={this.props.certificate.recipientComment || ""}
                   onChange={e =>
                     this.props.onRecipientCommentChange(e.target.value)
                   }

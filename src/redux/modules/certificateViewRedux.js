@@ -14,6 +14,7 @@ import * as dataFuncs from "../../utils/dataFuncs";
 import { IUserView } from "../../redux/modules/userViewRedux";
 import { IRecipientView } from "./recipientViewRedux";
 import { IServiceType } from "./serviceTypesRedux";
+import { IRestaurantView } from "./restaurantViewRedux";
 
 //*******************************************************************************
 
@@ -29,7 +30,10 @@ export const ICertificateView = PropTypes.shape({
 
   recipient: IRecipientView,
   recipientComment: PropTypes.string,
-  serviceType: IServiceType
+  serviceType: IServiceType,
+
+  issuingRestaurant: IRestaurantView,
+  redeemerRestaurant: IRestaurantView
 });
 
 //*******************************************************************************
@@ -43,6 +47,7 @@ const CHANGE_VALIDITY_PERIOD = PREFIX + "CHANGE_VALIDITY_PERIOD";
 const CHANGE_RECIPIENT_COMMENT = PREFIX + "CHANGE_RECIPIENT_COMMENT";
 const CHANGE_RECIPIENT = PREFIX + "CHANGE_RECIPIENT";
 const CHANGE_SERVICE_TYPE = PREFIX + "CHANGE_SERVICE_TYPE";
+const CHANGE_ISSUING_RESTAURANT = PREFIX + "CHANGE_ISSUING_RESTAURANT";
 
 //*******************************************************************************
 
@@ -58,7 +63,10 @@ export const certificateViewInitialState = {
 
   recipient: null,
   recipientComment: null,
-  serviceType: null
+  serviceType: null,
+
+  issuingRestaurant: null,
+  redeemerRestaurant: null
 };
 
 //*******************************************************************************
@@ -125,6 +133,12 @@ export default function reducer(
         serviceType: action.payload ? { ...action.payload } : null
       };
 
+    case CHANGE_ISSUING_RESTAURANT:
+      return {
+        ...state,
+        issuingRestaurant: action.payload ? { ...action.payload } : null
+      };
+
     default:
       return state;
   }
@@ -182,6 +196,13 @@ class CertificateViewActions extends BaseViewActions {
   changeServiceType = payload => {
     return {
       type: CHANGE_SERVICE_TYPE,
+      payload: payload
+    };
+  };
+
+  changeIssuingRestaurant = payload => {
+    return {
+      type: CHANGE_ISSUING_RESTAURANT,
       payload: payload
     };
   };

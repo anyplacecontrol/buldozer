@@ -46,10 +46,10 @@ export class SideBar_ extends React.Component {
         <div className="side-bar__toggle animated">
           <div
             className="side-bar__toggle--button animated"
-            title="Toggle sidebar"
+            title="Свернуть"
             onClick={this.onToggleSidebarClick}
           >
-            Toggle sidebar
+            Свернуть
           </div>
         </div>
       </div>
