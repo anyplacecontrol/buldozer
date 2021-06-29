@@ -33,7 +33,7 @@ function splitCommaToArray(str) {
 export function getEmailValidationError(emailAddress) {
   if (isEmptyString(emailAddress)) return null;
 
-  if (emailAddress.indexOf(" ") > 0) return "Spaces are not allowed";
+  if (emailAddress.indexOf(" ") > 0) return "Пробелы не допустимы";
 
   //looks like email?
   var lastAtPos = emailAddress.lastIndexOf("@");
@@ -44,14 +44,14 @@ export function getEmailValidationError(emailAddress) {
     emailAddress.indexOf("@@") == -1 &&
     lastDotPos > 2 &&
     emailAddress.length - lastDotPos > 2;
-  if (!looksLikeMail) return "Wrong format";
+  if (!looksLikeMail) return "Не верный фромат";
 
   //Invalid characters
   let filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
   if (filter.test(emailAddress)) {
     return null;
   } else {
-    return "Invalid characters";
+    return "Недопустимые символы";
   }
 }
 
@@ -75,39 +75,98 @@ export function getSelectBoxClass(viewItem, isError) {
   else return result + " is--error";
 }
 
+
+export function getPhoneValidationError(phone) {
+  if (isEmptyString(phone)) return null;
+
+  if (phone.indexOf(" ") > 0) return "Пробелы не допустимы";
+
+  if (phone.length < 10) return "Слишком короткий номер";
+
+  //Invalid characters
+  let filter = /^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$/g;
+  if (filter.test(phone)) {
+    return null;
+  } else {
+    return "Недопустимые символы";
+  }
+
+  return null;
+}
+
 //=========================================================================
 
-export function validateCertificateView(certificateView) {
+export function validateCertificateView(viewObj) {
   if (
-    isEmptyString(certificateView.id) ||
-    isEmptyString(certificateView.amount) ||
-    isEmptyString(certificateView.validityPeriodInMonths)
+    isEmptyString(viewObj.id) ||
+    isEmptyString(viewObj.amount) ||
+    isEmptyString(viewObj.validityPeriodInMonths)
   )
     throw "Проверка не удалась: пустые поля";
 
+  if (isEmptyString(viewObj.activeFromDate))
+    throw "Проверка не удалась: дата активации не задана";
+
+  if (!viewObj.recipient) throw "Проверка не удалась: контрагент не задан";
+
+  if (!viewObj.serviceType) throw "Проверка не удалась: вид услуг не задан";
+
+  if (!viewObj.issuingRestaurant)
+    throw "Проверка не удалась: ресторан-эмитет не задан";
+
   if (
-    isLongString(certificateView.id) ||
-    isLongString(certificateView.amount) ||
-    isLongString(certificateView.validityPeriodInMonths)     
+    isLongString(viewObj.id) ||
+    isLongString(viewObj.amount) ||
+    isLongString(viewObj.validityPeriodInMonths)
   ) {
     throw "Проверка не удалась: слишком длинные поля (>255 символов)";
   }
 
-  if (
-    isLongString(certificateView.recipientComment, 500)    
-  ) {
+  if (isLongString(viewObj.recipientComment, 500)) {
     throw "Проверка не удалась: слишком длинный комментарий (>500 символов)";
-  }  
+  }
 
-  if (!isNumeric(certificateView.validityPeriodInMonths))
+  if (!isNumeric(viewObj.validityPeriodInMonths))
     throw "Проверка не удалась: 'срок действия' не является числом";
 
-  if (
-    certificateView.validityPeriodInMonths < 0 ||
-    certificateView.validityPeriodInMonths > 36
-  )
+  if (viewObj.validityPeriodInMonths < 0 || viewObj.validityPeriodInMonths > 36)
     throw "Проверка не удалась: 'срок действия' в недопустимых границах";
   return {
-    ...certificateView
+    ...viewObj
+  };
+}
+
+//--------------------------------------------------------------------------
+
+export function validateRecipientView(viewObj) {  
+  if (
+    isEmptyString(viewObj.company) 
+  )
+    throw "Проверка не удалась: пустые поля";
+
+  if (
+    isLongString(viewObj.company) ||
+    isLongString(viewObj.name) ||
+    isLongString(viewObj.address) ||
+    isLongString(viewObj.phone) ||
+    isLongString(viewObj.email)    
+  ) {
+    throw "Проверка не удалась: слишком длинные поля (>255 символов)";
+  }
+
+  if (isLongString(viewObj.comment, 500)) {
+    throw "Проверка не удалась: слишком длинный комментарий (>500 символов)";
+  }
+
+  let emailError = getEmailValidationError(viewObj.email)
+  if (emailError)
+    throw "Проверка E-mail не удалась: " + emailError;
+
+  let phoneError = getPhoneValidationError(viewObj.phone);
+  if (phoneError)
+    throw "Проверка телефона не удалась: " + phoneError;
+
+  return {
+    ...viewObj
   };
 }

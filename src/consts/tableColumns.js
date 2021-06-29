@@ -109,9 +109,15 @@ export const RESTAURANTS_COLUMNS = _addIsDefault([
 //-----------------------------------------------------------------------------
 //Контрагенты
 
+export const COLUMN_COMPANY = {
+  accessor: "company",
+  accessorSort: "company",
+  text: "Компания",
+  className: "id"
+};
 
 export const RECIPIENTS_COLUMNS = _addIsDefault([
-  {...COLUMN_NAME, isVisible: true}, 
+  {...COLUMN_COMPANY, isVisible: true}, 
   {...COLUMN_CREATED_DATE, isVisible: true}, 
   {...COLUMN_IS_ACTIVE, isVisible: true},   
 ]);

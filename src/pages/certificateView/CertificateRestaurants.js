@@ -48,7 +48,7 @@ export class CertificateRestaurants extends React.Component {
             {/* -- Контрагент -- */}
             <div className="block-set__item--inner flex w100 animated">
               <div className="block-set__sub-title flex w100 animated">
-                Ресторан-эмитет
+                Ресторан-эмитет*
               </div>
               <div className="block-set__content flex w100 animated">
                 {this.renderIssuingRestaurantsSelectBox()}

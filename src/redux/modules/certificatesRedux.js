@@ -52,7 +52,7 @@ class CertificatesActions extends BaseTableActions {
   // *** Delete
   _deleteItem(kioskObj) {
     return async (dispatch, getState) => {
-      // await certificatesApi.deleteItem(kioskObj);
+      await certificatesApi.deleteItem(kioskObj);
     };
   }
 

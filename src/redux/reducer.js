@@ -1,27 +1,32 @@
 import {combineReducers} from "redux";
 import ui from "./modules/uiRedux";
 import routing from "./modules/routingRedux";
+import serviceTypes from "./modules/serviceTypesRedux"
 
 import certificates from "./modules/certificatesRedux";
 import certificateView from "./modules/certificateViewRedux";
 
-import restaurants from "./modules/restaurantsRedux";
 import recipients from "./modules/recipientsRedux";
+import recipientView from "./modules/recipientViewRedux";
+
+import restaurants from "./modules/restaurantsRedux";
 import users from "./modules/usersRedux";
 
-import serviceTypes from "./modules/serviceTypesRedux"
+
 
 const reducers = {
   ui,
   routing,  
+  serviceTypes,
+  
   certificates,
   certificateView,
 
-  restaurants,
   recipients,
-  users,
+  recipientView,
 
-  serviceTypes
+  restaurants,  
+  users,  
 };
 
 export default combineReducers(reducers);

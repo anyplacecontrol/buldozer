@@ -51,15 +51,20 @@ export class certificateView_ extends React.Component {
    this.props.dispatch(certificateViewActions.changeIssuingRestaurant(newValue));
   };
 
+  onChangeActiveFromDate   = newValue => {
+    this.props.dispatch(certificateViewActions.changeActiveFromDate(newValue));
+   };
+
   render() {
     return (
-      <BaseView viewName="Сертификат" actionsProvider={certificateViewActions}>
+      <BaseView viewName="Обзор сертификата" actionsProvider={certificateViewActions}>
         <CertificateGeneral
           certificate={this.props.certificate}
           onChangeId={this.onChangeId}
           onTriggerIsActive={this.onTriggerIsActive}
           onChangeAmount={this.onChangeAmount}
           onChangeValidityPeriod={this.onChangeValidityPeriod}
+          onChangeActiveFromDate={this.onChangeActiveFromDate}
         />
 
         <CertificateRecipient

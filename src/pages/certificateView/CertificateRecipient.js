@@ -76,7 +76,7 @@ export class CertificateRecipient extends React.Component {
             {/* -- Контрагент -- */}
             <div className="block-set__item--inner flex w100 animated">
               <div className="block-set__sub-title flex w100 animated">
-                Контрагент
+                Контрагент*
               </div>
               <div className="block-set__content flex w100 animated">
                 {this.renderRecipientsSelectBox()}
@@ -86,7 +86,7 @@ export class CertificateRecipient extends React.Component {
             {/* -- Вид услуг -- */}
             <div className="block-set__item--inner flex w100 animated">
               <div className="block-set__sub-title flex w100 animated">
-                Вид услуг
+                Вид услуг*
               </div>
               <div className="block-set__content flex w100 animated">
                 {this.renderServiceTypesSelectBox()}
@@ -97,7 +97,7 @@ export class CertificateRecipient extends React.Component {
           {/*------- Right panel-------- */}
 
           <div className="block-set__item flex animated">
-            {/* ---Additional description--- */}
+            {/* ---Комментарий-- */}
             <div className="block-set__item--inner flex w100 animated">
               <div className="block-set__sub-title flex w100 animated">
                 Комментарий

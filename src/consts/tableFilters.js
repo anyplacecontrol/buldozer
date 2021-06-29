@@ -116,6 +116,13 @@ export const FILTER_CREATED_DATE = _addDefaultValue({
 //------------------------------------------------------------------
 // Контрагенты
 
+export const FILTER_COMPANY = _addDefaultValue({
+  type: "input",
+  apiParamName: "company",
+  labelText: "Компания",
+  value: ""
+});
+
 
 //------------------------------------------------------------------
 // Администраторы

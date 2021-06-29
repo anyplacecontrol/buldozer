@@ -18,6 +18,7 @@ import {
   users
 } from "../../pages/tablePages/tablePages";
 import { certificateView } from "../../pages/certificateView/certificateView";
+import { recipientView } from "../../pages/recipientView/recipientView";
 import { login } from "../../pages/login/login";
 import * as authApi from "../../api/authApi";
 
@@ -110,6 +111,13 @@ class App_ extends React.Component {
                             path={ROUTE_NAMES.recipients}
                             render={() => {
                               const Component = recipients;
+                              return <Component />;
+                            }}
+                          />
+                           <Route
+                            path={ROUTE_NAMES.recipientView}
+                            render={() => {
+                              const Component = recipientView;
                               return <Component />;
                             }}
                           />

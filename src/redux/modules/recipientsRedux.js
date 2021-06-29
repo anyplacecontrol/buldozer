@@ -58,7 +58,7 @@ class RecipientsActions extends BaseTableActions {
     return async (dispatch, getState) => {     
 
       let filterItems = [
-        { ...tableFilters.FILTER_NAME },    
+        { ...tableFilters.FILTER_COMPANY },    
         { ...tableFilters.FILTER_CREATED_DATE },
         { ...tableFilters.FILTER_ISACTIVE },
         
@@ -93,13 +93,13 @@ class RecipientsActions extends BaseTableActions {
 
   goto_editItem(itemId) {
     return async dispatch => {
-      //dispatch(routing.goto_EditItem(ROUTE_NAMES.kioskView, itemId));
+      dispatch(routing.goto_EditItem(ROUTE_NAMES.recipientView, itemId));
     };
   }
 
   goto_addItem() {
     return async dispatch => {
-      //dispatch(routing.goto_AddItem(ROUTE_NAMES.kioskView));
+      dispatch(routing.goto_AddItem(ROUTE_NAMES.recipientView));
     };
   }
 

@@ -3,8 +3,7 @@ import { ROUTE_NAMES } from "../../consts/routeNames";
 import { certificatesActions } from "./certificatesRedux";
 import * as viewValidators from "../../utils/viewValidators";
 import * as certificatesApi from "../../api/certificatesApi";
-import {
-  BaseViewTypes,
+import {  
   BaseViewActions,
   BaseViewInitialState,
   BaseViewReducer,
@@ -21,7 +20,7 @@ import { IRestaurantView } from "./restaurantViewRedux";
 export const ICertificateView = PropTypes.shape({
   ...IBaseView,
   id: PropTypes.string.isRequired,
-  activeFromDate: PropTypes.string.isRequired, //api field: active_from_date
+  activeFromDate: PropTypes.string, //api field: active_from_date
   validityPeriodInMonths: PropTypes.number.isRequired, //api field validity_period_in_months
   isActive: PropTypes.bool, //api field is_active
   createdUser: IUserView, //api field: user_id
@@ -39,7 +38,6 @@ export const ICertificateView = PropTypes.shape({
 //*******************************************************************************
 const PREFIX = "certificateView/";
 
-// const CHANGE_CREATED_BY = PREFIX + "CHANGE_CREATED_BY";
 const CHANGE_ID = PREFIX + "CHANGE_ID";
 const CHANGE_IS_ACTIVE = PREFIX + "CHANGE_IS_ACTIVE";
 const CHANGE_AMOUNT = PREFIX + "CHANGE_AMOUNT";
@@ -48,13 +46,14 @@ const CHANGE_RECIPIENT_COMMENT = PREFIX + "CHANGE_RECIPIENT_COMMENT";
 const CHANGE_RECIPIENT = PREFIX + "CHANGE_RECIPIENT";
 const CHANGE_SERVICE_TYPE = PREFIX + "CHANGE_SERVICE_TYPE";
 const CHANGE_ISSUING_RESTAURANT = PREFIX + "CHANGE_ISSUING_RESTAURANT";
+const CHANGE_ACTIVE_FROM_DATE = PREFIX + "CHANGE_ACTIVE_FROM_DATE";
 
 //*******************************************************************************
 
 export const certificateViewInitialState = {
   ...BaseViewInitialState,
   id: "",
-  activeFromDate: dataFuncs.dateRangeToISOFormat(Date.now()),
+  activeFromDate: null,
   validityPeriodInMonths: 12,
   isActive: false,
   createdUser: null,
@@ -85,12 +84,6 @@ export default function reducer(
   if (result) return result;
 
   switch (action.type) {
-    // case CHANGE_CREATED_BY:
-    //   return {
-    //     ...state,
-    //     createdUser: action.payload,
-    //   };
-
     case CHANGE_ID:
       return {
         ...state,
@@ -139,6 +132,15 @@ export default function reducer(
         issuingRestaurant: action.payload ? { ...action.payload } : null
       };
 
+    case CHANGE_ACTIVE_FROM_DATE: {
+      let activeFromDate = action.payload
+        ? dataFuncs.dateRangeToISOFormat(action.payload)
+        : null;
+      return {
+        ...state,
+        activeFromDate
+      };
+    }
     default:
       return state;
   }
@@ -207,23 +209,10 @@ class CertificateViewActions extends BaseViewActions {
     };
   };
 
-  // Protected Action Creators
-
-  initializeView_end = () => {
-    return async (dispatch, getState) => {
-      //we need to remember some previous values,
-      //because there is separate API to change them
-      // let certificateObj = this._getStateSlice(getState());
-      // if (this._isNewItem(certificateObj)) {
-      //   await dispatch({
-      //     type: CHANGE_CREATED_BY,
-      //     payload: { id: window.myUser.id, email: window.authEmail }
-      //   });
-      // }
-      // let existingItem = dataFuncs.getItemById(
-      //   certificateObj.id,
-      //   getState().certificates.items
-      // );
+  changeActiveFromDate = payload => {
+    return {
+      type: CHANGE_ACTIVE_FROM_DATE,
+      payload: payload
     };
   };
 
