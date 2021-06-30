@@ -19,7 +19,7 @@ const PREFIX = "recipients/";
 
 export const recipientsInitialState = {
   ...BaseTableInitialState,
-  sortBy: tableColumns.COLUMN_NAME,
+  sortBy: tableColumns.COLUMN_CREATED_DATE,
   columns: tableColumns.RECIPIENTS_COLUMNS
 };
 
@@ -47,9 +47,9 @@ class RecipientsActions extends BaseTableActions {
   // ABSTRACT ACTIONS REALIZATION
 
   // *** Delete
-  _deleteItem(kioskObj) {
+  _deleteItem(Obj) {
     return async (dispatch, getState) => {
-    //   await recipientsApi.deleteItem(kioskObj);
+       await recipientsApi.deleteItem(Obj);
     };
   }
 

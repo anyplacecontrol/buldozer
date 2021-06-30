@@ -6,7 +6,7 @@ export const FAKE_USERS = [
         "phone": "8-800-528-1156",
         "isActive": true,
         "createdDate": "2021-06-17T14:32:46.000000Z",
-        "createdBy": {
+        "createdUser": {
             "id": 90,
             "name": "Клементина Фёдоровна Третьякова",
             "email": "galina73@example.org",

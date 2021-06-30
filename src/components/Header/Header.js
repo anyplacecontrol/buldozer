@@ -38,7 +38,7 @@ export class Header_ extends React.Component {
 
     return (
       <header className="header animated">
-        <div className="header__logo animated">A</div>
+        <div className="header__logo animated"></div>
         <div className="wrapper ph-35 animated">
           <div className="header__inner flex w100 animated">
             <div className="header__left flex animated">

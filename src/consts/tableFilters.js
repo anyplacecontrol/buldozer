@@ -91,7 +91,7 @@ export const FILTER_RECIPIENT = _addDefaultValue({
   apiParamName: "recipientId",
   labelText: "Контрагент",
   items: [ ], //items are store objects
-  accessorText: item => item.name,
+  accessorText: item => item.company,
   accessorApi: item => item.id,
   value: ""
 });

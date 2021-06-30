@@ -16,7 +16,7 @@ export const FAKE_CERTIFICATES = [
     isRedeemed: false,
     amount: 1000,
         
-    //createdDate: "2021-06-17T12:54:58.000000Z",
+    createdDate: "2021-06-17T12:54:58.000000Z",
     
     recipientComment:
       "Quo quis mollitia laboriosam recusandae est. Ut quo doloribus doloribus facere id.",    

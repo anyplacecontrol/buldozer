@@ -10,6 +10,8 @@ import recipients from "./modules/recipientsRedux";
 import recipientView from "./modules/recipientViewRedux";
 
 import restaurants from "./modules/restaurantsRedux";
+import restaurantView from "./modules/restaurantViewRedux";
+
 import users from "./modules/usersRedux";
 
 
@@ -25,7 +27,9 @@ const reducers = {
   recipients,
   recipientView,
 
-  restaurants,  
+  restaurants, 
+  restaurantView,
+
   users,  
 };
 

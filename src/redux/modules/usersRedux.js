@@ -19,7 +19,7 @@ const PREFIX = "users/";
 
 export const usersInitialState = {
   ...BaseTableInitialState,
-  sortBy: tableColumns.COLUMN_NAME,
+  sortBy: tableColumns.COLUMN_CREATED_DATE,
   columns: tableColumns.USERS_COLUMNS
 };
 

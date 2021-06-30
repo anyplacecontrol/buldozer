@@ -112,7 +112,7 @@ export function validateCertificateView(viewObj) {
   if (!viewObj.serviceType) throw "Проверка не удалась: вид услуг не задан";
 
   if (!viewObj.issuingRestaurant)
-    throw "Проверка не удалась: ресторан-эмитет не задан";
+    throw "Проверка не удалась: ресторан-эмитент не задан";
 
   if (
     isLongString(viewObj.id) ||
@@ -146,6 +146,42 @@ export function validateRecipientView(viewObj) {
 
   if (
     isLongString(viewObj.company) ||
+    isLongString(viewObj.name) ||
+    isLongString(viewObj.address) ||
+    isLongString(viewObj.phone) ||
+    isLongString(viewObj.email)    
+  ) {
+    throw "Проверка не удалась: слишком длинные поля (>255 символов)";
+  }
+
+  if (isLongString(viewObj.comment, 500)) {
+    throw "Проверка не удалась: слишком длинный комментарий (>500 символов)";
+  }
+
+  let emailError = getEmailValidationError(viewObj.email)
+  if (emailError)
+    throw "Проверка E-mail не удалась: " + emailError;
+
+  let phoneError = getPhoneValidationError(viewObj.phone);
+  if (phoneError)
+    throw "Проверка телефона не удалась: " + phoneError;
+
+  return {
+    ...viewObj
+  };
+}
+
+
+//--------------------------------------------------------------------------
+
+export function validateRestaurantView(viewObj) {  
+  if (
+    isEmptyString(viewObj.name) ||
+    isEmptyString(viewObj.address)
+  )
+    throw "Проверка не удалась: пустые поля";
+
+  if (    
     isLongString(viewObj.name) ||
     isLongString(viewObj.address) ||
     isLongString(viewObj.phone) ||

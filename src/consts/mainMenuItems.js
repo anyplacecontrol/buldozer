@@ -8,7 +8,7 @@ export const MAIN_MENU_ITEMS = [
     comment: "",
     items: [
       {
-        name: "Сертификаты",
+        name: "Сертификат",
         path: ROUTE_NAMES.certificateView,
         isHidden: true,
         comment: ""
@@ -23,7 +23,7 @@ export const MAIN_MENU_ITEMS = [
     comment: "",
     items: [
       {
-        name: "Контрагенты",
+        name: "Контрагент",
         path: ROUTE_NAMES.recipientView,
         isHidden: true,
         comment: ""
@@ -38,7 +38,7 @@ export const MAIN_MENU_ITEMS = [
     comment: "",
     items: [
       {
-        name: "Контрагенты",
+        name: "Ресторан",
         path: ROUTE_NAMES.restaurantView,
         isHidden: true,
         comment: ""

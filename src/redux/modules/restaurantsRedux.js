@@ -19,7 +19,7 @@ const PREFIX = "restaurants/";
 
 export const restaurantsInitialState = {
   ...BaseTableInitialState,
-  sortBy: tableColumns.COLUMN_ID,
+  sortBy: tableColumns.COLUMN_CREATED_DATE,
   columns: tableColumns.RESTAURANTS_COLUMNS
 };
 
@@ -47,9 +47,9 @@ class RestaurantsActions extends BaseTableActions {
   // ABSTRACT ACTIONS REALIZATION
 
   // *** Delete
-  _deleteItem(kioskObj) {
+  _deleteItem(Obj) {
     return async (dispatch, getState) => {
-    //   await restaurantsApi.deleteItem(kioskObj);
+      await restaurantsApi.deleteItem(Obj);
     };
   }
 
@@ -91,13 +91,13 @@ class RestaurantsActions extends BaseTableActions {
 
   goto_editItem(itemId) {
     return async dispatch => {
-      //dispatch(routing.goto_EditItem(ROUTE_NAMES.kioskView, itemId));
+      dispatch(routing.goto_EditItem(ROUTE_NAMES.restaurantView, itemId));
     };
   }
 
   goto_addItem() {
     return async dispatch => {
-      //dispatch(routing.goto_AddItem(ROUTE_NAMES.kioskView));
+      dispatch(routing.goto_AddItem(ROUTE_NAMES.restaurantView));
     };
   }
 

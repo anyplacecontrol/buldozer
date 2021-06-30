@@ -13,5 +13,5 @@ export const IUserView = PropTypes.shape({
   phone: PropTypes.string,  
   isActive: PropTypes.bool,
   createdDate: PropTypes.string,
-  createdBy: PropTypes.object,
+  createdUser: PropTypes.object,
 });

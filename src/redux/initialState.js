@@ -10,7 +10,7 @@ import { recipientsInitialState } from "./modules/recipientsRedux";
 import { recipientViewInitialState } from "./modules/recipientViewRedux";
 
 import {restaurantsInitialState} from "./modules/restaurantsRedux";
-
+import {restaurantViewInitialState} from "./modules/restaurantViewRedux";
 
 export const initialState = {
   ui: uiInitialState,
@@ -24,5 +24,7 @@ export const initialState = {
   recipientView: recipientViewInitialState,
 
   restaurants: restaurantsInitialState,
+  restaurantView: restaurantViewInitialState,
+  
   users: usersInitialState,  
 };

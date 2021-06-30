@@ -11,6 +11,8 @@ import {
   IBaseView
 } from "./baseViewRedux";
 import * as dataFuncs from "../../utils/dataFuncs";
+import * as uiActions from "./uiRedux";
+import { certificatesActions } from "./certificatesRedux";
 
 //*******************************************************************************
 
@@ -25,7 +27,7 @@ export const IRecipientView = PropTypes.shape({
   comment: PropTypes.string,
   isActive: PropTypes.bool,
   createdDate: PropTypes.string,
-  createdBy: IUserView
+  createdUser: IUserView
 });
 
 //*******************************************************************************
@@ -43,7 +45,7 @@ const CHANGE_EMAIL = PREFIX + "CHANGE_EMAIL";
 
 export const recipientViewInitialState = {
   ...BaseViewInitialState,
-  id: "",
+  id: 0,
   name: "",
   email: "",
   company: "",
@@ -52,7 +54,7 @@ export const recipientViewInitialState = {
   comment: "",
   isActive: false,
   createdDate: null,
-  createdBy: null
+  createdUser: null
 };
 
 //*******************************************************************************
@@ -171,6 +173,31 @@ class RecipientViewActions extends BaseViewActions {
     return {
       type: CHANGE_EMAIL,
       payload: payload
+    };
+  };
+
+  initializeView_end = () => {
+    return async (dispatch, getState) => {
+      if (this._isNewItem(getState().recipientView)) return;
+
+      //get certificates for recipient
+
+      try {
+        dispatch(uiActions.showBackdrop(true));
+        await dispatch(
+          certificatesActions.fetchItems(
+            0,
+            false,
+            false,
+            { recipientId: getState().recipientView.id },
+            true,
+            true
+          )
+        );
+      } catch (e) {
+      } finally {
+        dispatch(uiActions.showBackdrop(false));
+      }
     };
   };
 

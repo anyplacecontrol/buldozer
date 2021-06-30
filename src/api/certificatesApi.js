@@ -19,10 +19,12 @@ export async function getItems(
   sortBy = null,
   sortOrder = "descending"
 ) {
-  delete filter.notImplemented;
+  if (filter) {
+    delete filter.notImplemented;
 
-  if (filter.isActive === "true") filter.isActive = true;
-  if (filter.isActive === "false") filter.isActive = false;
+    if (filter.isActive === "true") filter.isActive = true;
+    if (filter.isActive === "false") filter.isActive = false;
+  }
 
   let result = await baseAPI.getFilteredItems(
     certificates_endPoint,
@@ -51,7 +53,7 @@ export async function addItem(certObj) {
 
 export async function updateItem(certObj) {
   let endPoint = certificateUpdate_endPoint + certObj.id;
-  return await AddOrUpdateItem(certObj,endPoint,"PUT");
+  return await AddOrUpdateItem(certObj, endPoint, "PUT");
 }
 
 //--------------------------------------------------------------------------------
@@ -77,10 +79,13 @@ export async function AddOrUpdateItem(certObj, endPoint, method) {
 
   cleanCert.recipientId = certObj.recipient ? certObj.recipient.id : null;
   cleanCert.serviceTypeId = certObj.serviceType ? certObj.serviceType.id : null;
-  cleanCert.issuingRestaurantId = certObj.issuingRestaurant ? certObj.issuingRestaurant.id : null;
-  cleanCert.redeemerRestaurantId = certObj.redeemerRestaurant ? certObj.redeemerRestaurant.id : null;
-  
-  // Modify Kiosk
+  cleanCert.issuingRestaurantId = certObj.issuingRestaurant
+    ? certObj.issuingRestaurant.id
+    : null;
+  cleanCert.redeemerRestaurantId = certObj.redeemerRestaurant
+    ? certObj.redeemerRestaurant.id
+    : null;
+
   let response = await fetchJSON(endPoint, {
     method: method,
     headers: {
@@ -88,7 +93,7 @@ export async function AddOrUpdateItem(certObj, endPoint, method) {
       "Content-Type": "application/json"
     },
     body: JSON.stringify(cleanCert)
-  });  
+  });
 
   return null;
 }

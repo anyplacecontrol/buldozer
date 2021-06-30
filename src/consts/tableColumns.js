@@ -71,8 +71,16 @@ export const COLUMN_AMOUNT =
   className: "price"  
 }
 
+export const COLUMN_CREATED_DATE = {
+  accessor: item => dataFuncs.truncateDate(item.createdDate),  
+  accessorSort: "createdDate",
+  text: "Дата добавления",
+  className: "name"
+};
+
 export const CERTIFICATES_COLUMNS = _addIsDefault([
   {...COLUMN_ID, isVisible: true}, 
+  {...COLUMN_CREATED_DATE, isVisible: false},   
   {...COLUMN_ACTIVE_FROM, isVisible: true},
   {...COLUMN_ACTIVE_TO, isVisible: true},
   {...COLUMN_IS_ACTIVE, isVisible: true},
@@ -83,7 +91,7 @@ export const CERTIFICATES_COLUMNS = _addIsDefault([
 
 
 //-----------------------------------------------------------------------------
-//Certificates
+//Restorans
 
 export const COLUMN_NAME = {
   accessor: "name",
@@ -91,14 +99,6 @@ export const COLUMN_NAME = {
   text: "Название",
   className: "id"
 };
-
-export const COLUMN_CREATED_DATE = {
-  accessor: item => dataFuncs.truncateDate(item.createdDate),  
-  accessorSort: "createdDate",
-  text: "Дата добавления",
-  className: "name"
-};
-
 
 export const RESTAURANTS_COLUMNS = _addIsDefault([
   {...COLUMN_NAME, isVisible: true}, 
@@ -135,7 +135,7 @@ export const COLUMN_EMAIL = {
 
 
 export const COLUMN_CREATED_BY = {  
-  accessor: item => (item.createdBy ? item.createdBy.email : ""),  
+  accessor: item => (item.createdUser ? item.createdUser.email : ""),  
   text: "Кем добавлен",
   className: "name"  
 }

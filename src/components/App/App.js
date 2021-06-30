@@ -19,6 +19,7 @@ import {
 } from "../../pages/tablePages/tablePages";
 import { certificateView } from "../../pages/certificateView/certificateView";
 import { recipientView } from "../../pages/recipientView/recipientView";
+import { restaurantView } from "../../pages/restaurantView/restaurantView";
 import { login } from "../../pages/login/login";
 import * as authApi from "../../api/authApi";
 
@@ -103,6 +104,13 @@ class App_ extends React.Component {
                             path={ROUTE_NAMES.restaurants}
                             render={() => {
                               const Component = restaurants;
+                              return <Component />;
+                            }}
+                          />                          
+                          <Route
+                            path={ROUTE_NAMES.restaurantView}
+                            render={() => {
+                              const Component = restaurantView;
                               return <Component />;
                             }}
                           />

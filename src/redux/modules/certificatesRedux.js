@@ -22,7 +22,7 @@ const PREFIX = "certificates/";
 
 export const certificatesInitialState = {
   ...BaseTableInitialState,  
-  sortBy: tableColumns.COLUMN_ID,
+  sortBy: tableColumns.COLUMN_CREATED_DATE,
   columns: tableColumns.CERTIFICATES_COLUMNS
 };
 
@@ -66,7 +66,7 @@ class CertificatesActions extends BaseTableActions {
         ) {
           try {
             await dispatch(
-              restaurantsActions.fetchItems(0, false, false, null, true)
+              restaurantsActions.fetchItems(0, false, false, null, true, true)
             );
           } catch (e) {
           }
@@ -81,7 +81,7 @@ class CertificatesActions extends BaseTableActions {
         ) {
           try {
             await dispatch(
-              recipientsActions.fetchItems(0, false, false, null, true)
+              recipientsActions.fetchItems(0, false, false, null, true, true)
             );
           } catch (e) {
           }
@@ -96,7 +96,7 @@ class CertificatesActions extends BaseTableActions {
         ) {
           try {
             await dispatch(
-              serviceTypesActions.fetchItems(0, false, false, null, true)
+              serviceTypesActions.fetchItems(0, false, false, null, true, true)
             );
           } catch (e) {
           }

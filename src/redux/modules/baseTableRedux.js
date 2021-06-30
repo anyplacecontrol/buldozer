@@ -132,7 +132,8 @@ export class BaseTableActions {
     isCvsExport = false,
     isUnlimitedPages = false,
     filter = null,
-    keepBackdropOpened = false
+    keepBackdropOpened = false,
+    needCleanFetch = false
   ) => {
     return async (dispatch, getState) => {
       if (!keepBackdropOpened) {
@@ -141,7 +142,7 @@ export class BaseTableActions {
 
       dispatch(uiActions.showBackdrop(true));
 
-      if (isUnlimitedPages && !isCvsExport) {
+      if ((isUnlimitedPages && !isCvsExport) || needCleanFetch) {
         //it is background fetch!
         //so we will need to do clean fetch after page displaying
         dispatch(this.changeNeedCleanFetch(true));

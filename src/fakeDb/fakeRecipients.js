@@ -9,7 +9,7 @@ export const FAKE_RECIPIENTS = [
         "comment": "Sit aliquam earum quo et asperiores et dignissimos.",
         "isActive": false,
         "createdDate": "2021-06-17T14:33:15.000000Z",
-        "createdBy": {
+        "createdUser": {
             "id": 84,
             "name": "Святослав Романович Комиссарова",
             "email": "anastasia24@example.com",

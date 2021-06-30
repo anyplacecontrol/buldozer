@@ -6,8 +6,8 @@ import * as serviceFuncs from "../utils/serviceFunctions";
 
 const restaurants_endPoint = "https://" + constants.apiDomain + "/restaurants";
 const restaurantsAdd_endPoint = restaurants_endPoint;
-const restaurantsDelete_endPoint = restaurants_endPoint + "/"; //+{kioskId}
-const restaurantsUpdate_endPoint = restaurants_endPoint + "/"; //+{kioskId}
+const restaurantsDelete_endPoint = restaurants_endPoint + "/"; //+{Id}
+const restaurantsUpdate_endPoint = restaurants_endPoint + "/"; //+{Id}
 
 //--------------------------------------------------------------------------------
 
@@ -18,7 +18,8 @@ export async function getItems(
   sortBy = null,
   sortOrder = "descending"
 ) {
-  delete filter.notImplemented;
+  if (filter)
+    delete filter.notImplemented;
     
   let result = await baseAPI.getFilteredItems(
     restaurants_endPoint,
@@ -34,22 +35,48 @@ export async function getItems(
 
 //--------------------------------------------------------------------------------
 
-export async function deleteItem(kioskObj) {
- 
+export async function deleteItem(Obj) {
+  return await baseAPI.deleteItem(Obj.id, restaurantsDelete_endPoint);
 }
 
 //--------------------------------------------------------------------------------
-export async function addItem(kioskObj) {
- 
-}
-
-//--------------------------------------------------------------------------------
-
-export async function updateItem(kioskObj) {  
- 
+export async function addItem(Obj) {
+  return await AddOrUpdateItem(Obj, restaurantsAdd_endPoint, "POST");
 }
 
 //--------------------------------------------------------------------------------
 
-export async function AddOrUpdateItem(kioskObj, endPoint, method) {  
+export async function updateItem(Obj) {  
+  let endPoint = restaurantsUpdate_endPoint + Obj.id;
+  return await AddOrUpdateItem(Obj, endPoint, "PUT");
+}
+
+//--------------------------------------------------------------------------------
+
+export async function AddOrUpdateItem(Obj, endPoint, method) {
+  if (!Obj) throwFetchError("argument Obj is empty", endPoint);
+
+  if (constants.isFakeData) {
+    await serviceFuncs.delayTime(constants.fakeDelay);
+    return;
+  }
+
+  let cleanObj = { ...Obj };
+  delete cleanObj.id;
+  delete cleanObj.isChecked;
+  delete cleanObj.isValidated;    
+  delete cleanObj.rowNumber;
+  delete cleanObj.createdUser;  
+  delete cleanObj.createdDate;
+
+  let response = await fetchJSON(endPoint, {
+    method: method,
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(cleanObj)
+  });
+
+  return null;
 }
