@@ -272,8 +272,10 @@ export class BaseTableActions {
 
   fetchCsv = () => {
     return async (dispatch, getState) => {
-      let fetchedResponse = await dispatch(this.fetchItems(0, true));
-      if (!fetchedResponse) return;
+      let fetchedResponse = {items: this._getStateSlice(getState()).items};
+      
+      //await dispatch(this.fetchItems(0, true));
+      //if (!fetchedResponse) return;
 
       let data = [];
       let columns = this._getStateSlice(getState()).columns;

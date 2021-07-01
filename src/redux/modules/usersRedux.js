@@ -47,9 +47,9 @@ class UsersActions extends BaseTableActions {
   // ABSTRACT ACTIONS REALIZATION
 
   // *** Delete
-  _deleteItem(kioskObj) {
+  _deleteItem(Obj) {
     return async (dispatch, getState) => {
-    //   await usersApi.deleteItem(kioskObj);
+       await usersApi.deleteItem(Obj);
     };
   }
 
@@ -60,7 +60,7 @@ class UsersActions extends BaseTableActions {
       let filterItems = [
         { ...tableFilters.FILTER_EMAIL },    
         { ...tableFilters.FILTER_CREATED_DATE },                
-        { ...tableFilters.FILTER_CREATED_BY },    
+        // { ...tableFilters.FILTER_CREATED_BY },    
       ];
 
       return dispatch({
@@ -92,13 +92,13 @@ class UsersActions extends BaseTableActions {
 
   goto_editItem(itemId) {
     return async dispatch => {
-      //dispatch(routing.goto_EditItem(ROUTE_NAMES.kioskView, itemId));
+      dispatch(routing.goto_EditItem(ROUTE_NAMES.userView, itemId));
     };
   }
 
   goto_addItem() {
     return async dispatch => {
-      //dispatch(routing.goto_AddItem(ROUTE_NAMES.kioskView));
+      dispatch(routing.goto_AddItem(ROUTE_NAMES.userView));
     };
   }
 

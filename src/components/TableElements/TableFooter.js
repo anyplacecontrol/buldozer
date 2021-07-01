@@ -50,7 +50,7 @@ export class TableFooter extends React.Component {
               className="export-list animated pointer"
               onClick={() => this.onExportCSV()}
             >
-              Export CSV
+              Экспорт CSV
             </div>
 
             {this.props.usePagination && (

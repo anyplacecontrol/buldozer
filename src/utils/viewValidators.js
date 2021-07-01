@@ -75,11 +75,8 @@ export function getSelectBoxClass(viewItem, isError) {
   else return result + " is--error";
 }
 
-
 export function getPhoneValidationError(phone) {
   if (isEmptyString(phone)) return null;
-
-  if (phone.indexOf(" ") > 0) return "Пробелы не допустимы";
 
   if (phone.length < 10) return "Слишком короткий номер";
 
@@ -138,18 +135,15 @@ export function validateCertificateView(viewObj) {
 
 //--------------------------------------------------------------------------
 
-export function validateRecipientView(viewObj) {  
-  if (
-    isEmptyString(viewObj.company) 
-  )
-    throw "Проверка не удалась: пустые поля";
+export function validateRecipientView(viewObj) {
+  if (isEmptyString(viewObj.company)) throw "Проверка не удалась: пустые поля";
 
   if (
     isLongString(viewObj.company) ||
     isLongString(viewObj.name) ||
     isLongString(viewObj.address) ||
     isLongString(viewObj.phone) ||
-    isLongString(viewObj.email)    
+    isLongString(viewObj.email)
   ) {
     throw "Проверка не удалась: слишком длинные поля (>255 символов)";
   }
@@ -158,34 +152,28 @@ export function validateRecipientView(viewObj) {
     throw "Проверка не удалась: слишком длинный комментарий (>500 символов)";
   }
 
-  let emailError = getEmailValidationError(viewObj.email)
-  if (emailError)
-    throw "Проверка E-mail не удалась: " + emailError;
+  let emailError = getEmailValidationError(viewObj.email);
+  if (emailError) throw "Проверка E-mail не удалась: " + emailError;
 
   let phoneError = getPhoneValidationError(viewObj.phone);
-  if (phoneError)
-    throw "Проверка телефона не удалась: " + phoneError;
+  if (phoneError) throw "Проверка телефона не удалась: " + phoneError;
 
   return {
     ...viewObj
   };
 }
 
-
 //--------------------------------------------------------------------------
 
-export function validateRestaurantView(viewObj) {  
-  if (
-    isEmptyString(viewObj.name) ||
-    isEmptyString(viewObj.address)
-  )
+export function validateRestaurantView(viewObj) {
+  if (isEmptyString(viewObj.name) || isEmptyString(viewObj.address))
     throw "Проверка не удалась: пустые поля";
 
-  if (    
+  if (
     isLongString(viewObj.name) ||
     isLongString(viewObj.address) ||
     isLongString(viewObj.phone) ||
-    isLongString(viewObj.email)    
+    isLongString(viewObj.email)
   ) {
     throw "Проверка не удалась: слишком длинные поля (>255 символов)";
   }
@@ -194,13 +182,42 @@ export function validateRestaurantView(viewObj) {
     throw "Проверка не удалась: слишком длинный комментарий (>500 символов)";
   }
 
-  let emailError = getEmailValidationError(viewObj.email)
-  if (emailError)
-    throw "Проверка E-mail не удалась: " + emailError;
+  let emailError = getEmailValidationError(viewObj.email);
+  if (emailError) throw "Проверка E-mail не удалась: " + emailError;
 
   let phoneError = getPhoneValidationError(viewObj.phone);
-  if (phoneError)
-    throw "Проверка телефона не удалась: " + phoneError;
+  if (phoneError) throw "Проверка телефона не удалась: " + phoneError;
+
+  return {
+    ...viewObj
+  };
+}
+
+//--------------------------------------------------------------------------
+
+export function validateUserView(viewObj) {
+  let isEditExisting = viewObj.createdUser != null;
+
+  if (isEmptyString(viewObj.name) || isEmptyString(viewObj.email))
+    throw "Проверка не удалась: пустые поля";
+
+  if (!viewObj.password || viewObj.password.length < 6)
+    throw "Пароль должен содержать не менее 6 символов";
+
+  if (
+    isLongString(viewObj.name) ||
+    isLongString(viewObj.position) ||
+    isLongString(viewObj.phone) ||
+    isLongString(viewObj.email)
+  ) {
+    throw "Проверка не удалась: слишком длинные поля (>255 символов)";
+  }
+
+  let emailError = getEmailValidationError(viewObj.email);
+  if (emailError) throw "Проверка E-mail не удалась: " + emailError;
+
+  let phoneError = getPhoneValidationError(viewObj.phone);
+  if (phoneError) throw "Проверка телефона не удалась: " + phoneError;
 
   return {
     ...viewObj

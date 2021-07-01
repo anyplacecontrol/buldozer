@@ -13,7 +13,7 @@ import restaurants from "./modules/restaurantsRedux";
 import restaurantView from "./modules/restaurantViewRedux";
 
 import users from "./modules/usersRedux";
-
+import userView from "./modules/userViewRedux";
 
 
 const reducers = {
@@ -31,6 +31,7 @@ const reducers = {
   restaurantView,
 
   users,  
+  userView
 };
 
 export default combineReducers(reducers);

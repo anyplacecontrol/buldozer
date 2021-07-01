@@ -1,16 +1,19 @@
-import {uiInitialState} from "./modules/uiRedux";
-import {routingInitialState} from "./modules/routingRedux";
-import { usersInitialState } from "./modules/usersRedux";
-import {serviceTypesInitialState} from "./modules/serviceTypesRedux";
+import { uiInitialState } from "./modules/uiRedux";
+import { routingInitialState } from "./modules/routingRedux";
+import { serviceTypesInitialState } from "./modules/serviceTypesRedux";
 
-import {certificatesInitialState} from "./modules/certificatesRedux";
+import { certificatesInitialState } from "./modules/certificatesRedux";
 import { certificateViewInitialState } from "./modules/certificateViewRedux";
 
 import { recipientsInitialState } from "./modules/recipientsRedux";
 import { recipientViewInitialState } from "./modules/recipientViewRedux";
 
-import {restaurantsInitialState} from "./modules/restaurantsRedux";
-import {restaurantViewInitialState} from "./modules/restaurantViewRedux";
+import { restaurantsInitialState } from "./modules/restaurantsRedux";
+import { restaurantViewInitialState } from "./modules/restaurantViewRedux";
+
+import { usersInitialState } from "./modules/usersRedux";
+import { userViewInitialState } from "./modules/userViewRedux";
+
 
 export const initialState = {
   ui: uiInitialState,
@@ -18,13 +21,14 @@ export const initialState = {
   serviceTypes: serviceTypesInitialState,
 
   certificates: certificatesInitialState,
-  certificateView:  certificateViewInitialState,
-  
+  certificateView: certificateViewInitialState,
+
   recipients: recipientsInitialState,
   recipientView: recipientViewInitialState,
 
   restaurants: restaurantsInitialState,
   restaurantView: restaurantViewInitialState,
-  
-  users: usersInitialState,  
+
+  users: usersInitialState,
+  userView: userViewInitialState,
 };

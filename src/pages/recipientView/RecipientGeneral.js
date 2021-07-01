@@ -1,13 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { IRecipientView } from "../../redux/modules/recipientViewRedux";
-import * as dataFuncs from "../../utils/dataFuncs";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 
 export class RecipientGeneral extends React.Component {
   render() {
-    let isEditExisting = this.props.recipient.createdUser != null;
 
     return (
       <div className="block-set__box flex animated">

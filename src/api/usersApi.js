@@ -19,7 +19,7 @@ export async function getItems(
   sortOrder = "descending"
 ) {
   delete filter.notImplemented;
-    
+
   let result = await baseAPI.getFilteredItems(
     users_endPoint,
     filter,
@@ -29,27 +29,60 @@ export async function getItems(
     sortOrder,
     FAKE_USERS_RESPONSE
   );
+  for (let i = 0; i < result.items.length; i++) {
+    result.items[i].password = "******";
+  }
+
   return result;
 }
 
 //--------------------------------------------------------------------------------
 
-export async function deleteItem(kioskObj) {
- 
+export async function deleteItem(Obj) {
+  return await baseAPI.deleteItem(Obj.id, usersDelete_endPoint);
 }
 
 //--------------------------------------------------------------------------------
-export async function addItem(kioskObj) {
- 
-}
-
-//--------------------------------------------------------------------------------
-
-export async function updateItem(kioskObj) {  
- 
+export async function addItem(Obj) {
+  return await AddOrUpdateItem(Obj, usersAdd_endPoint, "POST");
 }
 
 //--------------------------------------------------------------------------------
 
-export async function AddOrUpdateItem(kioskObj, endPoint, method) {  
+export async function updateItem(Obj) {
+  let endPoint = usersUpdate_endPoint + Obj.id;
+  return await AddOrUpdateItem(Obj, endPoint, "PUT");
+}
+
+//--------------------------------------------------------------------------------
+
+export async function AddOrUpdateItem(Obj, endPoint, method) {
+  if (!Obj) throwFetchError("argument Obj is empty", endPoint);
+
+  if (constants.isFakeData) {
+    await serviceFuncs.delayTime(constants.fakeDelay);
+    return;
+  }
+
+  let cleanObj = { ...Obj };
+  delete cleanObj.id;
+  delete cleanObj.isChecked;
+  delete cleanObj.isValidated;
+  delete cleanObj.rowNumber;
+  delete cleanObj.createdUser;
+  delete cleanObj.createdDate;
+  if (Obj.createdUser) {
+    delete delete cleanObj.password;
+  }
+
+  let response = await fetchJSON(endPoint, {
+    method: method,
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(cleanObj)
+  });
+
+  return null;
 }

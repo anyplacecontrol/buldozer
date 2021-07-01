@@ -20,6 +20,7 @@ import {
 import { certificateView } from "../../pages/certificateView/certificateView";
 import { recipientView } from "../../pages/recipientView/recipientView";
 import { restaurantView } from "../../pages/restaurantView/restaurantView";
+import { userView } from "../../pages/userView/userView";
 import { login } from "../../pages/login/login";
 import * as authApi from "../../api/authApi";
 
@@ -134,6 +135,13 @@ class App_ extends React.Component {
                             path={ROUTE_NAMES.users}
                             render={() => {
                               const Component = users;
+                              return <Component />;
+                            }}
+                          />
+                           <Route
+                            path={ROUTE_NAMES.userView}
+                            render={() => {
+                              const Component = userView;
                               return <Component />;
                             }}
                           />

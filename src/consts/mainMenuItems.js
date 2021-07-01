@@ -53,7 +53,7 @@ export const MAIN_MENU_ITEMS = [
     comment: "",
     items: [
       {
-        name: "Администраторы",
+        name: "Администратор",
         path: ROUTE_NAMES.userView,
         isHidden: true,
         comment: ""
