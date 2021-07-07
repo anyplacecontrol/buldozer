@@ -11,9 +11,9 @@ import { recipientsActions } from "../../redux/modules/recipientsRedux";
 import { restaurantsActions } from "../../redux/modules/restaurantsRedux";
 import { IRecipientView } from "../../redux/modules/recipientViewRedux";
 import {
-  serviceTypesActions,
-  IServiceType
+  serviceTypesActions,  
 } from "../../redux/modules/serviceTypesRedux";
+import {IServiceTypeView} from "../../redux/modules/serviceTypeViewRedux";
 import { IRestaurantView } from "../../redux/modules/restaurantViewRedux";
 
 export class certificateView_ extends React.Component {
@@ -92,7 +92,7 @@ certificateView_.propTypes = {
   dispatch: PropTypes.func.isRequired,
   certificate: certificateViewRedux.ICertificateView,
   allRecipients: PropTypes.arrayOf(IRecipientView).isRequired,
-  allServiceTypes: PropTypes.arrayOf(IServiceType).isRequired,
+  allServiceTypes: PropTypes.arrayOf(IServiceTypeView).isRequired,
   allRestaurants: PropTypes.arrayOf(IRestaurantView).isRequired,
 };
 
