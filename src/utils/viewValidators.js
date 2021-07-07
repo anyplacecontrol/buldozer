@@ -223,3 +223,23 @@ export function validateUserView(viewObj) {
     ...viewObj
   };
 }
+
+//--------------------------------------------------------------------------
+
+export function validateServiceTypeView(viewObj) {
+  let isEditExisting = viewObj.createdUser != null;
+
+  if (isEmptyString(viewObj.name)) {
+    throw "Проверка не удалась: пустые поля";
+  }
+  
+  if (
+    isLongString(viewObj.name) 
+  ) {
+    throw "Проверка не удалась: слишком длинные поля (>255 символов)";
+  }
+    
+  return {
+    ...viewObj
+  };
+}

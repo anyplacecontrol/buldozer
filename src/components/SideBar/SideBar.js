@@ -61,8 +61,7 @@ SideBar_.propTypes = {
   dispatch: PropTypes.func.isRequired,
   currentPath: PropTypes.string.isRequired,
   isHamburgerButtonPressed: PropTypes.bool.isRequired,
-  isMinimized: PropTypes.bool.isRequired,
-  myUser: PropTypes.object
+  isMinimized: PropTypes.bool.isRequired,  
 };
 
 function mapStateToProps(state) {

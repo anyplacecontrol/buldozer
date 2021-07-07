@@ -1,6 +1,5 @@
-import * as serviceTypesApi from "../../api/serviceTypesApi";
+import * as statsRedeemerRestaurantsApi from "../../api/statsRedeemerRestaurantsApi";
 import * as tableColumns from "../../consts/tableColumns";
-import { ROUTE_NAMES } from "../../consts/routeNames";
 import {
   BaseTableActions,
   BaseTableInitialState,
@@ -8,30 +7,27 @@ import {
   BaseTableTypes
 } from "./baseTableRedux";
 import * as tableFilters from "../../consts/tableFilters";
-import * as routing from "./routingRedux";
-import * as uiActions from "./uiRedux";
-import * as consts from "../../consts/constants";
 import PropTypes from "prop-types";
 
 //*******************************************************************************
-const PREFIX = "serviceTypes/";
+const PREFIX = "statsRedeemerRestaurants/";
 
 //*******************************************************************************
 
-export const serviceTypesInitialState = {
+export const statsRedeemerRestaurantsInitialState = {
   ...BaseTableInitialState,
-  sortBy: tableColumns.COLUMN_CREATED_DATE,
-  columns: tableColumns.SERVICE_TYPES_COLUMNS
+  sortBy: tableColumns.COLUMN_RESTAURANT_NAME,
+  columns: tableColumns.STATS_REDEEMER_RESTAURANTS_COLUMNS
 };
 
 //*******************************************************************************
 
-export default function reducer(state = serviceTypesInitialState, action = {}) {
+export default function reducer(state = statsRedeemerRestaurantsInitialState, action = {}) {
   let result = BaseTableReducer(
     PREFIX,
     state,
     action,
-    serviceTypesInitialState
+    statsRedeemerRestaurantsInitialState
   );
 
   if (result) return result;
@@ -44,23 +40,16 @@ export default function reducer(state = serviceTypesInitialState, action = {}) {
 
 //*******************************************************************************
 
-class ServiceTypesActions extends BaseTableActions {
+class StatsRedeemerRestaurantsActions extends BaseTableActions {
   // ABSTRACT ACTIONS REALIZATION
-
-  // *** Delete
-  _deleteItem(Obj) {
-    return async (dispatch, getState) => {
-      await serviceTypesApi.deleteItem(Obj);
-    };
-  }
 
   // *** Filters
   loadFilterItems() {
     return async (dispatch, getState) => {    
 
       let filterItems = [
-        { ...tableFilters.FILTER_NAME },    
-        { ...tableFilters.FILTER_CREATED_DATE },
+        // { ...tableFilters.FILTER_NAME },    
+        // { ...tableFilters.FILTER_CREATED_DATE },
       ];
 
       return dispatch({
@@ -78,7 +67,7 @@ class ServiceTypesActions extends BaseTableActions {
     sortOrder
   ) {
     return async (dispatch, getState) => {
-      let fetchedResponse = await serviceTypesApi.getItems(
+      let fetchedResponse = await statsRedeemerRestaurantsApi.getItems(
         filter,
         topRowNumber,
         itemsPerPage,
@@ -90,18 +79,7 @@ class ServiceTypesActions extends BaseTableActions {
     };
   }
 
-  goto_editItem(itemId) {
-    return async dispatch => {
-      dispatch(routing.goto_EditItem(ROUTE_NAMES.serviceTypeView, itemId));
-    };
-  }
-
-  goto_addItem() {
-    return async dispatch => {
-      dispatch(routing.goto_AddItem(ROUTE_NAMES.serviceTypeView));
-    };
-  }
-
+ 
   //------------------------------------------------------------------------------
   // ABSTRACT FUNCS REALIZATION
 
@@ -110,7 +88,7 @@ class ServiceTypesActions extends BaseTableActions {
   }
 
   get ALLOW_ADD_ITEM() {
-    return true;
+    return false;
   }
 
   get _USE_PAGINATION() {
@@ -118,8 +96,8 @@ class ServiceTypesActions extends BaseTableActions {
   }
 
   _getStateSlice = state => {
-    return state.serviceTypes;
+    return state.statsRedeemerRestaurants;
   };
 }
 
-export const serviceTypesActions = new ServiceTypesActions();
+export const statsRedeemerRestaurantsActions = new StatsRedeemerRestaurantsActions();

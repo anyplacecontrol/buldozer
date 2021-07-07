@@ -128,8 +128,9 @@ export class TableFooter extends React.Component {
 
                   <div className="quantity animated">
                     {this.props.topRowNumber + 1} -{" "}
-                    {this.props.topRowNumber + this.props.pageItemsQty} of{" "}
-                    {this.props.count} items
+                    {this.props.topRowNumber + this.props.pageItemsQty} из
+                    {" "}
+                    {this.props.count} строк
                   </div>
                 </div>
               </OutsideClickHandler>

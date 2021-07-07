@@ -15,12 +15,16 @@ import {
   certificates,
   restaurants,
   recipients,
-  users
+  users,
+  serviceTypes,
+  statsIssuingRestaurants,
+  statsRedeemerRestaurants
 } from "../../pages/tablePages/tablePages";
 import { certificateView } from "../../pages/certificateView/certificateView";
 import { recipientView } from "../../pages/recipientView/recipientView";
 import { restaurantView } from "../../pages/restaurantView/restaurantView";
 import { userView } from "../../pages/userView/userView";
+import { serviceTypeView } from "../../pages/serviceTypeView/serviceTypeView";
 import { login } from "../../pages/login/login";
 import * as authApi from "../../api/authApi";
 
@@ -28,16 +32,12 @@ class App_ extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      authEmail: "",
-      myUser: null
+      authEmail: "",      
     };
   }
 
   componentDidMount = async () => {
-    await authApi.getToken();
-    this.setState({
-      myUser: window.myUser
-    });
+    await authApi.getToken();    
 
     this.props.dispatch(authRedux.start_monitorClicks_Timer());
   };
@@ -75,8 +75,7 @@ class App_ extends React.Component {
                     className={this.props.isSidebarMinimized ? "active" : ""}
                   >
                     <SideBar
-                      isMinimized={this.props.isSidebarMinimized}
-                      myUser={this.state.myUser}
+                      isMinimized={this.props.isSidebarMinimized}                      
                     />
 
                     {/* -- Main content container-- */}
@@ -142,6 +141,37 @@ class App_ extends React.Component {
                             path={ROUTE_NAMES.userView}
                             render={() => {
                               const Component = userView;
+                              return <Component />;
+                            }}
+                          />
+                          {/* ------Виды услуг----- */}
+                          <Route
+                            path={ROUTE_NAMES.serviceTypes}
+                            render={() => {
+                              const Component = serviceTypes;
+                              return <Component />;
+                            }}
+                          />
+                          <Route
+                            path={ROUTE_NAMES.serviceTypeView}
+                            render={() => {
+                              const Component = serviceTypeView;
+                              return <Component />;
+                            }}
+                          />
+                          {/* ------Статистика рест. эмитеты----- */}
+                          <Route
+                            path={ROUTE_NAMES.statsIssuingRestaurants}
+                            render={() => {
+                              const Component = statsIssuingRestaurants;
+                              return <Component />;
+                            }}
+                          />
+                           {/* ------Статистика рест. погас----- */}
+                           <Route
+                            path={ROUTE_NAMES.statsRedeemerRestaurants}
+                            render={() => {
+                              const Component = statsRedeemerRestaurants;
                               return <Component />;
                             }}
                           />

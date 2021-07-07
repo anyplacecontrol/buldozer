@@ -7,7 +7,7 @@ export async function getFilteredItems(
   endpoint,
   filter = null,
   topRowNumber = 0,
-  itemsPerPage = 0, // <=0: no limit
+  itemsPerPage = 100, 
   sortBy = null,
   sortOrder = "descending",
   FAKE_DATA

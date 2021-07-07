@@ -2,8 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import { ICertificateView } from "../../redux/modules/certificateViewRedux";
 import * as dataFuncs from "../../utils/dataFuncs";
-import DatePicker from "react-datepicker";
+import DatePicker, { registerLocale, setDefaultLocale} from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import ru from 'date-fns/locale/ru';
+registerLocale('ru', ru)
 
 export class CertificateGeneral extends React.Component {
   render() {
@@ -56,6 +58,7 @@ export class CertificateGeneral extends React.Component {
               </div>
               <div className="block-set__content flex w100 animated">
                 <DatePicker
+                  locale="ru"
                   selected={
                     this.props.certificate.activeFromDate
                       ? new Date(this.props.certificate.activeFromDate)

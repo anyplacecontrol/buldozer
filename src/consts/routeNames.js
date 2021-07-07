@@ -9,6 +9,10 @@ export const ROUTE_NAMES = {
       recipientView: "/recipientView",
     users: "/users",
       userView: "/userView",
+    serviceTypes: "/serviceTypes",
+      serviceTypeView: "/serviceTypeView",
+    statsIssuingRestaurants: "/statsIssuingRestaurants",
+    statsRedeemerRestaurants: "/statsRedeemerRestaurants"
 };
 
 export const QUERY_PARAMS = {

@@ -79,69 +79,10 @@ export class MainMenu extends React.Component {
 
   renderItems = () => {
     let jsxArr = [];
-    let userRole = "Guest";
-    if (window.myUser && window.myUser.role) {
-      userRole = window.myUser.role.name;
-    }
-
+   
     for (let i = 0; i < this.props.items.length; i++) {
-      let item = this.props.items[i];
+      let item = this.props.items[i];                
 
-      if (
-        userRole !== "SuperAdmin" &&
-        item.path === routeNames.ROUTE_NAMES.statusesProducts
-      ) {
-        continue;
-      }
-
-      let hiddenMenuItems = [];
-      let hiddenMenuSubItems = [];
-
-      if (userRole === "manager") {
-        hiddenMenuItems = [
-          routeNames.ROUTE_NAMES.reportOrders,
-          routeNames.ROUTE_NAMES.reportInventoryByStore,
-          routeNames.ROUTE_NAMES.reportProductsByPopularity,
-          routeNames.ROUTE_NAMES.reportInventoryByProduct,
-          routeNames.ROUTE_NAMES.customers,
-          routeNames.ROUTE_NAMES.customerView,
-          routeNames.ROUTE_NAMES.orders,
-          routeNames.ROUTE_NAMES.orderView,
-          routeNames.ROUTE_NAMES.mobileOrders,
-          routeNames.ROUTE_NAMES.mobileOrderView
-        ];
-      } else if (userRole === "tester") {
-        hiddenMenuItems = [
-          routeNames.ROUTE_NAMES.dashboard,
-          routeNames.ROUTE_NAMES.customers,
-          routeNames.ROUTE_NAMES.cookingTips,
-          routeNames.ROUTE_NAMES.emails,
-          routeNames.ROUTE_NAMES.users
-        ];
-
-        hiddenMenuSubItems = [
-          routeNames.ROUTE_NAMES.tags,
-          routeNames.ROUTE_NAMES.taxView,
-          routeNames.ROUTE_NAMES.bundleView
-        ];
-      } else if (userRole === "mobile") {
-        hiddenMenuItems = [
-          routeNames.ROUTE_NAMES.dashboard,
-          routeNames.ROUTE_NAMES.cookingTips,
-          routeNames.ROUTE_NAMES.emails,
-          routeNames.ROUTE_NAMES.users
-        ];
-
-        hiddenMenuSubItems = [
-          routeNames.ROUTE_NAMES.tags,
-          routeNames.ROUTE_NAMES.taxView,
-          routeNames.ROUTE_NAMES.bundleView
-        ];
-      }
-
-      if (hiddenMenuItems.includes(item.path)) {
-        continue;
-      }
 
       //if item does not contain sub-items
       if (!item.items && !item.isHidden) {
@@ -167,7 +108,7 @@ export class MainMenu extends React.Component {
         for (let index = 0; index < item.items.length; index++) {
           let subitem = item.items[index];
 
-          if (!subitem.isHidden && !hiddenMenuSubItems.includes(subitem.path)) {
+          if (!subitem.isHidden ) {
             innerJsxArr.push(
               <li
                 key={"subitem_" + index}

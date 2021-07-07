@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {OutsideClickHandler} from "../OutsideClickHandler/OutsideClickHandler";
 import {DateRange, DateRangePicker} from "react-date-range";
+import {ru} from "react-date-range/src/locale";
 import * as dataFuncs from "../../utils/dataFuncs";
 
 export class DateRangeBox extends React.Component {
@@ -53,7 +54,7 @@ export class DateRangeBox extends React.Component {
           className="filter__input calendar animated"
           onClick={this.onInputClick}
           type="text"
-          placeholder="Click to select..."
+          placeholder="Кликните..."
           value={dataFuncs.getFilterText(this.props.filterItem)}
           readOnly
         />
@@ -67,6 +68,7 @@ export class DateRangeBox extends React.Component {
         {this.state.isCalendarVisible && (
           <div>
             <Component
+            locale={ru}
               ranges={[
                 {
                   startDate: this.props.filterItem.value.startDate || new Date(),

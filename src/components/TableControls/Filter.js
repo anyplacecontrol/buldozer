@@ -36,7 +36,7 @@ export class Filter extends React.Component {
             <input
               className="filter__input animated"
               type="text"
-              placeholder="Type in..."
+              placeholder="Введите..."
               value={filterItem.value}
               onChange={event =>
                 this.onValueChange(filterItem, event.target.value)
@@ -50,7 +50,7 @@ export class Filter extends React.Component {
             <input
               className="filter__input animated"
               type="number"
-              placeholder="Type in..."
+              placeholder="Введите..."
               value={filterItem.value}
               onChange={event =>
                 this.onValueChange(filterItem, event.target.value)

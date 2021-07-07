@@ -5,7 +5,6 @@ import * as dataFuncs from "../../utils/dataFuncs";
 import { IRestaurantView } from "../../redux/modules/restaurantViewRedux";
 import * as consts from "../../consts/constants";
 import { SelectBox } from "../../components/SelectBox/SelectBox";
-import { IServiceType } from "../../redux/modules/serviceTypesRedux";
 
 export class CertificateRestaurants extends React.Component {
   renderIssuingRestaurantsSelectBox = () => {

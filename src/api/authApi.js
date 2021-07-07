@@ -3,29 +3,26 @@ import * as constants from "../consts/constants";
 import * as serviceFuncs from "../utils/serviceFunctions";
 
 const signin_endPoint =
-  "https://" + constants.oldApiDomain + "/users_api/admins/signin";
-const refreshToken_endPoint =
-  "https://" + constants.oldApiDomain + "/users_api/admins/refreshToken";
+  "https://" + constants.apiDomain + "/auth/login";
 const myUser_endPoint =
-  "https://" + constants.oldApiDomain + "/users_api/admins/me";
+  "https://" + constants.apiDomain + "/auth/me";
 
-  window.authData = null;
-  window.myUser = null;
+  window.authData = null;  
   
 //--------------------------------------------------------------------------
 function saveToken(authData) {
   window.authData = authData;
 
   //duration of token in seconds - 30 seconds
-  let tokenDuration =
-    window.authData.idToken.payload.exp -
-    window.authData.idToken.payload.auth_time -
-    30;
+  let tokenDuration = 7 * 24 *60 *60 * 1000; //неделя в миллисекундах
+    //window.authData.idToken.payload.exp -
+    //window.authData.idToken.payload.auth_time -
+    //30;
   let timeObject = new Date();
 
   //calculate expiration DateTime
-  window.authData.idToken.expirationMoment = new Date(
-    timeObject.getTime() + 1000 * tokenDuration
+  window.authData.expirationMoment = new Date(
+    timeObject.getTime() + tokenDuration
   );
 
   if (typeof Storage !== "undefined") {
@@ -78,42 +75,11 @@ export async function login(email, password) {
 
   let json = await response.json();
 
-  saveToken(json.body);
+  saveToken(json);
 
-  return window.authData.idToken.jwtToken;
+  return window.authData.accessToken;
 }
 
-//-------------------------------------------------------------------------------
-export async function refreshToken(old_refreshToken) {
-  //read email from local storage
-  window.authEmail = window.authEmail || "";
-  if (typeof Storage !== "undefined") {
-    window.authEmail = localStorage.getItem("authEmail");
-  }
-
-  window.authData = null;
-  let response;
-
-  response = await fetch(refreshToken_endPoint, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      email: window.authEmail,
-      refreshToken: old_refreshToken
-    })
-  });
-
-  await handleFetchError(response);
-
-  let json = await response.json();
-
-  saveToken(json.body);
-
-  return window.authData.idToken.jwtToken;
-}
 
 //-------------------------------------------------------------------------------
 export async function getToken() {
@@ -129,23 +95,12 @@ export async function getToken() {
 
   //check if token expired
   if (window.authData) {
-    let expireDate = new Date(window.authData.idToken.expirationMoment);
+    let expireDate = new Date(window.authData.expirationMoment);
     let currentDate = new Date();
 
     if (expireDate > currentDate) {
-      return window.authData.idToken.jwtToken;
-    } else {
-      //refresh Token
-      try {
-        let newJwtToken = await refreshToken(
-          window.authData.refreshToken.token
-        );
-
-        return newJwtToken;
-      } catch (err) {
-        console.error(err);
-      }
-    }
+      return window.authData.accessToken;
+    } 
   }
 
   if (window.location.pathname !== "/") {
@@ -159,9 +114,9 @@ export async function getMyUser() {
   window.myUser = null;  
 
   let Json = await fetchJSON(myUser_endPoint);
-  if (!Json.body) {
+  if (!Json) {
     throwFetchError("Body is empty", null, myUser_endPoint);
   }
 
-  window.myUser = Json.body;
+  window.myUser = Json.user;
 }

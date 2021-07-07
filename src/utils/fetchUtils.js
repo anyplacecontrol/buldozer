@@ -46,7 +46,7 @@ export async function fetchJSON(url, init) {
 
     let newHeaders = {
       ...headers,
-      Authorization: token
+      Authorization: "Bearer " + token
     };
     init = { ...init, headers: newHeaders };
     method = init.method || "GET";
@@ -66,7 +66,7 @@ export async function fetchJSON(url, init) {
 
     return json;
   } catch (err) {
-    if (!token) {
+    if (!token || err.includes('Unauthenticated')) {
       //Not Authorized
       window.location.replace("/");
       throw err;

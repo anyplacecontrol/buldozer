@@ -147,3 +147,87 @@ export const USERS_COLUMNS = _addIsDefault([
   {...COLUMN_IS_ACTIVE, isVisible: true},  
   {...COLUMN_CREATED_BY, isVisible: true}
 ]);
+
+//-----------------------------------------------------------------------------
+//Service types 
+
+export const SERVICE_TYPES_COLUMNS = _addIsDefault([
+  {...COLUMN_NAME, isVisible: true},   
+  {...COLUMN_CREATED_DATE, isVisible: true},       
+]);
+
+
+//-----------------------------------------------------------------------------
+//Stats Issuing Restaurants
+
+
+export const COLUMN_RESTAURANT_NAME = {
+  accessor: "restaurantName",
+  accessorSort: "restaurantName",
+  text: "Ресторан",
+  className: "name"
+};
+
+export const COLUMN_ALL_COUNT = {
+  accessor: "allCount",
+  accessorSort: "allCount",
+  text: "Серт. всего",
+  className: "name"
+};
+
+export const COLUMN_ALL_AMOUNT = {
+  accessor: "allAmount",
+  accessorSort: "allAmount",
+  text: "Сумма",
+  className: "name"
+};
+ 
+export const COLUMN_REDEEMED_COUNT = {
+  accessor: "redeemedCount",
+  accessorSort: "redeemedCount",
+  text: "Серт. погаш.",
+  className: "name"
+};
+
+export const COLUMN_REDEEMED_AMOUNT = {
+  accessor: "redeemedAmount",
+  accessorSort: "redeemedAmount",
+  text: "Сумма погаш.",
+  className: "name"
+};
+ 
+export const COLUMN_ACTIVE_COUNT = {
+  accessor: "activeCount",
+  accessorSort: "activeCount",
+  text: "Серт. акт.",
+  className: "name"
+};
+
+export const COLUMN_ACTIVE_AMOUNT = {
+  accessor: "activeAmount",
+  accessorSort: "activeAmount",
+  text: "Сумма акт.",
+  className: "name"
+};
+
+ 
+export const STATS_ISSUING_RESTAURANTS_COLUMNS = _addIsDefault([
+  {...COLUMN_RESTAURANT_NAME, isVisible: true},   
+  {...COLUMN_ALL_COUNT, isVisible: true},       
+  {...COLUMN_ACTIVE_COUNT, isVisible: true},       
+  {...COLUMN_REDEEMED_COUNT, isVisible: true},       
+  {...COLUMN_ALL_AMOUNT, isVisible: true},       
+  {...COLUMN_ACTIVE_AMOUNT, isVisible: true},       
+  {...COLUMN_REDEEMED_AMOUNT, isVisible: true},       
+]);
+
+
+//-----------------------------------------------------------------------------
+//Stats Redeemer Restaurants
+
+export const STATS_REDEEMER_RESTAURANTS_COLUMNS = _addIsDefault([
+  {...COLUMN_RESTAURANT_NAME, isVisible: true},   
+  {...COLUMN_REDEEMED_COUNT, isVisible: true},       
+  {...COLUMN_REDEEMED_AMOUNT, isVisible: true},       
+]);
+

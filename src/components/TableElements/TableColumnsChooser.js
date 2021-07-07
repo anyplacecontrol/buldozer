@@ -77,14 +77,14 @@ export class TableColumnsChooser extends React.Component {
           <div className="table__filter--buttons flex animated">
             <div className="table__filter--button table__filter--reset flex animated"
             onClick = {this.onResetClick}>
-              Reset
+              Сбросить
             </div>
             {/* -- click ".table__filter--cancel" remove class "active" for ".table__filter--icon"-- */}
             <div
               className="table__filter--button table__filter--cancel flex animated"
               onClick={this.onCancelClick}
             >
-              Close
+              Закрыть
             </div>
           </div>
         </div>

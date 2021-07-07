@@ -59,5 +59,42 @@ export const MAIN_MENU_ITEMS = [
         comment: ""
       }
     ]
+  },
+
+  {
+    name: "Виды услуг",
+    cssCls: "certificates",
+    path: ROUTE_NAMES.serviceTypes,
+    comment: "",
+    items: [
+      {
+        name: "Вид Услуг",
+        path: ROUTE_NAMES.serviceTypeView,
+        isHidden: true,
+        comment: ""
+      }
+    ]
+  },
+
+  {
+    name: "Статистика",
+    cssCls: "reports",
+    path: ROUTE_NAMES.statsIssuingRestaurants,
+    comment: "",
+    items: [
+      {
+        name: "По рестор. эмит-ах",
+        path: ROUTE_NAMES.statsIssuingRestaurants,
+        isHidden: false,
+        comment: ""
+      },
+      {
+        name: "По рестор. погасит.",
+        path: ROUTE_NAMES.statsRedeemerRestaurants,
+        isHidden: false,
+        comment: ""
+      }
+    ]
   }
+
 ];

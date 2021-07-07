@@ -165,7 +165,7 @@ export class BaseTableActions {
           this._fetchItemsFromNetwork(
             filter,
             topRowNumber,
-            isCvsExport || isUnlimitedPages ? 0 : itemsPerPage,
+            isCvsExport || isUnlimitedPages ? 100 : itemsPerPage,
             sortBy,
             sortOrder
           )
@@ -586,7 +586,7 @@ export class BaseTableActions {
   };
 
   getItemsPerPage = globalState => {
-    return this._USE_PAGINATION ? globalState.ui.itemsPerPage : 0;
+    return this._USE_PAGINATION ? globalState.ui.itemsPerPage : 100;
   };
 
   getSelectedItemsQty = globalState => {

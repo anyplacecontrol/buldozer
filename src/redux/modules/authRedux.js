@@ -18,10 +18,7 @@ export function login(email, password) {
       window.authEmail = email;
       if (typeof Storage !== "undefined") {
         localStorage.setItem("authEmail", window.authEmail);
-      }
-
-      // get admin role
-      await authApi.getMyUser();
+      }          
 
       // redirect to dashboard
       dispatch(routingRedux.goto_Page(ROUTE_NAMES.certificates));
@@ -38,10 +35,8 @@ export function login(email, password) {
         //
       }
 
-      if (message.status === 403) {
-        return message.status;
-      } else {
-        alert(message.errorMessage || message);
+      if (message.status === 401) {        
+        alert(message.errorMessage.message || message);
       }
     } finally {
       dispatch(uiRedux.showBackdrop(false));

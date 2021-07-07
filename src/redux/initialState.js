@@ -1,6 +1,8 @@
 import { uiInitialState } from "./modules/uiRedux";
 import { routingInitialState } from "./modules/routingRedux";
+
 import { serviceTypesInitialState } from "./modules/serviceTypesRedux";
+import { serviceTypeViewInitialState } from "./modules/serviceTypeViewRedux";
 
 import { certificatesInitialState } from "./modules/certificatesRedux";
 import { certificateViewInitialState } from "./modules/certificateViewRedux";
@@ -14,11 +16,16 @@ import { restaurantViewInitialState } from "./modules/restaurantViewRedux";
 import { usersInitialState } from "./modules/usersRedux";
 import { userViewInitialState } from "./modules/userViewRedux";
 
+import { statsIssuingRestaurantsInitialState} from "./modules/statsIssuingRestaurantsRedux";
+import { statsRedeemerRestaurantsInitialState } from "./modules/statsRedeemerRestaurantsRedux";
+
 
 export const initialState = {
   ui: uiInitialState,
   routing: routingInitialState,
+
   serviceTypes: serviceTypesInitialState,
+  serviceTypeView: serviceTypeViewInitialState,
 
   certificates: certificatesInitialState,
   certificateView: certificateViewInitialState,
@@ -31,4 +38,7 @@ export const initialState = {
 
   users: usersInitialState,
   userView: userViewInitialState,
+
+  statsIssuingRestaurants: statsIssuingRestaurantsInitialState,
+  statsRedeemerRestaurants: statsRedeemerRestaurantsInitialState
 };

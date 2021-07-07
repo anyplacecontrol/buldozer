@@ -12,7 +12,7 @@ import {
 import * as dataFuncs from "../../utils/dataFuncs";
 import { IUserView } from "../../redux/modules/userViewRedux";
 import { IRecipientView } from "./recipientViewRedux";
-import { IServiceType } from "./serviceTypesRedux";
+import { IServiceTypeView } from "./serviceTypeViewRedux";
 import { IRestaurantView } from "./restaurantViewRedux";
 
 //*******************************************************************************
@@ -29,7 +29,7 @@ export const ICertificateView = PropTypes.shape({
 
   recipient: IRecipientView,
   recipientComment: PropTypes.string,
-  serviceType: IServiceType,
+  serviceType: IServiceTypeView,
 
   issuingRestaurant: IRestaurantView,
   redeemerRestaurant: IRestaurantView

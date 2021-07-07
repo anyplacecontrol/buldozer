@@ -5,7 +5,7 @@ import * as dataFuncs from "../../utils/dataFuncs";
 import { IRecipientView } from "../../redux/modules/recipientViewRedux";
 import * as consts from "../../consts/constants";
 import { SelectBox } from "../../components/SelectBox/SelectBox";
-import { IServiceType } from "../../redux/modules/serviceTypesRedux";
+import { IServiceTypeView } from "../../redux/modules/serviceTypeViewRedux";
 
 export class CertificateRecipient extends React.Component {
   renderRecipientsSelectBox = () => {
@@ -124,7 +124,7 @@ export class CertificateRecipient extends React.Component {
 CertificateRecipient.propTypes = {
   certificate: ICertificateView,
   allRecipients: PropTypes.arrayOf(IRecipientView).isRequired,
-  allServiceTypes: PropTypes.arrayOf(IServiceType).isRequired,
+  allServiceTypes: PropTypes.arrayOf(IServiceTypeView).isRequired,
   onChangeRecipient: PropTypes.func.isRequired,
   onRecipientCommentChange: PropTypes.func.isRequired,
   onChangeServiceType: PropTypes.func.isRequired
