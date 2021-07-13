@@ -8,7 +8,7 @@ export class Footer extends React.Component {
     return (
       <footer className="footer animated">
         <div className="copyright ph-35 animated">
-          &copy; {(new Date()).getFullYear()} Buldozer Group Ukraine. Все права защищены
+          &copy; {(new Date()).getFullYear()} Buldozer Group Ukraine. Все права защищены.
           Version: {appVersion}
         </div>
       </footer>

@@ -69,7 +69,7 @@ export class FunctionalTable extends React.Component {
   };
 
   getButtonsPosition = () => {
-    let left = this.state.tableWidth - 208 - 40;
+    let left = this.state.tableWidth - 208 - 100;
 
     if (!this.props.onDeleteClick) left = this.state.tableWidth - 98 - 40;
 

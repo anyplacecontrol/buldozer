@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {SelectBox} from "../SelectBox/SelectBox";
+import { SelectBox } from "../SelectBox/SelectBox";
 
 export class Controls extends React.Component {
   render() {
@@ -12,36 +12,43 @@ export class Controls extends React.Component {
       <>
         {/* -- Nav before table-- */}
         <div className="main-nav flex w100 animated">
-          {(this.props.onDeleteSelectedItems) &&
-          <div className="main-nav__left flex animated">
-            <div className="filter__select animated">
-              <SelectBox
-                text="Действия"
-                items={[
-                  this.props.onDeleteSelectedItems ?
-                    {text: "Удалить", onClick: this.props.onDeleteSelectedItems} : null,                
-                ]}
-              />
-            </div>
+          {this.props.onDeleteSelectedItems && (
+            <div className="main-nav__left flex animated">
+              <div className="filter__select animated">
+                <SelectBox
+                  text="Действия"
+                  items={[
+                    this.props.onDeleteSelectedItems
+                      ? {
+                          text: "Удалить",
+                          onClick: this.props.onDeleteSelectedItems
+                        }
+                      : null
+                  ]}
+                />
+              </div>
 
-            <div className="filter__count animated">
-              {this.props.count} записей найдено ({this.props.selectedItemsQty} выбрано)
+              <div className="filter__count animated">
+                {this.props.count} записей найдено (
+                {this.props.selectedItemsQty} выбрано)
+              </div>
             </div>
-
-          </div>
-          }
+          )}
 
           <div className="main-nav__right flex animated">
-            <button className="main-nav__refresh animated" onClick={this.props.onRefreshClick}/>
+            <button
+              className="main-nav__refresh animated"
+              onClick={this.props.onRefreshClick}
+            />
             {/* -- click ".filter__button" -- toggle class "active" and toggle class "hidden" for .filter__body--
             -- added class ".flex"--
             -- changed structure-- */}
-            {this.props.onFilterClick &&
-            <div className={filterBtnCls} onClick={this.props.onFilterClick}>
-              <div className="filter__button--icon animated"/>
-              <div className="filter__button--text animated">Фильтр</div>
-            </div>
-            }
+            {this.props.onFilterClick && (
+              <div className={filterBtnCls} onClick={this.props.onFilterClick}>
+                <div className="filter__button--icon animated" />
+                <div className="filter__button--text animated">Фильтр</div>
+              </div>
+            )}
 
             {this.props.onAddItemClick && (
               <button
@@ -52,7 +59,15 @@ export class Controls extends React.Component {
               </button>
             )}
 
-
+            {this.props.onImportClick && (
+              <div
+                className="import__button flex animated"
+                onClick={this.props.onImportClick}
+              >
+                <div className="import__button--icon animated"></div>
+                <div className="import__button--text animated">Импорт CSV</div>
+              </div>
+            )}
           </div>
         </div>
       </>
@@ -63,7 +78,8 @@ export class Controls extends React.Component {
 Controls.propTypes = {
   onFilterClick: PropTypes.func,
   onAddItemClick: PropTypes.func,
-  onDeleteSelectedItems: PropTypes.func,  
+  onImportClick: PropTypes.func,
+  onDeleteSelectedItems: PropTypes.func,
   onRefreshClick: PropTypes.func,
   isFilterVisible: PropTypes.bool.isRequired,
   count: PropTypes.number.isRequired,

@@ -30,7 +30,7 @@ export class SideBar_ extends React.Component {
           <div className="side-bar__logo animated">
             <img
               className="side-bar__logo--image animated"
-              src={require("../../assets/img/svg/main-logo.svg")}
+              src={require("../../assets/img/bulldozer-dark_blue.png")}
               alt="logo"
             />
           </div>

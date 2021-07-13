@@ -158,7 +158,7 @@ export class Filter extends React.Component {
   };
 
   getClsName = () => {
-    let result = "filter__body--box v3 flex animated";
+    let result = "filter__body--box flex animated";
 
     let filterItemLength = this.props.filterItems;
     if (

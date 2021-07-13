@@ -11,7 +11,7 @@ export class BaseView_ extends React.Component {
   async componentDidMount() {
     if (!this.props.actionsProvider) return;
 
-    this.componentDidUpdate();
+    //this.componentDidUpdate();
 
     await this.props.dispatch(this.props.actionsProvider.initializeView());
     //set previous values of some state fields

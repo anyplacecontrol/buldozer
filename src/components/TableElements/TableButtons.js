@@ -10,7 +10,7 @@ export class TableButtons extends React.Component {
             className="buttons__item button__edit flex animated"
             onClick={() => this.props.onEditClick(this.props.dataItem)}
           >
-            {this.props.onDeleteClick ? "Edit" : "View"}
+            {this.props.onDeleteClick ? "Просмотр" : "Просмотр"}
           </div>
         )}
 
@@ -19,7 +19,7 @@ export class TableButtons extends React.Component {
             className="buttons__item button__delete flex animated"
             onClick={() => this.props.onDeleteClick(this.props.dataItem)}
           >
-            Delete
+            Удалить
           </div>
         )}
       </div>     

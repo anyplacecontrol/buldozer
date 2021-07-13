@@ -248,3 +248,14 @@
     width: 100%;
   }
 }
+
+/* sidebar menu */
+.main-menu__item.services .main-menu__link:before {
+  background-image: url(../img/svg/side-menu/Services_icon.svg);
+}
+.main-menu__item.services:not(.active):hover .main-menu__link:before {
+  background-image: url(../img/svg/side-menu/Services_icon_dark.svg);
+}
+.main-menu__item.services.active .main-menu__link:before {
+  background-image: url(../img/svg/side-menu/Services_icon.svg);
+}

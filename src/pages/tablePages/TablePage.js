@@ -53,7 +53,7 @@ export class TablePage extends React.Component {
   };
 
   onDeleteClick = item => {
-    if (confirm("Are you sure you want to delete item ?")) {
+    if (confirm("Вы уверены, что хотите удалить эту запись?")) {
       this.props.dispatch(this.props.actionsProvider.deleteItem(item));
       this.setState({ csvData: null });
     }
@@ -82,9 +82,7 @@ export class TablePage extends React.Component {
 
   onItemsPerPageChange = async quantity => {
     await this.props.dispatch(changeItemsPerPage(quantity));
-    this.props.dispatch(
-      this.props.actionsProvider.fetchItems(0)
-    );
+    this.props.dispatch(this.props.actionsProvider.fetchItems(0));
   };
 
   onExportCSV = async () => {
@@ -159,9 +157,13 @@ export class TablePage extends React.Component {
           onSortClick={this.onSortClick}
           onTriggerColumn={this.onTriggerColumn}
           onResetColumns={this.onResetColumns}
-          onSelectItem={this.onSelectItem}
+          onSelectItem={
+            this.props.actionsProvider.ALLOW_DELETE_ITEM
+              ? this.onSelectItem
+              : null
+          }
           onSelectAllItems={this.onSelectAllItems}
-          onRowClick={this.onRowClick}
+          onRowClick={this.props.actionsProvider.ALLOW_DELETE_ITEM ? this.onRowClick : null}
           onDeleteClick={
             this.props.actionsProvider.ALLOW_DELETE_ITEM
               ? this.onDeleteClick

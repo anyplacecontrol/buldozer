@@ -67,7 +67,7 @@ export const COLUMN_AMOUNT =
 {
   accessor: "amount",
   accessorSort: "amount",
-  text: "Номинал",
+  text: "Номинал, грн",
   className: "price"  
 }
 

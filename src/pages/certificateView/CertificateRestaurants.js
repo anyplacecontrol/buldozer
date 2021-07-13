@@ -66,7 +66,7 @@ export class CertificateRestaurants extends React.Component {
               <div className="block-set__content flex w100 animated">
                 {this.props.certificate.redeemerRestaurant
                   ? this.props.certificate.redeemerRestaurant.name
-                  : null}
+                  : "Не погашено"}
               </div>
             </div>
           </div>

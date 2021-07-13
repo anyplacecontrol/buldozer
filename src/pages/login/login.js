@@ -42,8 +42,9 @@ export class login_ extends React.Component {
       <div className="sigh-in flex ph-35 animated" id="wrapper">
         <form className="main-screen animated" action="#">
           <img
+            style={{ maxWidth: "250px;"}}
             className="main-screen__logo animated"
-            src={ require("../../assets/img/svg/main-logo.svg")}
+            src={ require("../../assets/img/bulldozer-white.png")}
             alt="AppleStone Logo"
           />
           <div className="main-screen__title animated">
@@ -93,7 +94,7 @@ export class login_ extends React.Component {
               </div>
             </div>
             <div className="main-screen__footnotes animated">
-            Эта панель управления предназначена для администраторов и менеджеров.
+            Эта панель управления предназначена для администраторов и менеджеров Bulldozer Group Ukraine.
             </div>
           </div>
         </form>

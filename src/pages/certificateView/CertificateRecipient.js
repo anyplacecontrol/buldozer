@@ -16,14 +16,14 @@ export class CertificateRecipient extends React.Component {
 
     let itemsArr = this.props.allRecipients.map((recipient, index) => {
       return {
-        text: recipient.name,
+        text: recipient.company,
         onClick: () => this.props.onChangeRecipient(recipient)
       };
     });
 
     let currentText;
     if (this.props.certificate.recipient != null)
-      currentText = this.props.certificate.recipient.name;
+      currentText = this.props.certificate.recipient.company;
     else currentText = consts.chooseStr;
 
     return (

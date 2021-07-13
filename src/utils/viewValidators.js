@@ -111,6 +111,9 @@ export function validateCertificateView(viewObj) {
   if (!viewObj.issuingRestaurant)
     throw "Проверка не удалась: ресторан-эмитент не задан";
 
+  if (viewObj.amount == "0") 
+    throw "Номинал не должен быть 0";
+    
   if (
     isLongString(viewObj.id) ||
     isLongString(viewObj.amount) ||

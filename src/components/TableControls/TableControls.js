@@ -22,7 +22,7 @@ export class TableControls extends React.Component {
       confirm(
         "Вы уверены, что хотите УДАЛИТЬ " +
           this.props.selectedItemsQty +
-          " item(s) ?"
+          " запись(и/ей)?"
       )
     ) {
       this.props.dispatch(this.props.actionsProvider.deleteSelectedItems());
@@ -66,6 +66,15 @@ export class TableControls extends React.Component {
     else return null;
   };
 
+  onImportClick = () => {
+    this.props.dispatch(this.props.actionsProvider.importCSV());
+  }
+
+  getImportHandler = () => {
+    if (this.props.actionsProvider.importCSV) return this.onImportClick;
+    else return null;
+  };  
+
   onChangeFilterValue = (filterItem, newValue) => {
     this.props.dispatch(
       this.props.actionsProvider.changeFilterValue(filterItem, newValue)
@@ -88,6 +97,7 @@ export class TableControls extends React.Component {
           onFilterClick={onFilterClick}
           onRefreshClick={this.onRefreshClick}
           onAddItemClick={this.getAddItemHandler()}
+          onImportClick={this.getImportHandler()}
           onDeleteSelectedItems={
             this.props.actionsProvider.ALLOW_DELETE_ITEM
               ? this.onDeleteSelectedItems

@@ -63,7 +63,7 @@ export const MAIN_MENU_ITEMS = [
 
   {
     name: "Виды услуг",
-    cssCls: "certificates",
+    cssCls: "services",
     path: ROUTE_NAMES.serviceTypes,
     comment: "",
     items: [

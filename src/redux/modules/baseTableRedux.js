@@ -453,7 +453,7 @@ export class BaseTableActions {
         this._handleItem(
           itemObj,
           this._deleteItem,
-          "Item(s) successfully deleted",
+          "Выполнено успешно!",
           isBulkOperation
         )
       );
@@ -472,7 +472,7 @@ export class BaseTableActions {
         this._handleItem(
           itemObj,
           this._disableItem,
-          "Item(s) successfully disabled",
+          "Выполнено успешно!",
           isBulkOperation
         )
       );
@@ -705,7 +705,10 @@ export class BaseTableActions {
         dispatch(uiActions.ShowAlert(successMessage, uiActions.ALERT_INFO));
 
         if (!isBulkOperation) {
-          if (func === this._deleteItem) location.reload(true);
+          if (func === this._deleteItem) {
+            await serviceFuncs.delayTime(500);
+            location.reload(true)
+          }
           else {
             let topRowNumber = this._getStateSlice(getState()).topRowNumber;
             await dispatch(

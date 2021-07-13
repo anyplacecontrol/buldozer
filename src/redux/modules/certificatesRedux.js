@@ -166,6 +166,12 @@ class CertificatesActions extends BaseTableActions {
     };
   }
 
+  importCSV() {
+    return async dispatch => {
+     
+    };
+  }
+
   //------------------------------------------------------------------------------
   // ABSTRACT FUNCS REALIZATION
 
