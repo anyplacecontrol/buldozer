@@ -19,6 +19,7 @@ import userView from "./modules/userViewRedux";
 
 import statsIssuingRestaurants from "./modules/statsIssuingRestaurantsRedux";
 import statsRedeemerRestaurants from "./modules/statsRedeemerRestaurantsRedux";
+import statsRecipients from "./modules/statsRecipientsRedux";
 
 const reducers = {
   ui,
@@ -40,7 +41,8 @@ const reducers = {
   userView,
 
   statsIssuingRestaurants,
-  statsRedeemerRestaurants
+  statsRedeemerRestaurants,
+  statsRecipients
 };
 
 export default combineReducers(reducers);

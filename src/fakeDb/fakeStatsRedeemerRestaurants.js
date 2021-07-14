@@ -1,4 +1,4 @@
-export const FAKE_STATS_REDEEMER_RESTAURANTS = [
+const FAKE_STATS_REDEEMER_RESTAURANTS = [
     {
       restaurantName: "МКК СантехОмскКреп",
       redeemedCount: 9,      

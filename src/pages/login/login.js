@@ -42,7 +42,7 @@ export class login_ extends React.Component {
       <div className="sigh-in flex ph-35 animated" id="wrapper">
         <form className="main-screen animated" action="#">
           <img
-            style={{ maxWidth: "250px;"}}
+            style={{ maxWidth: "250px"}}
             className="main-screen__logo animated"
             src={ require("../../assets/img/bulldozer-white.png")}
             alt="AppleStone Logo"

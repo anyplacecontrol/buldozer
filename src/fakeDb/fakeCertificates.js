@@ -1,4 +1,4 @@
-export const FAKE_CERTIFICATES = [
+const FAKE_CERTIFICATES = [
   {
     id: "100703920390",
     validityPeriodInMonths: 9,        

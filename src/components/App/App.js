@@ -18,7 +18,8 @@ import {
   users,
   serviceTypes,
   statsIssuingRestaurants,
-  statsRedeemerRestaurants
+  statsRedeemerRestaurants,
+  statsRecipients
 } from "../../pages/tablePages/tablePages";
 import { certificateView } from "../../pages/certificateView/certificateView";
 import { recipientView } from "../../pages/recipientView/recipientView";
@@ -173,7 +174,15 @@ class App_ extends React.Component {
                             render={() => {
                               const Component = statsRedeemerRestaurants;
                               return <Component />;
-                            }}
+                            }}                            
+                          />
+                           {/* ------Статистика контрагенты----- */}
+                           <Route
+                            path={ROUTE_NAMES.statsRecipients}
+                            render={() => {
+                              const Component = statsRecipients;
+                              return <Component />;
+                            }}                            
                           />
                         </Switch>
                       </div>

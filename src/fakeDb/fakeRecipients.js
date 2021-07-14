@@ -1,4 +1,4 @@
-export const FAKE_RECIPIENTS = [
+const FAKE_RECIPIENTS = [
     {
         "id": 1,
         "name": "Елисеева Родион Иванович",

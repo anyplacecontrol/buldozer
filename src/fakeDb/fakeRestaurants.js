@@ -1,4 +1,4 @@
-export const FAKE_RESTAURANTS = [
+const FAKE_RESTAURANTS = [
     {
         "id": 1,
         "name": "ОАО АсбоцементСевер",

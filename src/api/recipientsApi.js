@@ -1,5 +1,4 @@
-import {
-  FAKE_RECIPIENTS,
+import {  
   FAKE_RECIPIENTS_RESPONSE
 } from "../fakeDb/fakeRecipients";
 import * as baseAPI from "./baseApi";
@@ -75,7 +74,7 @@ export async function AddOrUpdateItem(Obj, endPoint, method) {
   delete cleanObj.createdUser;  
   delete cleanObj.createdDate;
 
-  let response = await fetchJSON(endPoint, {
+  await fetchJSON(endPoint, {
     method: method,
     headers: {
       Accept: "application/json",

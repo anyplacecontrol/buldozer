@@ -93,6 +93,12 @@ export const MAIN_MENU_ITEMS = [
         path: ROUTE_NAMES.statsRedeemerRestaurants,
         isHidden: false,
         comment: ""
+      },
+      {
+        name: "По контрагентам",
+        path: ROUTE_NAMES.statsRecipients,
+        isHidden: false,
+        comment: ""
       }
     ]
   }

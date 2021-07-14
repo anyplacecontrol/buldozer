@@ -231,3 +231,22 @@ export const STATS_REDEEMER_RESTAURANTS_COLUMNS = _addIsDefault([
   {...COLUMN_REDEEMED_AMOUNT, isVisible: true},       
 ]);
 
+//-----------------------------------------------------------------------------
+//Stats RECIPIENTS
+
+export const COLUMN_RECIPIENT_NAME = {
+  accessor: "recipientName",
+  accessorSort: "recipientName",
+  text: "Контрагент",
+  className: "name"
+};
+
+export const STATS_RECIPIENTS_COLUMNS = _addIsDefault([
+  {...COLUMN_RECIPIENT_NAME, isVisible: true},   
+  {...COLUMN_ALL_COUNT, isVisible: true},       
+  {...COLUMN_ACTIVE_COUNT, isVisible: true},       
+  {...COLUMN_REDEEMED_COUNT, isVisible: true},       
+  {...COLUMN_ALL_AMOUNT, isVisible: true},       
+  {...COLUMN_ACTIVE_AMOUNT, isVisible: true},       
+  {...COLUMN_REDEEMED_AMOUNT, isVisible: true},       
+]);

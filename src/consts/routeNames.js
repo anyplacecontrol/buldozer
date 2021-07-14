@@ -12,7 +12,8 @@ export const ROUTE_NAMES = {
     serviceTypes: "/serviceTypes",
       serviceTypeView: "/serviceTypeView",
     statsIssuingRestaurants: "/statsIssuingRestaurants",
-    statsRedeemerRestaurants: "/statsRedeemerRestaurants"
+    statsRedeemerRestaurants: "/statsRedeemerRestaurants",
+    statsRecipients: "/statsRecipients"
 };
 
 export const QUERY_PARAMS = {

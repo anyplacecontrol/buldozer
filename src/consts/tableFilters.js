@@ -141,22 +141,24 @@ export const FILTER_CREATED_BY = _addDefaultValue({
   value: ""
 });
 
-// export const FILTER_THICKNESS = _addDefaultValue({
-//   type: "multiSelectBox",
-//   apiParamName: "cutThickness",
-//   labelText: "Thickness",
-//   items: [{text: "1 Inch", value: 1}, {text: "1.5 Inch", value: 2}, {text: "2 Inch", value: 3}],
-//   accessorText: item => item.text,
-//   accessorApi: item => item.value,
-//   value: []
-// });
+//------------------------------------------------------------------
+//Stats
 
-// export const FILTER_PRICE = _addDefaultValue({
-//   type: "sliderRange",
-//   apiParamName: "price",
-//   labelText: "Price",
-//   minValue: 0,
-//   maxValue: 100,
-//   value: {startValue: 0, endValue: 100, }
-// });
+export const FILTER_CREATED_DATE_STATS = _addDefaultValue({
+  type: "dateRange",
+  apiParamName: "createdDate",
+  labelText: "Период создания серт.",
+  value: {startDate: null, endDate: null}
+});
 
+export const FILTER_RECIPIENT_STATS = _addDefaultValue({
+  type: "multiSelectBox",
+  apiParamName: "recipients",
+  labelText: "Контрагент",
+  items: [ ], //items are store objects
+  accessorText: item => item.company,
+  accessorApi: item => item.id,
+  value: []
+});
+
+export const FILTER_ISACTIVE_STATS = {...FILTER_ISACTIVE, labelText: "Активность сертификата"};

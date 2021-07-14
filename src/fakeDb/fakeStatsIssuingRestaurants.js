@@ -1,4 +1,4 @@
-export const FAKE_STATS_ISSUING_RESTAURANTS = [
+const FAKE_STATS_ISSUING_RESTAURANTS = [
   {
     activeAmount: 16000,
     activeCount: 10,

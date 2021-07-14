@@ -18,6 +18,7 @@ import { userViewInitialState } from "./modules/userViewRedux";
 
 import { statsIssuingRestaurantsInitialState} from "./modules/statsIssuingRestaurantsRedux";
 import { statsRedeemerRestaurantsInitialState } from "./modules/statsRedeemerRestaurantsRedux";
+import { statsRecipientsInitialState } from "./modules/statsRecipientsRedux";
 
 
 export const initialState = {
@@ -40,5 +41,6 @@ export const initialState = {
   userView: userViewInitialState,
 
   statsIssuingRestaurants: statsIssuingRestaurantsInitialState,
-  statsRedeemerRestaurants: statsRedeemerRestaurantsInitialState
+  statsRedeemerRestaurants: statsRedeemerRestaurantsInitialState,
+  statsRecipients: statsRecipientsInitialState,
 };

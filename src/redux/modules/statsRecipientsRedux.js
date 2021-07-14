@@ -1,4 +1,4 @@
-import * as statsRedeemerRestaurantsApi from "../../api/statsRedeemerRestaurantsApi";
+import * as statsRecipientsApi from "../../api/statsRecipientsApi";
 import * as tableColumns from "../../consts/tableColumns";
 import {
   BaseTableActions,
@@ -7,29 +7,31 @@ import {
   BaseTableTypes
 } from "./baseTableRedux";
 import * as tableFilters from "../../consts/tableFilters";
-import PropTypes from "prop-types";
-import {restaurantsActions} from "./restaurantsRedux";
+import { recipientsActions } from "./recipientsRedux";
 import * as uiActions from "./uiRedux";
 
 //*******************************************************************************
-const PREFIX = "statsRedeemerRestaurants/";
+const PREFIX = "statsRecipients/";
 
 //*******************************************************************************
 
-export const statsRedeemerRestaurantsInitialState = {
+export const statsRecipientsInitialState = {
   ...BaseTableInitialState,
-  sortBy: tableColumns.COLUMN_RESTAURANT_NAME,
-  columns: tableColumns.STATS_REDEEMER_RESTAURANTS_COLUMNS
+  sortBy: tableColumns.COLUMN_RECIPIENT_NAME,
+  columns: tableColumns.STATS_RECIPIENTS_COLUMNS
 };
 
 //*******************************************************************************
 
-export default function reducer(state = statsRedeemerRestaurantsInitialState, action = {}) {
+export default function reducer(
+  state = statsRecipientsInitialState,
+  action = {}
+) {
   let result = BaseTableReducer(
     PREFIX,
     state,
     action,
-    statsRedeemerRestaurantsInitialState
+    statsRecipientsInitialState
   );
 
   if (result) return result;
@@ -42,24 +44,22 @@ export default function reducer(state = statsRedeemerRestaurantsInitialState, ac
 
 //*******************************************************************************
 
-class StatsRedeemerRestaurantsActions extends BaseTableActions {
+class StatsRecipientsActions extends BaseTableActions {
   // ABSTRACT ACTIONS REALIZATION
 
   // *** Filters
   loadFilterItems() {
-    return async (dispatch, getState) => {    
-
-      let p1 = new Promise(async (resolve, reject) => {
+    return async (dispatch, getState) => {
+      let p1 = new Promise(async (resolve) => {
         if (
-          !getState().restaurants.items ||
-          getState().restaurants.items.length === 0
+          !getState().recipients.items ||
+          getState().recipients.items.length === 0
         ) {
           try {
             await dispatch(
-              restaurantsActions.fetchItems(0, false, false, null, true, true)
+              recipientsActions.fetchItems(0, false, false, null, true, true)
             );
-          } catch (e) {
-          }
+          } catch (e) {}
         }
         resolve();
       });
@@ -70,12 +70,13 @@ class StatsRedeemerRestaurantsActions extends BaseTableActions {
 
       let filterItems = [
         { ...tableFilters.FILTER_CREATED_DATE_STATS },
-         {
-          ...tableFilters.FILTER_REDEEMER_RESTAURANT,
-          items: [...getState().restaurants.items]
-        },         
-        { ...tableFilters.FILTER_ISACTIVE_STATS },
+        {
+          ...tableFilters.FILTER_RECIPIENT_STATS,
+          items: [...getState().recipients.items]
+        },
+        { ...tableFilters.FILTER_ISACTIVE_STATS }
       ];
+
       return dispatch({
         type: this._withPrefix(BaseTableTypes.REPLACE_FILTER_ITEMS),
         filterItems: filterItems
@@ -91,7 +92,7 @@ class StatsRedeemerRestaurantsActions extends BaseTableActions {
     sortOrder
   ) {
     return async (dispatch, getState) => {
-      let fetchedResponse = await statsRedeemerRestaurantsApi.getItems(
+      let fetchedResponse = await statsRecipientsApi.getItems(
         filter,
         topRowNumber,
         itemsPerPage,
@@ -103,7 +104,6 @@ class StatsRedeemerRestaurantsActions extends BaseTableActions {
     };
   }
 
- 
   //------------------------------------------------------------------------------
   // ABSTRACT FUNCS REALIZATION
 
@@ -120,8 +120,8 @@ class StatsRedeemerRestaurantsActions extends BaseTableActions {
   }
 
   _getStateSlice = state => {
-    return state.statsRedeemerRestaurants;
+    return state.statsRecipients;
   };
 }
 
-export const statsRedeemerRestaurantsActions = new StatsRedeemerRestaurantsActions();
+export const statsRecipientsActions = new StatsRecipientsActions();
