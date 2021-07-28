@@ -1,11 +1,9 @@
 import React from "react";
 import * as dataFuncs from "../../utils/dataFuncs";
 import { ICertificateView } from "../../redux/modules/certificateViewRedux";
-import { certificatesActions } from "../../redux/modules/certificatesRedux";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
 
-export class CertificatesTable_ extends React.Component {
+export class CertificatesTable extends React.Component {
   renderRows = () => {
     if (!this.props.certificates) return null;
 
@@ -97,7 +95,7 @@ export class CertificatesTable_ extends React.Component {
                   </div>
                   <div className="date animated">
                     <div className="product__table--td animated">
-                      Номинал
+                      Номинал, грн
                     </div>
                   </div>
                 </div>
@@ -111,16 +109,8 @@ export class CertificatesTable_ extends React.Component {
   }
 }
 
-CertificatesTable_.propTypes = {
+CertificatesTable.propTypes = {
   certificates: PropTypes.arrayOf(ICertificateView).isRequired
 };
 
-function mapStateToProps(state) {
-  return {
-    certificates: certificatesActions.getItems(state)
-  };
-}
 
-export const CertificatesTable = connect(mapStateToProps)(
-  CertificatesTable_
-);

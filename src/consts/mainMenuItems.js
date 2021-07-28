@@ -2,6 +2,21 @@ import { ROUTE_NAMES } from "./routeNames";
 
 export const MAIN_MENU_ITEMS = [
   {
+    name: "Карточки",
+    cssCls: "certificates",
+    path: ROUTE_NAMES.cards,
+    comment: "",
+    items: [
+      {
+        name: "Карточка",
+        path: ROUTE_NAMES.cardView,
+        isHidden: true,
+        comment: ""
+      }
+    ]
+  },
+
+  {
     name: "Сертификаты",
     cssCls: "certificates",
     path: ROUTE_NAMES.certificates,
@@ -99,7 +114,13 @@ export const MAIN_MENU_ITEMS = [
         path: ROUTE_NAMES.statsRecipients,
         isHidden: false,
         comment: ""
-      }
+      },
+      {
+        name: "По неиспольз. серт.",
+        path: ROUTE_NAMES.statsUnusedCertificates,
+        isHidden: false,
+        comment: ""
+      },      
     ]
   }
 

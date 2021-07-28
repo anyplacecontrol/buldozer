@@ -6,7 +6,8 @@ const FAKE_STATS_RECIPIENTS = [
     allCount: 44,
     recipientName: "Шароваа Лилия Александровна",
     redeemedAmount: 26500,
-    redeemedCount: 23
+    redeemedCount: 23,
+    recipientCompany:"ООО Компания УралГор"
   }
 ];
 

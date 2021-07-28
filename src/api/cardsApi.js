@@ -1,14 +1,14 @@
-import { FAKE_CERTIFICATES_RESPONSE } from "../fakeDb/fakeCertificates";
+import { FAKE_CARDS_RESPONSE } from "../fakeDb/fakeCards";
 import * as baseAPI from "./baseApi";
 import { fetchJSON, throwFetchError } from "../utils/fetchUtils.js";
 import * as constants from "../consts/constants";
 import * as serviceFuncs from "../utils/serviceFunctions";
 
-const certificates_endPoint =
-  "https://" + constants.apiDomain + "/certificates";
-const certificateAdd_endPoint = certificates_endPoint;
-const certificateDelete_endPoint = certificates_endPoint + "/"; //+{Id}
-const certificateUpdate_endPoint = certificates_endPoint + "/"; //+{Id}
+const cards_endPoint =
+  "https://" + constants.apiDomain + "/cards";
+const cardAdd_endPoint = cards_endPoint;
+const cardDelete_endPoint = cards_endPoint + "/"; //+{Id}
+const cardUpdate_endPoint = cards_endPoint + "/"; //+{Id}
 
 //--------------------------------------------------------------------------------
 
@@ -27,65 +27,58 @@ export async function getItems(
   }
 
   let result = await baseAPI.getFilteredItems(
-    certificates_endPoint,
+    cards_endPoint,
     filter,
     topRowNumber,
     itemsPerPage,
     sortBy,
     sortOrder,
-    FAKE_CERTIFICATES_RESPONSE
+    FAKE_CARDS_RESPONSE
   );
+//   result.items.forEach(item => {
+//       item.id_ = item.id
+//   });
   return result;
 }
 
 //--------------------------------------------------------------------------------
 
-export async function deleteItem(certObj) {
-  return await baseAPI.deleteItem(certObj.id, certificateDelete_endPoint);
+export async function deleteItem(cardObj) {
+  return await baseAPI.deleteItem(cardObj.id, cardDelete_endPoint);
 }
 
 //--------------------------------------------------------------------------------
-export async function addItem(certObj) {
-  return await AddOrUpdateItem(certObj, certificateAdd_endPoint, "POST");
-}
-
-//--------------------------------------------------------------------------------
-
-export async function updateItem(certObj) {
-  let endPoint = certificateUpdate_endPoint + certObj.id;
-  return await AddOrUpdateItem(certObj, endPoint, "PUT");
+export async function addItem(cardObj) {
+  return await AddOrUpdateItem(cardObj, cardAdd_endPoint, "POST");
 }
 
 //--------------------------------------------------------------------------------
 
-export async function AddOrUpdateItem(certObj, endPoint, method) {
-  if (!certObj) throwFetchError("argument certObj is empty", endPoint);
+export async function updateItem(cardObj) {
+  let endPoint = cardUpdate_endPoint + cardObj.id;
+  return await AddOrUpdateItem(cardObj, endPoint, "PUT");
+}
+
+//--------------------------------------------------------------------------------
+
+export async function AddOrUpdateItem(cardObj, endPoint, method) {
+  if (!cardObj) throwFetchError("argument cardObj is empty", endPoint);
 
   if (constants.isFakeData) {
     await serviceFuncs.delayTime(constants.fakeDelay);
     return;
   }
 
-  let cleanCert = { ...certObj };
-  delete cleanCert.recipient;
-  delete cleanCert.serviceType;
-  delete cleanCert.issuingRestaurant;
-  delete cleanCert.redeemerRestaurant;
+  let cleanCert = { ...cardObj };
+  delete cleanCert.recipient;  
   delete cleanCert.isChecked;
   delete cleanCert.isValidated;
   delete cleanCert.createdUser;
   delete cleanCert.createdDate;
-  delete cleanCert.activeToDate;
+  delete cleanCert.cardificates;  
 
-  cleanCert.recipientId = certObj.recipient ? certObj.recipient.id : null;
-  cleanCert.serviceTypeId = certObj.serviceType ? certObj.serviceType.id : null;
-  cleanCert.issuingRestaurantId = certObj.issuingRestaurant
-    ? certObj.issuingRestaurant.id
-    : null;
-  cleanCert.redeemerRestaurantId = certObj.redeemerRestaurant
-    ? certObj.redeemerRestaurant.id
-    : null;
-
+  cleanCert.recipientId = cardObj.recipient ? cardObj.recipient.id : null;  
+  
   let response = await fetchJSON(endPoint, {
     method: method,
     headers: {

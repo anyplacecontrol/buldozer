@@ -4,6 +4,9 @@ import { routingInitialState } from "./modules/routingRedux";
 import { serviceTypesInitialState } from "./modules/serviceTypesRedux";
 import { serviceTypeViewInitialState } from "./modules/serviceTypeViewRedux";
 
+import { cardsInitialState } from "./modules/cardsRedux";
+import { cardViewInitialState } from  "./modules/cardViewRedux";
+
 import { certificatesInitialState } from "./modules/certificatesRedux";
 import { certificateViewInitialState } from "./modules/certificateViewRedux";
 
@@ -19,6 +22,7 @@ import { userViewInitialState } from "./modules/userViewRedux";
 import { statsIssuingRestaurantsInitialState} from "./modules/statsIssuingRestaurantsRedux";
 import { statsRedeemerRestaurantsInitialState } from "./modules/statsRedeemerRestaurantsRedux";
 import { statsRecipientsInitialState } from "./modules/statsRecipientsRedux";
+import { statsUnusedCertificatesInitialState } from "./modules/statsUnusedCertificatesRedux";
 
 
 export const initialState = {
@@ -27,6 +31,9 @@ export const initialState = {
 
   serviceTypes: serviceTypesInitialState,
   serviceTypeView: serviceTypeViewInitialState,
+
+  cards: cardsInitialState,
+  cardView: cardViewInitialState,
 
   certificates: certificatesInitialState,
   certificateView: certificateViewInitialState,
@@ -43,4 +50,5 @@ export const initialState = {
   statsIssuingRestaurants: statsIssuingRestaurantsInitialState,
   statsRedeemerRestaurants: statsRedeemerRestaurantsInitialState,
   statsRecipients: statsRecipientsInitialState,
+  statsUnusedCertificates: statsUnusedCertificatesInitialState
 };

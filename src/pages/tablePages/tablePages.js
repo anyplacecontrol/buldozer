@@ -1,4 +1,5 @@
 import {tablePageWithProvider} from "./tablePageWithProvider";
+import {cardsActions} from "../../redux/modules/cardsRedux";
 import {certificatesActions} from "../../redux/modules/certificatesRedux";
 import {restaurantsActions} from "../../redux/modules/restaurantsRedux";
 import {recipientsActions} from "../../redux/modules/recipientsRedux";
@@ -7,7 +8,9 @@ import {serviceTypesActions} from "../../redux/modules/serviceTypesRedux";
 import {statsIssuingRestaurantsActions} from "../../redux/modules/statsIssuingRestaurantsRedux";
 import {statsRedeemerRestaurantsActions} from "../../redux/modules/statsRedeemerRestaurantsRedux";
 import {statsRecipientsActions} from "../../redux/modules/statsRecipientsRedux";
+import {statsUnusedCertificatesActions} from "../../redux/modules/statsUnusedCertificatesRedux";
 
+export const cards = tablePageWithProvider(cardsActions);
 export const certificates = tablePageWithProvider(certificatesActions);
 export const restaurants = tablePageWithProvider(restaurantsActions);
 export const recipients = tablePageWithProvider(recipientsActions);
@@ -16,3 +19,4 @@ export const serviceTypes = tablePageWithProvider(serviceTypesActions);
 export const statsIssuingRestaurants  = tablePageWithProvider(statsIssuingRestaurantsActions);
 export const statsRedeemerRestaurants = tablePageWithProvider(statsRedeemerRestaurantsActions);
 export const statsRecipients = tablePageWithProvider(statsRecipientsActions);
+export const statsUnusedCertificates = tablePageWithProvider(statsUnusedCertificatesActions);

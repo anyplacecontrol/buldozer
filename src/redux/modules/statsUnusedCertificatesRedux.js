@@ -1,4 +1,4 @@
-import * as statsRecipientsApi from "../../api/statsRecipientsApi";
+import * as statsUnusedCertificatesApi from "../../api/statsUnusedCertificatesApi";
 import * as tableColumns from "../../consts/tableColumns";
 import {
   BaseTableActions,
@@ -7,31 +7,31 @@ import {
   BaseTableTypes
 } from "./baseTableRedux";
 import * as tableFilters from "../../consts/tableFilters";
-import { recipientsActions } from "./recipientsRedux";
+import { restaurantsActions } from "./restaurantsRedux";
 import * as uiActions from "./uiRedux";
 
 //*******************************************************************************
-const PREFIX = "statsRecipients/";
+const PREFIX = "statsUnusedCertificates/";
 
 //*******************************************************************************
 
-export const statsRecipientsInitialState = {
+export const statsUnusedCertificatesInitialState = {
   ...BaseTableInitialState,
-  sortBy: tableColumns.COLUMN_RECIPIENT_COMPANY,
-  columns: tableColumns.STATS_RECIPIENTS_COLUMNS
+  sortBy: tableColumns.COLUMN_RESTAURANT_NAME,
+  columns: tableColumns.STATS_UNUSED_CERTIFICATES_COLUMNS
 };
 
 //*******************************************************************************
 
 export default function reducer(
-  state = statsRecipientsInitialState,
+  state = statsUnusedCertificatesInitialState,
   action = {}
 ) {
   let result = BaseTableReducer(
     PREFIX,
     state,
     action,
-    statsRecipientsInitialState
+    statsUnusedCertificatesInitialState
   );
 
   if (result) return result;
@@ -44,25 +44,26 @@ export default function reducer(
 
 //*******************************************************************************
 
-class StatsRecipientsActions extends BaseTableActions {
+class StatsUnusedCertificatesActions extends BaseTableActions {
   // ABSTRACT ACTIONS REALIZATION
 
   // *** Filters
   loadFilterItems() {
     return async (dispatch, getState) => {
-      let p1 = new Promise(async (resolve) => {
-        if (
-          !getState().recipients.items ||
-          getState().recipients.items.length === 0
-        ) {
-          try {
-            await dispatch(
-              recipientsActions.fetchItems(0, false, false, null, true, true)
-            );
-          } catch (e) {}
-        }
-        resolve();
-      });
+        let p1 = new Promise(async (resolve, reject) => {
+            if (
+              !getState().restaurants.items ||
+              getState().restaurants.items.length === 0
+            ) {
+              try {
+                await dispatch(
+                  restaurantsActions.fetchItems(0, false, false, null, true, true)
+                );
+              } catch (e) {
+              }
+            }
+            resolve();
+          });
 
       dispatch(uiActions.showBackdrop(true));
       await Promise.all([p1]);
@@ -71,8 +72,8 @@ class StatsRecipientsActions extends BaseTableActions {
       let filterItems = [
         { ...tableFilters.FILTER_CREATED_DATE_STATS },
         {
-          ...tableFilters.FILTER_RECIPIENT_STATS,
-          items: [ ...getState().recipients.items]
+          ...tableFilters.FILTER_ISSUING_RESTAURANT,
+          items: [...getState().restaurants.items]
         },
         { ...tableFilters.FILTER_ISACTIVE_STATS }
       ];
@@ -92,7 +93,7 @@ class StatsRecipientsActions extends BaseTableActions {
     sortOrder
   ) {
     return async (dispatch, getState) => {
-      let fetchedResponse = await statsRecipientsApi.getItems(
+      let fetchedResponse = await statsUnusedCertificatesApi.getItems(
         filter,
         topRowNumber,
         itemsPerPage,
@@ -120,8 +121,8 @@ class StatsRecipientsActions extends BaseTableActions {
   }
 
   _getStateSlice = state => {
-    return state.statsRecipients;
+    return state.statsUnusedCertificates;
   };
 }
 
-export const statsRecipientsActions = new StatsRecipientsActions();
+export const statsUnusedCertificatesActions = new StatsUnusedCertificatesActions();

@@ -138,6 +138,32 @@ export function validateCertificateView(viewObj) {
 
 //--------------------------------------------------------------------------
 
+export function validateCardView(viewObj) {
+  if (
+    isEmptyString(viewObj.id) 
+  )
+    throw "Проверка не удалась: пустые поля";
+  
+  if (!viewObj.recipient) throw "Проверка не удалась: контрагент не задан";
+    
+  if (
+    isLongString(viewObj.id) 
+  ) {
+    throw "Проверка не удалась: слишком длинные поля (>255 символов)";
+  }
+
+  if (isLongString(viewObj.recipientComment, 500)) {
+    throw "Проверка не удалась: слишком длинный комментарий (>500 символов)";
+  }
+  
+  return {
+    ...viewObj
+  };
+}
+
+
+//--------------------------------------------------------------------------
+
 export function validateRecipientView(viewObj) {
   if (isEmptyString(viewObj.company)) throw "Проверка не удалась: пустые поля";
 

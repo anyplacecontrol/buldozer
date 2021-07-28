@@ -178,7 +178,7 @@ export const COLUMN_ALL_COUNT = {
 export const COLUMN_ALL_AMOUNT = {
   accessor: "allAmount",
   accessorSort: "allAmount",
-  text: "Сумма",
+  text: "Сумма, грн",
   className: "name"
 };
  
@@ -192,7 +192,7 @@ export const COLUMN_REDEEMED_COUNT = {
 export const COLUMN_REDEEMED_AMOUNT = {
   accessor: "redeemedAmount",
   accessorSort: "redeemedAmount",
-  text: "Сумма погаш.",
+  text: "Сумма погаш., грн",
   className: "name"
 };
  
@@ -206,7 +206,7 @@ export const COLUMN_ACTIVE_COUNT = {
 export const COLUMN_ACTIVE_AMOUNT = {
   accessor: "activeAmount",
   accessorSort: "activeAmount",
-  text: "Сумма акт.",
+  text: "Сумма акт., грн",
   className: "name"
 };
 
@@ -234,19 +234,63 @@ export const STATS_REDEEMER_RESTAURANTS_COLUMNS = _addIsDefault([
 //-----------------------------------------------------------------------------
 //Stats RECIPIENTS
 
-export const COLUMN_RECIPIENT_NAME = {
-  accessor: "recipientName",
-  accessorSort: "recipientName",
+export const COLUMN_RECIPIENT_COMPANY = {
+  accessor: "recipientCompany",
+  accessorSort: "recipientCompany",
   text: "Контрагент",
   className: "name"
 };
 
 export const STATS_RECIPIENTS_COLUMNS = _addIsDefault([
-  {...COLUMN_RECIPIENT_NAME, isVisible: true},   
+  {...COLUMN_RECIPIENT_COMPANY, isVisible: true},   
   {...COLUMN_ALL_COUNT, isVisible: true},       
   {...COLUMN_ACTIVE_COUNT, isVisible: true},       
   {...COLUMN_REDEEMED_COUNT, isVisible: true},       
   {...COLUMN_ALL_AMOUNT, isVisible: true},       
   {...COLUMN_ACTIVE_AMOUNT, isVisible: true},       
   {...COLUMN_REDEEMED_AMOUNT, isVisible: true},       
+]);
+
+//-----------------------------------------------------------------------------
+//Stats Unused Cert
+
+export const COLUMN_EXPIRED_COUNT = {
+  accessor: "expiredCount",
+  accessorSort: "expiredCount",
+  text: "Просрочен. серт.",
+  className: "name"
+};
+
+export const COLUMN_EXPIRED_AMOUNT = {
+  accessor: "expiredAmount",
+  accessorSort: "expiredAmount",
+  text: "Сумма просроч. серт., грн",
+  className: "name"
+};
+
+export const STATS_UNUSED_CERTIFICATES_COLUMNS = _addIsDefault([
+  {...COLUMN_RESTAURANT_NAME, isVisible: true},   
+  {...COLUMN_ALL_COUNT, isVisible: true},       
+  {...COLUMN_ALL_AMOUNT, isVisible: true},         
+  {...COLUMN_EXPIRED_COUNT, isVisible: true},       
+  {...COLUMN_EXPIRED_AMOUNT, isVisible: true},       
+]);
+
+
+//-----------------------------------------------------------------------------
+//Cards
+
+export const COLUMN_RECIPIENT = {  
+  accessor: item => (item.recipient ? item.recipient.company : ""),  
+  accessorSort: "recipient",
+  text: "Контрагент",
+  className: "name"
+};
+
+export const CARDS_COLUMNS = _addIsDefault([
+  {...COLUMN_ID, isVisible: true}, 
+  {...COLUMN_CREATED_DATE, isVisible: false},   
+  {...COLUMN_IS_ACTIVE, isVisible: true},
+  {...COLUMN_RECIPIENT, isVisible: true},  
+  {...COLUMN_AMOUNT, isVisible: true},
 ]);

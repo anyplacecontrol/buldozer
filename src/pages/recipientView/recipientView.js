@@ -6,6 +6,8 @@ import { recipientViewActions } from "../../redux/modules/recipientViewRedux";
 import { BaseView } from "../../components/BaseView/BaseView";
 import { RecipientGeneral } from "./RecipientGeneral";
 import { CertificatesTable } from "../../components/CertificatesTable/CertificatesTable";
+import { ICertificateView } from "../../redux/modules/certificateViewRedux";
+import { certificatesActions } from "../../redux/modules/certificatesRedux";
 
 export class recipientView_ extends React.Component {
   onTriggerIsActive = () => {
@@ -55,7 +57,7 @@ export class recipientView_ extends React.Component {
           onChangeEmail={this.onChangeEmail}
         />
 
-        {isEditExisting ? <CertificatesTable />: null}
+        {isEditExisting ? <CertificatesTable certificates={this.props.certificates} />: null}
 
       </BaseView>
     );
@@ -64,12 +66,14 @@ export class recipientView_ extends React.Component {
 
 recipientView_.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  recipient: recipientViewRedux.IRecipientView
+  recipient: recipientViewRedux.IRecipientView,
+  certificates: PropTypes.arrayOf(ICertificateView)
 };
 
 function mapStateToProps(state) {
   return {
-    recipient: state.recipientView
+    recipient: state.recipientView,
+    certificates: certificatesActions.getItems(state)
   };
 }
 

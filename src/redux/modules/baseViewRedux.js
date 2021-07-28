@@ -417,8 +417,8 @@ export class BaseViewActions {
       await dispatch(this._TABLE_ACTIONS_PROVIDER.changeNeedCleanFetch(true));
       await dispatch(routing.goto_Page(this._TABLE_ROUTE));
 
-      let message = "Item successfully updated";
-      if (isCreateNew) message = "Item successfully created";
+      let message = "Запись успешно обновлена";
+      if (isCreateNew) message = "Запись успешно создана";
 
       //we need delay, because fetch after goto_Page clears alerts
       if (!warningMessage)

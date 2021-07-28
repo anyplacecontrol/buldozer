@@ -1,4 +1,4 @@
-import * as certificatesApi from "../../api/certificatesApi";
+import * as cardsApi from "../../api/cardsApi";
 import * as tableColumns from "../../consts/tableColumns";
 import { ROUTE_NAMES } from "../../consts/routeNames";
 import {
@@ -16,24 +16,24 @@ import {serviceTypesActions} from "./serviceTypesRedux";
 import * as consts from "../../consts/constants";
 
 //*******************************************************************************
-const PREFIX = "certificates/";
+const PREFIX = "cards/";
 
 //*******************************************************************************
 
-export const certificatesInitialState = {
+export const cardsInitialState = {
   ...BaseTableInitialState,  
   sortBy: tableColumns.COLUMN_CREATED_DATE,
-  columns: tableColumns.CERTIFICATES_COLUMNS
+  columns: tableColumns.CARDS_COLUMNS
 };
 
 //*******************************************************************************
 
-export default function reducer(state = certificatesInitialState, action = {}) {
+export default function reducer(state = cardsInitialState, action = {}) {
   let result = BaseTableReducer(
     PREFIX,
     state,
     action,
-    certificatesInitialState
+    cardsInitialState
   );
 
   if (result) return result;
@@ -52,29 +52,15 @@ class CertificatesActions extends BaseTableActions {
   // *** Delete
   _deleteItem(kioskObj) {
     return async (dispatch, getState) => {
-      await certificatesApi.deleteItem(kioskObj);
+      await cardsApi.deleteItem(kioskObj);
     };
   }
 
   // *** Filters
   loadFilterItems() {
-    return async (dispatch, getState) => {
-      let p1 = new Promise(async (resolve, reject) => {
-        if (
-          !getState().restaurants.items ||
-          getState().restaurants.items.length === 0
-        ) {
-          try {
-            await dispatch(
-              restaurantsActions.fetchItems(0, false, false, null, true, true)
-            );
-          } catch (e) {
-          }
-        }
-        resolve();
-      });
+    return async (dispatch, getState) => {      
 
-      let p2 = new Promise(async (resolve, reject) => {
+      let p1 = new Promise(async (resolve, reject) => {
         if (
           !getState().recipients.items ||
           getState().recipients.items.length === 0
@@ -88,39 +74,15 @@ class CertificatesActions extends BaseTableActions {
         }
         resolve();
       });
-
-      let p3 = new Promise(async (resolve, reject) => {
-        if (
-          !getState().serviceTypes.items ||
-          getState().serviceTypes.items.length === 0
-        ) {
-          try {
-            await dispatch(
-              serviceTypesActions.fetchItems(0, false, false, null, true, true)
-            );
-          } catch (e) {
-          }
-        }
-        resolve();
-      });
+     
 
       dispatch(uiActions.showBackdrop(true));
-      await Promise.all([p1, p2, p3]);
+      await Promise.all([p1]);
       dispatch(uiActions.showBackdrop(false));
 
       let filterItems = [
         { ...tableFilters.FILTER_ID },
-        { ...tableFilters.FILTER_ISACTIVE },
-        { ...tableFilters.FILTER_ACTIVATION_DATE },
-        { ...tableFilters.FILTER_VALIDITY_DATE },
-        {
-          ...tableFilters.FILTER_ISSUING_RESTAURANT,
-          items: [...getState().restaurants.items]
-        },
-        {
-          ...tableFilters.FILTER_REDEEMER_RESTAURANT,
-          items: [...getState().restaurants.items]
-        },
+        { ...tableFilters.FILTER_ISACTIVE },        
         {
           ...tableFilters.FILTER_RECIPIENT,
           items: [ { company: "Все", value: null }, ...getState().recipients.items]
@@ -142,7 +104,7 @@ class CertificatesActions extends BaseTableActions {
     sortOrder
   ) {
     return async (dispatch, getState) => {
-      let fetchedResponse = await certificatesApi.getItems(
+      let fetchedResponse = await cardsApi.getItems(
         filter,
         topRowNumber,
         itemsPerPage,
@@ -156,13 +118,19 @@ class CertificatesActions extends BaseTableActions {
 
   goto_editItem(itemId) {
     return async dispatch => {
-      dispatch(routing.goto_EditItem(ROUTE_NAMES.certificateView, itemId));
+      dispatch(routing.goto_EditItem(ROUTE_NAMES.cardView, itemId));
     };
   }
 
   goto_addItem() {
     return async dispatch => {
-      dispatch(routing.goto_AddItem(ROUTE_NAMES.certificateView));
+      dispatch(routing.goto_AddItem(ROUTE_NAMES.cardView));
+    };
+  }
+
+  importCSV() {
+    return async dispatch => {
+     
     };
   }
 
@@ -182,8 +150,8 @@ class CertificatesActions extends BaseTableActions {
   }
 
   _getStateSlice = state => {
-    return state.certificates;
+    return state.cards;
   };
 }
 
-export const certificatesActions = new CertificatesActions();
+export const cardsActions = new CertificatesActions();

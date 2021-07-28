@@ -6,6 +6,8 @@ import { restaurantViewActions } from "../../redux/modules/restaurantViewRedux";
 import { BaseView } from "../../components/BaseView/BaseView";
 import { RestaurantGeneral } from "./RestaurantGeneral";
 import { CertificatesTable } from "../../components/CertificatesTable/CertificatesTable";
+import { ICertificateView } from "../../redux/modules/certificateViewRedux";
+import { certificatesActions } from "../../redux/modules/certificatesRedux";
 
 export class restaurantView_ extends React.Component {
 
@@ -51,7 +53,7 @@ export class restaurantView_ extends React.Component {
           onChangeEmail={this.onChangeEmail}
         />
 
-        {isEditExisting ? <CertificatesTable />: null}
+        {isEditExisting ? <CertificatesTable certificates={this.props.certificates}/>: null}
 
       </BaseView>
     );
@@ -60,12 +62,14 @@ export class restaurantView_ extends React.Component {
 
 restaurantView_.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  restaurant: restaurantViewRedux.IRestaurantView
+  restaurant: restaurantViewRedux.IRestaurantView,
+  certificates: PropTypes.arrayOf(ICertificateView)
 };
 
 function mapStateToProps(state) {
   return {
-    restaurant: state.restaurantView
+    restaurant: state.restaurantView,
+    certificates: certificatesActions.getItems(state)
   };
 }
 

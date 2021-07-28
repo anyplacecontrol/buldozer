@@ -12,6 +12,7 @@ import * as routing from "../../redux/modules/routingRedux";
 import * as authRedux from "../../redux/modules/authRedux";
 
 import {
+  cards,
   certificates,
   restaurants,
   recipients,
@@ -19,8 +20,10 @@ import {
   serviceTypes,
   statsIssuingRestaurants,
   statsRedeemerRestaurants,
-  statsRecipients
+  statsRecipients,
+  statsUnusedCertificates
 } from "../../pages/tablePages/tablePages";
+import { cardView } from "../../pages/cardView/cardView";
 import { certificateView } from "../../pages/certificateView/certificateView";
 import { recipientView } from "../../pages/recipientView/recipientView";
 import { restaurantView } from "../../pages/restaurantView/restaurantView";
@@ -33,12 +36,12 @@ class App_ extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      authEmail: "",      
+      authEmail: ""
     };
   }
 
   componentDidMount = async () => {
-    await authApi.getToken();    
+    await authApi.getToken();
 
     this.props.dispatch(authRedux.start_monitorClicks_Timer());
   };
@@ -75,9 +78,7 @@ class App_ extends React.Component {
                     id="wrapper"
                     className={this.props.isSidebarMinimized ? "active" : ""}
                   >
-                    <SideBar
-                      isMinimized={this.props.isSidebarMinimized}                      
-                    />
+                    <SideBar isMinimized={this.props.isSidebarMinimized} />
 
                     {/* -- Main content container-- */}
                     <div className="site-middle animated">
@@ -85,6 +86,21 @@ class App_ extends React.Component {
 
                       <div className="site-middle__inner ph-35 animated">
                         <Switch>
+                          {/* ------Cards----- */}
+                          <Route
+                            path={ROUTE_NAMES.cards}
+                            render={() => {
+                              const Component = cards;
+                              return <Component />;
+                            }}
+                          />
+                           <Route
+                            path={ROUTE_NAMES.cardView}
+                            render={() => {
+                              const Component = cardView;
+                              return <Component />;
+                            }}
+                          />
                           {/* ------Certificates----- */}
                           <Route
                             path={ROUTE_NAMES.certificates}
@@ -107,7 +123,7 @@ class App_ extends React.Component {
                               const Component = restaurants;
                               return <Component />;
                             }}
-                          />                          
+                          />
                           <Route
                             path={ROUTE_NAMES.restaurantView}
                             render={() => {
@@ -123,7 +139,7 @@ class App_ extends React.Component {
                               return <Component />;
                             }}
                           />
-                           <Route
+                          <Route
                             path={ROUTE_NAMES.recipientView}
                             render={() => {
                               const Component = recipientView;
@@ -138,7 +154,7 @@ class App_ extends React.Component {
                               return <Component />;
                             }}
                           />
-                           <Route
+                          <Route
                             path={ROUTE_NAMES.userView}
                             render={() => {
                               const Component = userView;
@@ -168,21 +184,29 @@ class App_ extends React.Component {
                               return <Component />;
                             }}
                           />
-                           {/* ------Статистика рест. погас----- */}
-                           <Route
+                          {/* ------Статистика рест. погас----- */}
+                          <Route
                             path={ROUTE_NAMES.statsRedeemerRestaurants}
                             render={() => {
                               const Component = statsRedeemerRestaurants;
                               return <Component />;
-                            }}                            
+                            }}
                           />
-                           {/* ------Статистика контрагенты----- */}
-                           <Route
+                          {/* ------Статистика контрагенты----- */}
+                          <Route
                             path={ROUTE_NAMES.statsRecipients}
                             render={() => {
                               const Component = statsRecipients;
                               return <Component />;
-                            }}                            
+                            }}
+                          />
+                          {/* ------Статистика unused certificates----- */}
+                          <Route
+                            path={ROUTE_NAMES.statsUnusedCertificates}
+                            render={() => {
+                              const Component = statsUnusedCertificates;
+                              return <Component />;
+                            }}
                           />
                         </Switch>
                       </div>

@@ -5,6 +5,9 @@ import routing from "./modules/routingRedux";
 import serviceTypes from "./modules/serviceTypesRedux";
 import serviceTypeView from "./modules/serviceTypeViewRedux";
 
+import cards from "./modules/cardsRedux";
+import cardView from "./modules/cardViewRedux";
+
 import certificates from "./modules/certificatesRedux";
 import certificateView from "./modules/certificateViewRedux";
 
@@ -20,6 +23,7 @@ import userView from "./modules/userViewRedux";
 import statsIssuingRestaurants from "./modules/statsIssuingRestaurantsRedux";
 import statsRedeemerRestaurants from "./modules/statsRedeemerRestaurantsRedux";
 import statsRecipients from "./modules/statsRecipientsRedux";
+import statsUnusedCertificates from "./modules/statsUnusedCertificatesRedux";
 
 const reducers = {
   ui,
@@ -27,6 +31,9 @@ const reducers = {
 
   serviceTypes,
   serviceTypeView,
+  
+  cards,
+  cardView,
   
   certificates,
   certificateView,
@@ -42,7 +49,8 @@ const reducers = {
 
   statsIssuingRestaurants,
   statsRedeemerRestaurants,
-  statsRecipients
+  statsRecipients,
+  statsUnusedCertificates
 };
 
 export default combineReducers(reducers);

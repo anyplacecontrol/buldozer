@@ -1,6 +1,7 @@
 export const ROUTE_NAMES = {
-    login: "/",
-    
+    login: "/",    
+    cards: "/cards",
+    cardView: "/cardView",
     certificates: "/certificates",
       certificateView: "/certificateView",
     restaurants: "/restaurants",
@@ -13,7 +14,8 @@ export const ROUTE_NAMES = {
       serviceTypeView: "/serviceTypeView",
     statsIssuingRestaurants: "/statsIssuingRestaurants",
     statsRedeemerRestaurants: "/statsRedeemerRestaurants",
-    statsRecipients: "/statsRecipients"
+    statsRecipients: "/statsRecipients",
+    statsUnusedCertificates: "/statsUnusedCertificates"
 };
 
 export const QUERY_PARAMS = {
