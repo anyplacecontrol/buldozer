@@ -20,7 +20,7 @@ import { ICertificateView } from "./certificateViewRedux";
 export const ICardView = PropTypes.shape({
   ...IBaseView,
   id: PropTypes.string.isRequired,
-  amount: PropTypes.number.isRequired,
+  balance: PropTypes.number.isRequired,
   recipientComment: PropTypes.string,
   isActive: PropTypes.bool, 
   createdDate: PropTypes.string, 
@@ -42,7 +42,7 @@ const CHANGE_RECIPIENT = PREFIX + "CHANGE_RECIPIENT";
 export const cardViewInitialState = {
   ...BaseViewInitialState,
   id: "",
-  amount: 0,
+  balance: 0,
   recipientComment: "",
   isActive: false,
   createdDate: "",

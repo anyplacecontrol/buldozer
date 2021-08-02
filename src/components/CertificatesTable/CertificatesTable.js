@@ -8,7 +8,7 @@ export class CertificatesTable extends React.Component {
     if (!this.props.certificates) return null;
 
     return this.props.certificates.map((certificate, index) => {
-      let id = "..."+certificate.id.substr(certificate.id.length - 5);
+      let id = "..." + certificate.id.substr(certificate.id.length - 5);
       let activeFromDate = dataFuncs.truncateDate(certificate.activeFromDate);
       let activeToDate = dataFuncs.truncateDate(certificate.activeToDate);
       let issuingRestaurant = certificate.issuingRestaurant
@@ -18,6 +18,14 @@ export class CertificatesTable extends React.Component {
         ? certificate.redeemerRestaurant.name
         : "";
       let amount = certificate.amount;
+      let cardId = certificate.card
+        ? "..." + certificate.card.id.substr(certificate.card.id.length - 5)
+        : null;
+
+      let isActive = certificate.isActive ? "Да" : "Нет";
+      let certType = certificate.isPartiallyRedeemable ? "Частич. погаш.": "Обычный";
+      let certKind = certificate.isBarterable ? "Бартерный": "Подарочный";
+      let balance = certificate.balance;
 
       return (
         <div
@@ -25,12 +33,18 @@ export class CertificatesTable extends React.Component {
           className="product__table--tr flex animated"
           style={{ textTransform: "capitalize" }}
         >
+          {!this.props.hideCardId ? (
+            <div className="id animated">
+              <div className="product__table--td animated">{cardId}</div>
+            </div>
+          ) : null}
+
           <div className="id animated">
             <div className="product__table--td animated">{id}</div>
           </div>
 
-          <div className="name animated">
-            <div className="product__table--td animated">{activeFromDate}</div>
+          <div className="id animated">
+            <div className="product__table--td animated">{isActive}</div>
           </div>
 
           <div className="name animated">
@@ -44,15 +58,23 @@ export class CertificatesTable extends React.Component {
           </div>
 
           <div className="name animated">
-            <div className="product__table--td animated">
-              {redeemerRestaurant}
-            </div>
+            <div className="product__table--td animated">{certType}</div>
+          </div>
+
+          <div className="name animated">
+            <div className="product__table--td animated">{certKind}</div>
           </div>
 
           <div className="date animated">
-            <div className="product__table--td animated">
-              {amount}
-            </div>
+            <div className="product__table--td animated">{amount}</div>
+          </div>
+
+          <div className="date animated">
+            <div className="product__table--td animated">{amount - balance }</div>
+          </div>
+
+          <div className="date animated">
+            <div className="product__table--td animated">{balance}</div>
           </div>
         </div>
       );
@@ -69,13 +91,19 @@ export class CertificatesTable extends React.Component {
             <div className="product__table--inner flex animated">
               <div className="product__table--thead animated">
                 <div className="product__table--tr main flex animated">
-                  {/* -- add class ".v2"-- */}
+                  {!this.props.hideCardId ? (
+                    <div className="id animated">
+                      <div className="product__table--td animated">
+                        ID карты
+                      </div>
+                    </div>
+                  ) : null}
                   <div className="id animated">
-                    <div className="product__table--td animated">ID карты</div>
+                    <div className="product__table--td animated">ID серт</div>
                   </div>
-                  <div className="name animated">
+                  <div className="id animated">
                     <div className="product__table--td animated">
-                      Дата активации
+                      Активность
                     </div>
                   </div>
                   <div className="name animated">
@@ -89,13 +117,24 @@ export class CertificatesTable extends React.Component {
                     </div>
                   </div>
                   <div className="name animated">
-                    <div className="product__table--td animated">
-                      Рест. погаситель
-                    </div>
+                    <div className="product__table--td animated">Тип серт</div>
+                  </div>
+                  <div className="name animated">
+                    <div className="product__table--td animated">Вид серт</div>
                   </div>
                   <div className="date animated">
                     <div className="product__table--td animated">
                       Номинал, грн
+                    </div>
+                  </div>
+                  <div className="date animated">
+                    <div className="product__table--td animated">
+                      Погашено, грн
+                    </div>
+                  </div>
+                  <div className="date animated">
+                    <div className="product__table--td animated">
+                      Баланс, грн
                     </div>
                   </div>
                 </div>
@@ -110,7 +149,6 @@ export class CertificatesTable extends React.Component {
 }
 
 CertificatesTable.propTypes = {
-  certificates: PropTypes.arrayOf(ICertificateView).isRequired
+  certificates: PropTypes.arrayOf(ICertificateView).isRequired,
+  hideCardId: PropTypes.bool
 };
-
-

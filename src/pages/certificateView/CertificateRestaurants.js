@@ -7,16 +7,50 @@ import * as consts from "../../consts/constants";
 import { SelectBox } from "../../components/SelectBox/SelectBox";
 
 export class CertificateRestaurants extends React.Component {
+
+  renderRedeemerRestaurantSelectBox  = () => {
+    
+    let itemsArr = this.props.allRestaurants.map((restaurant, index) => {
+      let isChecked=false;
+      if (this.props.certificate.redeemerRestaurants) {
+        for (let i=0; i<this.props.certificate.redeemerRestaurants.length; i++) {
+          if (this.props.certificate.redeemerRestaurants[i].id === restaurant.id) {
+            isChecked=true;
+            break;
+          }
+        }
+      }
+
+      restaurant.id
+      return {
+        text: restaurant.name,
+        isChecked,
+        onClick: () => this.props.onChangeRedeemerRestaurant(restaurant, isChecked)
+      };
+    });   
+
+    return (
+      <SelectBox
+        style={{ zIndex: 3 }}
+        className="w100"
+        text={"Выбрать..."}
+        items={[...itemsArr]}
+        isCheckboxItems
+      />
+    );
+  };
+
+  
   renderIssuingRestaurantsSelectBox = () => {
     let nullItem = {
       text: consts.noStr,
       onClick: () => this.props.onChangeIssuingRestaurant(null)
     };
 
-    let itemsArr = this.props.allRestaurants.map((recipient, index) => {
+    let itemsArr = this.props.allRestaurants.map((restaurant, index) => {
       return {
-        text: recipient.name,
-        onClick: () => this.props.onChangeIssuingRestaurant(recipient)
+        text: restaurant.name,
+        onClick: () => this.props.onChangeIssuingRestaurant(restaurant)
       };
     });
 
@@ -44,7 +78,7 @@ export class CertificateRestaurants extends React.Component {
         <div className="block-set__inner flex w100 animated">
           {/*------- Left panel-------- */}
           <div className="block-set__item flex animated">
-            {/* -- Контрагент -- */}
+            {/* --  Ресторан-эмитент -- */}
             <div className="block-set__item--inner flex w100 animated">
               <div className="block-set__sub-title flex w100 animated">
                 Ресторан-эмитент*
@@ -58,17 +92,16 @@ export class CertificateRestaurants extends React.Component {
           {/*------- Right panel-------- */}
 
           <div className="block-set__item flex animated">
-            {/* ---Additional description--- */}
-            <div className="block-set__item--inner flex w100 animated">
+             {/* --  Ресторан-погашатель-- */}
+             <div className="block-set__item--inner flex w100 animated">
               <div className="block-set__sub-title flex w100 animated">
                 Ресторан-погашатель
               </div>
               <div className="block-set__content flex w100 animated">
-                {this.props.certificate.redeemerRestaurant
-                  ? this.props.certificate.redeemerRestaurant.name
-                  : "Не погашено"}
+                {this.renderRedeemerRestaurantSelectBox()}
               </div>
             </div>
+
           </div>
         </div>
       </div>
@@ -80,4 +113,5 @@ CertificateRestaurants.propTypes = {
   certificate: ICertificateView,
   allRestaurants: PropTypes.arrayOf(IRestaurantView).isRequired,  
   onChangeIssuingRestaurant: PropTypes.func.isRequired,  
+  onChangeRedeemerRestaurant: PropTypes.func.isRequired,  
 };

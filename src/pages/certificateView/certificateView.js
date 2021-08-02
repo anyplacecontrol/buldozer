@@ -6,6 +6,7 @@ import { certificateViewActions } from "../../redux/modules/certificateViewRedux
 import { CertificateGeneral } from "./CertificateGeneral";
 import { CertificateRecipient } from "./CertificateRecipient";
 import { CertificateRestaurants } from "./CertificateRestaurants";
+import { CertificateBalance } from "./CertificateBalance";
 import { BaseView } from "../../components/BaseView/BaseView";
 import { recipientsActions } from "../../redux/modules/recipientsRedux";
 import { restaurantsActions } from "../../redux/modules/restaurantsRedux";
@@ -19,6 +20,10 @@ import { IRestaurantView } from "../../redux/modules/restaurantViewRedux";
 export class certificateView_ extends React.Component {
   onChangeId = newValue => {
     this.props.dispatch(certificateViewActions.changeId(newValue));
+  };
+
+  onChangeCardId = newValue => {
+    this.props.dispatch(certificateViewActions.changeCardId(newValue));
   };
 
   onTriggerIsActive = () => {
@@ -51,8 +56,20 @@ export class certificateView_ extends React.Component {
    this.props.dispatch(certificateViewActions.changeIssuingRestaurant(newValue));
   };
 
-  onChangeActiveFromDate   = newValue => {
+  onChangeRedeemerRestaurant  = (restaurant, isChecked) => {
+    this.props.dispatch(certificateViewActions.changeRedeemerRestaurant(restaurant, isChecked));
+   };
+
+  onChangeActiveFromDate = newValue => {
     this.props.dispatch(certificateViewActions.changeActiveFromDate(newValue));
+   };
+
+  onChangeIsBarterable = newValue => {
+    this.props.dispatch(certificateViewActions.changeIsBarterable(newValue));
+   };
+
+  onChangeIsPartiallyRedeemable = newValue => {
+    this.props.dispatch(certificateViewActions.changeIsPartiallyRedeemable(newValue));
    };
 
   render() {
@@ -65,6 +82,9 @@ export class certificateView_ extends React.Component {
           onChangeAmount={this.onChangeAmount}
           onChangeValidityPeriod={this.onChangeValidityPeriod}
           onChangeActiveFromDate={this.onChangeActiveFromDate}
+          onChangeCardId={this.onChangeCardId}
+          onChangeIsBarterable={this.onChangeIsBarterable}
+          onChangeIsPartiallyRedeemable={this.onChangeIsPartiallyRedeemable}
         />
 
         <CertificateRecipient
@@ -80,8 +100,12 @@ export class certificateView_ extends React.Component {
           certificate={this.props.certificate}
           allRestaurants={this.props.allRestaurants}          
           onChangeIssuingRestaurant={this.onChangeIssuingRestaurant}
+          onChangeRedeemerRestaurant={this.onChangeRedeemerRestaurant}
         />
 
+        <CertificateBalance
+          certificate={this.props.certificate}
+        />
 
       </BaseView>
     );

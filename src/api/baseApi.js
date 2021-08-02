@@ -56,33 +56,6 @@ export async function getFilteredItems(
   };
 }
 
-export async function getItems(endpoint, FAKE_DATA) {
-  let result;
-
-  if (constants.isFakeData) {
-    await serviceFuncs.delayTime(constants.fakeDelay);
-    if (FAKE_DATA) {
-      result = JSON.parse(JSON.stringify(FAKE_DATA));
-    } else
-      result = {
-        items: [],
-        topRowNumber: 0,
-        count: 0
-      };
-  }
-  
-  if (!result) {
-    let Json = await fetchJSON(endpoint);
-    if (!Json.body) throwFetchError("Body is empty", null, endpoint);
-    result = {
-      items: Json.body,
-      topRowNumber: 0,
-      count: Json.body.length
-    };
-  }
-
-  return result;
-}
 
 //-------------------------------------------------------------------
 export async function deleteItem(itemId, partialEndpoint) {

@@ -48,7 +48,7 @@ export class cardView_ extends React.Component {
           onRecipientCommentChange={this.onRecipientCommentChange}          
         />       
 
-         {isEditExisting ? <CertificatesTable certificates={this.props.card.certificates}/>: null} 
+         {isEditExisting ? <CertificatesTable hideCardId certificates={this.props.card.certificates}/>: null} 
 
       </BaseView>
     );

@@ -21,7 +21,7 @@ export function login(email, password) {
       }          
 
       // redirect to dashboard
-      dispatch(routingRedux.goto_Page(ROUTE_NAMES.certificates));
+      dispatch(routingRedux.goto_Page(ROUTE_NAMES.cards));
     } catch (err) {
       console.error(err);
 

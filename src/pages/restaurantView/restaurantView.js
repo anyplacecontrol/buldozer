@@ -36,7 +36,7 @@ export class restaurantView_ extends React.Component {
   };
 
   render() {
-    let isEditExisting = this.props.restaurant.createdUser != null;
+    let isEditExisting = this.props.restaurant.id != 0;
 
     return (
       <BaseView

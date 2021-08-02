@@ -287,10 +287,18 @@ export const COLUMN_RECIPIENT = {
   className: "name"
 };
 
+export const COLUMN_BALANCE = 
+{
+  accessor: "balance",
+  accessorSort: "balance",
+  text: "Номинал, грн",
+  className: "price"  
+}
+
 export const CARDS_COLUMNS = _addIsDefault([
   {...COLUMN_ID, isVisible: true}, 
   {...COLUMN_CREATED_DATE, isVisible: false},   
   {...COLUMN_IS_ACTIVE, isVisible: true},
   {...COLUMN_RECIPIENT, isVisible: true},  
-  {...COLUMN_AMOUNT, isVisible: true},
+  {...COLUMN_BALANCE, isVisible: true},
 ]);

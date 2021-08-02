@@ -97,7 +97,8 @@ export function validateCertificateView(viewObj) {
   if (
     isEmptyString(viewObj.id) ||
     isEmptyString(viewObj.amount) ||
-    isEmptyString(viewObj.validityPeriodInMonths)
+    isEmptyString(viewObj.validityPeriodInMonths) ||
+    isEmptyString(viewObj.cardId)
   )
     throw "Проверка не удалась: пустые поля";
 
@@ -117,7 +118,8 @@ export function validateCertificateView(viewObj) {
   if (
     isLongString(viewObj.id) ||
     isLongString(viewObj.amount) ||
-    isLongString(viewObj.validityPeriodInMonths)
+    isLongString(viewObj.validityPeriodInMonths) ||
+    isLongString(viewObj.cardId) 
   ) {
     throw "Проверка не удалась: слишком длинные поля (>255 символов)";
   }

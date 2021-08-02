@@ -226,7 +226,7 @@ class RecipientViewActions extends BaseViewActions {
   }
 
   _isNewItem(itemObj) {
-    return itemObj.createdUser == null;
+    return itemObj.id == 0;
   }
 
   _getStateSlice = state => {

@@ -35,6 +35,17 @@ export async function getItems(
     sortOrder,
     FAKE_CERTIFICATES_RESPONSE
   );
+  result.items.forEach(item => {
+    item.cardId = item.card ? item.card.id : "";
+  });
+  return result;
+}
+
+export async function getItem(id) {
+  let endpoint = certificates_endPoint + "/" + id;
+  let Json = await fetchJSON(endpoint);
+  if (!Json.data) throwFetchError("Data is empty", null, endpoint);
+  let result = Json.data.transactions;
   return result;
 }
 
@@ -76,15 +87,16 @@ export async function AddOrUpdateItem(certObj, endPoint, method) {
   delete cleanCert.createdUser;
   delete cleanCert.createdDate;
   delete cleanCert.activeToDate;
+  delete cleanCert.redeemerRestaurants; 
+  delete cleanCert.transactions;
+  delete cleanCert.card;  
 
+  cleanCert.redeemerRestaurantIds =certObj.redeemerRestaurants.map((restaurant) => restaurant.id)
   cleanCert.recipientId = certObj.recipient ? certObj.recipient.id : null;
   cleanCert.serviceTypeId = certObj.serviceType ? certObj.serviceType.id : null;
   cleanCert.issuingRestaurantId = certObj.issuingRestaurant
     ? certObj.issuingRestaurant.id
-    : null;
-  cleanCert.redeemerRestaurantId = certObj.redeemerRestaurant
-    ? certObj.redeemerRestaurant.id
-    : null;
+    : null;  
 
   let response = await fetchJSON(endPoint, {
     method: method,

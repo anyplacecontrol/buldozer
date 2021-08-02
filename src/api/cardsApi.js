@@ -35,9 +35,7 @@ export async function getItems(
     sortOrder,
     FAKE_CARDS_RESPONSE
   );
-//   result.items.forEach(item => {
-//       item.id_ = item.id
-//   });
+ 
   return result;
 }
 

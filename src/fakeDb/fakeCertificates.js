@@ -1,5 +1,18 @@
 const FAKE_CERTIFICATES = [
   {
+    usedAmount: 500,
+    balance: 500,    
+    amount: 1000,
+    isPartiallyRedeemable: false,
+    isBarterable: false,
+
+    card: {      
+        amount:6000,
+        createdDate:"2021-07-27T14:45:27.000000Z",
+        id:"881424407462",
+        isActive:true,
+        recipientComment:"Enim eveniet"
+      },
     id: "100703920390",
     validityPeriodInMonths: 9,        
     activeFromDate: "2021-06-17T12:54:51.000000Z",
@@ -14,7 +27,6 @@ const FAKE_CERTIFICATES = [
       //createdDate: "2021-06-17T12:54:51.000000Z"
     },
     isRedeemed: false,
-    amount: 1000,
         
     createdDate: "2021-06-17T12:54:58.000000Z",
     
@@ -46,7 +58,7 @@ const FAKE_CERTIFICATES = [
       //isActive: false,
       //createdDate: "2021-06-17T12:55:36.000000Z"
     },
-    redeemerRestaurant: {
+    redeemerRestaurants : [{
       //id: 516,
       name: "ООО Компания ITКазТекстиль-М",
       //email: "eva90@example.com",
@@ -57,7 +69,7 @@ const FAKE_CERTIFICATES = [
         "Et dignissimos assumenda pariatur ullam illo eveniet assumenda. Soluta eius omnis sed iusto fuga sit ex debitis. Mollitia velit aperiam commodi saepe architecto.",
       //isActive: true,
       //createdDate: "2021-06-17T12:55:37.000000Z"
-    }
+    }]
   }
 ];
 

@@ -39,7 +39,7 @@ export class recipientView_ extends React.Component {
   };
 
   render() {
-    let isEditExisting = this.props.recipient.createdUser != null;
+    let isEditExisting = this.props.recipient.id != 0;
 
     return (
       <BaseView
