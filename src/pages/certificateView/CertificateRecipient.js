@@ -65,7 +65,7 @@ export class CertificateRecipient extends React.Component {
   };
 
   render() {
-    let isEditExisting = this.props.certificate.createdUser != null;
+    let isEditExisting = this.props.certificate.id != 0;
 
     return (
       <div className="block-set__box flex animated">

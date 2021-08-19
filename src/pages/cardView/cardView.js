@@ -31,7 +31,7 @@ export class cardView_ extends React.Component {
 
 
   render() {
-    let isEditExisting = this.props.card.createdUser != null;
+    let isEditExisting = this.props.card.createdDate != "";
 
     return (
       <BaseView viewName="Обзор карточки" actionsProvider={cardViewActions}>

@@ -5,7 +5,7 @@ import * as dataFuncs from "../../utils/dataFuncs";
 
 export class RestaurantGeneral extends React.Component {
   render() {
-    let isEditExisting = this.props.restaurant.createdUser != null;
+    let isEditExisting = this.props.restaurant.id != 0;
 
     return (
       <div className="block-set__box flex animated">

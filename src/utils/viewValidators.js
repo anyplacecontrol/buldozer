@@ -1,5 +1,6 @@
 import { isEmpty } from "./serviceFunctions";
 import * as serviceFuncs from "./serviceFunctions";
+import * as consts from "../consts/constants";
 
 function isNumeric(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
@@ -149,9 +150,9 @@ export function validateCardView(viewObj) {
   if (!viewObj.recipient) throw "Проверка не удалась: контрагент не задан";
     
   if (
-    isLongString(viewObj.id) 
+    viewObj.id.length != 6
   ) {
-    throw "Проверка не удалась: слишком длинные поля (>255 символов)";
+    throw "Проверка не удалась: id должен содержать 6 цифр";
   }
 
   if (isLongString(viewObj.recipientComment, 500)) {
@@ -159,7 +160,8 @@ export function validateCardView(viewObj) {
   }
   
   return {
-    ...viewObj
+    ...viewObj,
+    id: consts.cardIdPrefix + viewObj.id
   };
 }
 
@@ -227,7 +229,7 @@ export function validateRestaurantView(viewObj) {
 //--------------------------------------------------------------------------
 
 export function validateUserView(viewObj) {
-  let isEditExisting = viewObj.createdUser != null;
+  let isEditExisting = viewObj.id != 0;
 
   if (isEmptyString(viewObj.name) || isEmptyString(viewObj.email))
     throw "Проверка не удалась: пустые поля";
@@ -258,7 +260,7 @@ export function validateUserView(viewObj) {
 //--------------------------------------------------------------------------
 
 export function validateServiceTypeView(viewObj) {
-  let isEditExisting = viewObj.createdUser != null;
+  let isEditExisting = viewObj.id != 0;
 
   if (isEmptyString(viewObj.name)) {
     throw "Проверка не удалась: пустые поля";

@@ -5,7 +5,7 @@ import * as dataFuncs from "../../utils/dataFuncs";
 
 export class ServiceTypeGeneral extends React.Component {
   render() {
-    let isEditExisting = this.props.serviceType.createdUser != null;
+    let isEditExisting = this.props.serviceType.id != 0;
 
     return (
       <div className="block-set__box flex animated">

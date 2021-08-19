@@ -9,7 +9,7 @@ registerLocale("ru", ru);
 
 export class CertificateGeneral extends React.Component {
   render() {
-    let isEditExisting = this.props.certificate.createdUser != null;
+    let isEditExisting = this.props.certificate.id != 0;
 
     return (
       <div className="block-set__box flex animated">
@@ -80,8 +80,8 @@ export class CertificateGeneral extends React.Component {
                   <div className="block-set__info flex animated">
                     <div className="block-set__info--title animated">
                       {this.props.certificate.createdUser
-                        ? this.props.certificate.createdUser.email
-                        : null}
+                        ? this.props.certificate.createdUser.name
+                        : "-"}
                     </div>
                   </div>
                 </div>

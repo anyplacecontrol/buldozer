@@ -60,6 +60,10 @@ export class certificateView_ extends React.Component {
     this.props.dispatch(certificateViewActions.changeRedeemerRestaurant(restaurant, isChecked));
    };
 
+  onTriggerAllRedeemerRestaurants = () => {
+    this.props.dispatch(certificateViewActions.triggerAllRedeemerRestaurant());
+   };
+
   onChangeActiveFromDate = newValue => {
     this.props.dispatch(certificateViewActions.changeActiveFromDate(newValue));
    };
@@ -101,6 +105,7 @@ export class certificateView_ extends React.Component {
           allRestaurants={this.props.allRestaurants}          
           onChangeIssuingRestaurant={this.onChangeIssuingRestaurant}
           onChangeRedeemerRestaurant={this.onChangeRedeemerRestaurant}
+          onTriggerAllRedeemerRestaurants={this.onTriggerAllRedeemerRestaurants}
         />
 
         <CertificateBalance

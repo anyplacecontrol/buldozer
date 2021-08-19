@@ -13,7 +13,7 @@ import * as dataFuncs from "../../utils/dataFuncs";
 import { IUserView } from "../../redux/modules/userViewRedux";
 import { IRecipientView } from "./recipientViewRedux";
 import { ICertificateView } from "./certificateViewRedux";
-
+import * as uiActions from "./uiRedux";
 
 //*******************************************************************************
 
@@ -36,6 +36,7 @@ const CHANGE_ID = PREFIX + "CHANGE_ID";
 const CHANGE_IS_ACTIVE = PREFIX + "CHANGE_IS_ACTIVE";
 const CHANGE_RECIPIENT_COMMENT = PREFIX + "CHANGE_RECIPIENT_COMMENT";
 const CHANGE_RECIPIENT = PREFIX + "CHANGE_RECIPIENT";
+const UPDATE_CARD_DETAILS = PREFIX + "UPDATE_CARD_DETAILS";
 
 //*******************************************************************************
 
@@ -78,7 +79,7 @@ export default function reducer(
         ...state,
         recipientComment: action.payload
       };
-
+    
     case CHANGE_IS_ACTIVE:
       return {
         ...state,
@@ -90,7 +91,13 @@ export default function reducer(
         ...state,
         recipient: action.payload ? { ...action.payload } : null
       };
-   
+
+    case UPDATE_CARD_DETAILS:
+      return {
+        ...state,
+        certificates: (action.card && action.card.certificates) ? action.card.certificates : []
+        //amount: (action.card && action.card.amount) ? action.card.amount : 0,
+      }
     default:
       return state;
   }
@@ -132,6 +139,30 @@ class CardViewActions extends BaseViewActions {
     };
   };
 
+  initializeView_end = () => {
+    return async (dispatch, getState) => {
+      if (this._isNewItem(getState().cardView)) return;
+
+      //fetch card details (to get certificates)
+
+      try {
+        dispatch(uiActions.showBackdrop(true));
+        let card = await cardsApi.getItem(
+          getState().cardView.id
+        );
+        await dispatch({
+          type: UPDATE_CARD_DETAILS,
+          card: card
+        });
+      } catch (e) {
+        console.log(e);
+        alert(e.message);
+      } finally {
+        dispatch(uiActions.showBackdrop(false));
+      }
+    };
+  };
+
   // ABSTRACT SERVICE FUNCS
 
   get _TABLE_ROUTE() {
@@ -157,7 +188,7 @@ class CardViewActions extends BaseViewActions {
   }
 
   _isNewItem(itemObj) {
-    return itemObj.createdUser == null;
+    return itemObj.createdDate == "";
   }
 
   _getStateSlice = state => {

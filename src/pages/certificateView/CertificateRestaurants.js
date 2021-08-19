@@ -7,27 +7,32 @@ import * as consts from "../../consts/constants";
 import { SelectBox } from "../../components/SelectBox/SelectBox";
 
 export class CertificateRestaurants extends React.Component {
-
-  renderRedeemerRestaurantSelectBox  = () => {
-    
+  renderRedeemerRestaurantSelectBox = () => {
     let itemsArr = this.props.allRestaurants.map((restaurant, index) => {
-      let isChecked=false;
+      let isChecked = false;
       if (this.props.certificate.redeemerRestaurants) {
-        for (let i=0; i<this.props.certificate.redeemerRestaurants.length; i++) {
-          if (this.props.certificate.redeemerRestaurants[i].id === restaurant.id) {
-            isChecked=true;
+        for (
+          let i = 0;
+          i < this.props.certificate.redeemerRestaurants.length;
+          i++
+        ) {
+          if (
+            this.props.certificate.redeemerRestaurants[i].id === restaurant.id
+          ) {
+            isChecked = true;
             break;
           }
         }
       }
 
-      restaurant.id
+      restaurant.id;
       return {
         text: restaurant.name,
         isChecked,
-        onClick: () => this.props.onChangeRedeemerRestaurant(restaurant, isChecked)
+        onClick: () =>
+          this.props.onChangeRedeemerRestaurant(restaurant, isChecked)
       };
-    });   
+    });
 
     return (
       <SelectBox
@@ -40,7 +45,6 @@ export class CertificateRestaurants extends React.Component {
     );
   };
 
-  
   renderIssuingRestaurantsSelectBox = () => {
     let nullItem = {
       text: consts.noStr,
@@ -70,7 +74,7 @@ export class CertificateRestaurants extends React.Component {
   };
 
   render() {
-    let isEditExisting = this.props.certificate.createdUser != null;
+    let isEditExisting = this.props.certificate.id != 0;
 
     return (
       <div className="block-set__box flex animated">
@@ -92,16 +96,36 @@ export class CertificateRestaurants extends React.Component {
           {/*------- Right panel-------- */}
 
           <div className="block-set__item flex animated">
-             {/* --  Ресторан-погашатель-- */}
-             <div className="block-set__item--inner flex w100 animated">
+            {/* --  Ресторан-погашатель-- */}
+            <div className="block-set__item--inner flex w100 animated">
               <div className="block-set__sub-title flex w100 animated">
                 Ресторан-погашатель
               </div>
               <div className="block-set__content flex w100 animated">
-                {this.renderRedeemerRestaurantSelectBox()}
+               
+                <div className="block-set__content flex w100 animated">
+                  <div
+                    className="block-set__info flex animated"
+                    style={{ marginBottom: "10px" }}
+                  >
+                    <div
+                      className={
+                        this.props.certificate.allRedeemerRestaurants
+                          ? "block-set__tumbler active animated"
+                          : "block-set__tumbler animated"
+                      }
+                      onClick={this.props.onTriggerAllRedeemerRestaurants}
+                    />
+                    <div className="block-set__info--title animated">
+                      {"Все"}
+                    </div>
+                  </div>
+                </div>
+                {this.props.certificate.allRedeemerRestaurants
+                  ? null
+                  : this.renderRedeemerRestaurantSelectBox()}
               </div>
             </div>
-
           </div>
         </div>
       </div>
@@ -111,7 +135,8 @@ export class CertificateRestaurants extends React.Component {
 
 CertificateRestaurants.propTypes = {
   certificate: ICertificateView,
-  allRestaurants: PropTypes.arrayOf(IRestaurantView).isRequired,  
-  onChangeIssuingRestaurant: PropTypes.func.isRequired,  
-  onChangeRedeemerRestaurant: PropTypes.func.isRequired,  
+  allRestaurants: PropTypes.arrayOf(IRestaurantView).isRequired,
+  onChangeIssuingRestaurant: PropTypes.func.isRequired,
+  onChangeRedeemerRestaurant: PropTypes.func.isRequired,
+  onTriggerAllRedeemerRestaurants: PropTypes.func.isRequired,
 };

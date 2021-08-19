@@ -35,6 +35,16 @@ export async function getItems(
 
 //--------------------------------------------------------------------------------
 
+export async function getItem(id) {
+  let endpoint = restaurants_endPoint + "/" + id;
+  let Json = await fetchJSON(endpoint);
+  if (!Json.data) throwFetchError("Data is empty", null, endpoint);
+  let result = Json.data;
+  return result;
+}
+
+//--------------------------------------------------------------------------------
+
 export async function deleteItem(Obj) {
   return await baseAPI.deleteItem(Obj.id, restaurantsDelete_endPoint);
 }

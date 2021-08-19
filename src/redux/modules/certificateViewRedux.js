@@ -46,6 +46,7 @@ export const ICertificateView = PropTypes.shape({
 
   issuingRestaurant: IRestaurantView,
   redeemerRestaurants: PropTypes.arrayOf(IRestaurantView),
+  allRedeemerRestaurants: PropTypes.bool,
 
   card: PropTypes.shape({
     id: PropTypes.string.isRequired
@@ -68,6 +69,7 @@ const CHANGE_SERVICE_TYPE = PREFIX + "CHANGE_SERVICE_TYPE";
 const CHANGE_ISSUING_RESTAURANT = PREFIX + "CHANGE_ISSUING_RESTAURANT";
 const CHANGE_ACTIVE_FROM_DATE = PREFIX + "CHANGE_ACTIVE_FROM_DATE";
 const CHANGE_REDEEMER_RESTAURANT = PREFIX + "CHANGE_REDEEMER_RESTAURANT";
+const TRIGGER_ALL_REDEEMER_RESTAURANTS = PREFIX + "TRIGGER_ALL_REDEEMER_RESTAURANTS";
 const CHANGE_TRANSACTIONS = PREFIX + "CHANGE_TRANSACTIONS";
 const CHANGE_IS_PARTIALLY_REDEEMABLE = PREFIX + "CHANGE_IS_PARTIALLY_REDEEMABLE";
 const CHANGE_IS_BARTERABLE = PREFIX + "CHANGE_IS_BARTERABLE"
@@ -96,6 +98,7 @@ export const certificateViewInitialState = {
 
   issuingRestaurant: null,
   redeemerRestaurants: null,
+  allRedeemerRestaurants: false,
 
   card: null
 };
@@ -142,6 +145,13 @@ export default function reducer(
         ...state,
         redeemerRestaurants: restaurants
       };
+    }
+
+    case TRIGGER_ALL_REDEEMER_RESTAURANTS: {
+      return {
+      ...state,
+      allRedeemerRestaurants: !state.allRedeemerRestaurants
+      }
     }
 
     case CHANGE_CARD_ID:
@@ -236,6 +246,7 @@ class CertificateViewActions extends BaseViewActions {
       payload: payload
     };
   };
+  
 
   triggerIsActive = () => {
     return async (dispatch, getState) => {
@@ -303,6 +314,12 @@ class CertificateViewActions extends BaseViewActions {
     };
   };
 
+  triggerAllRedeemerRestaurant = () => {
+    return {
+      type: TRIGGER_ALL_REDEEMER_RESTAURANTS
+    }
+  }
+
   changeIsBarterable = newValue => {
     return {
       type: CHANGE_IS_BARTERABLE,
@@ -366,7 +383,7 @@ class CertificateViewActions extends BaseViewActions {
   }
 
   _isNewItem(itemObj) {
-    return itemObj.createdUser == null;
+    return itemObj.id == 0;
   }
 
   _getStateSlice = state => {

@@ -21,7 +21,7 @@ export class UserMenu extends React.Component {
             className="user__sub--link pointer animated"
             onClick={() => this.props.onLogOutClick()}
           >
-            {"Выйти: " + this.props.authEmail}
+            {"Выйти"}
           </a>
         </li>
       </ul>

@@ -53,7 +53,8 @@ export class restaurantView_ extends React.Component {
           onChangeEmail={this.onChangeEmail}
         />
 
-        {isEditExisting ? <CertificatesTable certificates={this.props.certificates}/>: null}
+        {isEditExisting ? <CertificatesTable title="Карточки и сертификаты / Рестораны эмитеты" certificates={this.props.restaurant.issuingCertificates}/>: null}
+        {isEditExisting ? <CertificatesTable title="Карточки и сертификаты / Рестораны погашатели" certificates={this.props.restaurant.redeemerCertificates}/>: null}
 
       </BaseView>
     );

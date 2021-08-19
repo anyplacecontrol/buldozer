@@ -41,6 +41,16 @@ export async function getItems(
 
 //--------------------------------------------------------------------------------
 
+export async function getItem(id) {
+  let endpoint = cards_endPoint + "/" + id;
+  let Json = await fetchJSON(endpoint);
+  if (!Json.data) throwFetchError("Data is empty", null, endpoint);
+  let result = Json.data;
+  return result;
+}
+
+//--------------------------------------------------------------------------------
+
 export async function deleteItem(cardObj) {
   return await baseAPI.deleteItem(cardObj.id, cardDelete_endPoint);
 }

@@ -13,6 +13,7 @@ import {
 import * as dataFuncs from "../../utils/dataFuncs";
 import * as uiActions from "./uiRedux";
 import { certificatesActions } from "./certificatesRedux";
+import { ICertificateView } from "./certificateViewRedux";
 
 //*******************************************************************************
 
@@ -27,6 +28,8 @@ export const IRestaurantView = PropTypes.shape({
   isActive: PropTypes.bool,
   createdDate: PropTypes.string,
   createdUser: IUserView,  
+  issuingCertificates: PropTypes.arrayOf(PropTypes.object),
+  redeemerCertificates: PropTypes.arrayOf(PropTypes.object), 
 });
 
 
@@ -40,6 +43,7 @@ const CHANGE_COMPANY = PREFIX + "CHANGE_COMPANY";
 const CHANGE_ADDRESS = PREFIX + "CHANGE_ADDRESS";
 const CHANGE_PHONE = PREFIX + "CHANGE_PHONE";
 const CHANGE_EMAIL = PREFIX + "CHANGE_EMAIL";
+const UPDATE_RESTAURANT_DETAILS = PREFIX + "UPDATE_RESTAURANT_DETAILS"
 
 //*******************************************************************************
 
@@ -54,6 +58,8 @@ export const restaurantViewInitialState = {
   isActive: false,
   createdDate: null,
   createdUser: null,  
+  issuingCertificates: [],
+  redeemerCertificates: []
 };
 
 //*******************************************************************************
@@ -114,6 +120,12 @@ export default function reducer(
         email: action.payload
       };
 
+    case UPDATE_RESTAURANT_DETAILS: 
+      return {
+        ...state,
+        issuingCertificates: action.payload.issuingCertificates,
+        redeemerCertificates: action.payload.redeemerCertificates
+      }
     default:
       return state;
   }
@@ -173,21 +185,20 @@ class RestaurantViewActions extends BaseViewActions {
     return async (dispatch, getState) => {
       if (this._isNewItem(getState().restaurantView)) return;
 
-      //get certificates for restaurant
+      //fetch restaurant details (to get certificates)
 
       try {
         dispatch(uiActions.showBackdrop(true));
-        await dispatch(
-          certificatesActions.fetchItems(
-            0,
-            false,
-            false,
-            { issuingRestaurants : [getState().restaurantView.id] },
-            true,
-            true
-          )
+        let restaurant = await restaurantsApi.getItem(
+          getState().restaurantView.id
         );
+        await dispatch({
+          type: UPDATE_RESTAURANT_DETAILS,
+          payload: restaurant
+        });
       } catch (e) {
+        console.log(e);
+        alert(e.message);
       } finally {
         dispatch(uiActions.showBackdrop(false));
       }

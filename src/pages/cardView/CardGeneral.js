@@ -5,7 +5,7 @@ import { ICardView } from "../../redux/modules/cardViewRedux";
 
 export class CardGeneral extends React.Component {
   render() {
-    let isEditExisting = this.props.card.createdUser != null;
+    let isEditExisting = this.props.card.createdDate != "";
 
     return (
       <div className="block-set__box flex animated">
@@ -30,19 +30,21 @@ export class CardGeneral extends React.Component {
             ) : (
               <div className="block-set__item--inner flex w100 animated">
                 <div className="block-set__sub-title flex w100 animated">
-                  Id*
+                  Id *
                 </div>
-                <div className="block-set__content flex w100 animated">
+                <div className="block-set__content flex w100 animated">                                  
                   <input
                     className={
                       !this.props.card.isValidated || this.props.card.id != ""
                         ? "block-set__input animated"
                         : "block-set__input animated  is--error"
                     }
+                    placeholder="последние 6 цифр"
                     value={this.props.card.id}
                     onChange={e => this.props.onChangeId(e.target.value)}
                   />
                 </div>
+                <div style={{marginTop: "10px", fontSize: "small"}}>Автоматически будет добавлено приставку 778256460000</div>
               </div>
             )}
 
@@ -56,8 +58,8 @@ export class CardGeneral extends React.Component {
                   <div className="block-set__info flex animated">
                     <div className="block-set__info--title animated">
                       {this.props.card.createdUser
-                        ? this.props.card.createdUser.email
-                        : null}
+                        ? this.props.card.createdUser.name
+                        : "-"}
                     </div>
                   </div>
                 </div>
@@ -95,12 +97,12 @@ export class CardGeneral extends React.Component {
             {isEditExisting?
             <div className="block-set__item--inner flex w100 animated">
               <div className="block-set__sub-title flex w100 animated">
-                Номинал (грн)
+                Баланс (грн)
               </div>
               <div className="block-set__content flex w100 animated">
                 <div className="block-set__info flex animated">
                   <div className="block-set__info--title animated">
-                    {this.props.card.amount ? this.props.card.amount : "-"}
+                    {this.props.card.balance ? this.props.card.balance : "-"}
                   </div>
                 </div>
               </div>

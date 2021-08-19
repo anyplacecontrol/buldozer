@@ -8,3 +8,5 @@ export const anyValue = "Все";
 export const AUTH_INACTIVITY_TIME = 30 * 60 * 1000; //30 minutes
 
 export const apiDomain = "bulldozer-api.madency.com/api"; //prod
+
+export const cardIdPrefix = "778256460000";

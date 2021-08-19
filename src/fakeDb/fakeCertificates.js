@@ -58,6 +58,7 @@ const FAKE_CERTIFICATES = [
       //isActive: false,
       //createdDate: "2021-06-17T12:55:36.000000Z"
     },
+    allRedeemerRestaurants: false,
     redeemerRestaurants : [{
       //id: 516,
       name: "ООО Компания ITКазТекстиль-М",

@@ -5,7 +5,7 @@ import * as dataFuncs from "../../utils/dataFuncs";
 
 export class UserGeneral extends React.Component {
   render() {
-    let isEditExisting = this.props.user.createdUser != null;
+    let isEditExisting = this.props.user.id != 0;
 
     return (
       <div className="block-set__box flex animated">

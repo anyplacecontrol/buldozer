@@ -90,6 +90,9 @@ export async function AddOrUpdateItem(certObj, endPoint, method) {
   delete cleanCert.redeemerRestaurants; 
   delete cleanCert.transactions;
   delete cleanCert.card;  
+  if (cleanCert.allRedeemerRestaurants) {
+    delete cleanCert.redeemerRestaurants
+  } 
 
   cleanCert.redeemerRestaurantIds =certObj.redeemerRestaurants.map((restaurant) => restaurant.id)
   cleanCert.recipientId = certObj.recipient ? certObj.recipient.id : null;

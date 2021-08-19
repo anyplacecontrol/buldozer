@@ -38,7 +38,7 @@ export class CardRecipient extends React.Component {
 
 
   render() {
-    let isEditExisting = this.props.card.createdUser != null;
+    let isEditExisting = this.props.card.id != 0;
 
     return (
       <div className="block-set__box flex animated">
