@@ -70,11 +70,11 @@ export class CertificatesTable extends React.Component {
                 <div className="product__table--td animated">{id}</div>
               </div>
 
-              <div className="id animated">
+              <div className="activity animated">
                 <div className="product__table--td animated">{isActive}</div>
               </div>
 
-              <div className="name animated">
+              <div className="date animated">
                 <div className="product__table--td animated">
                   {activeToDate}
                 </div>
@@ -94,17 +94,17 @@ export class CertificatesTable extends React.Component {
                 <div className="product__table--td animated">{certKind}</div>
               </div>
 
-              <div className="date animated">
+              <div className="price animated">
                 <div className="product__table--td animated">{amount}</div>
               </div>
 
-              <div className="date animated">
+              <div className="price animated">
                 <div className="product__table--td animated">
                   {amount - balance}
                 </div>
               </div>
 
-              <div className="date animated">
+              <div className="price animated">
                 <div className="product__table--td animated">{balance}</div>
               </div>
             </div>
@@ -142,12 +142,12 @@ export class CertificatesTable extends React.Component {
                   <div className="id animated">
                     <div className="product__table--td animated">ID серт</div>
                   </div>
-                  <div className="id animated">
+                  <div className="activity animated">
                     <div className="product__table--td animated">
                       Активность
                     </div>
                   </div>
-                  <div className="name animated">
+                  <div className="date animated">
                     <div className="product__table--td animated">
                       Срок действия
                     </div>
@@ -163,17 +163,17 @@ export class CertificatesTable extends React.Component {
                   <div className="name animated">
                     <div className="product__table--td animated">Вид серт</div>
                   </div>
-                  <div className="date animated">
+                  <div className="price animated">
                     <div className="product__table--td animated">
                       Номинал, грн
                     </div>
                   </div>
-                  <div className="date animated">
+                  <div className="price animated">
                     <div className="product__table--td animated">
                       Погашено, грн
                     </div>
                   </div>
-                  <div className="date animated">
+                  <div className="price animated">
                     <div className="product__table--td animated">
                       Баланс, грн
                     </div>
