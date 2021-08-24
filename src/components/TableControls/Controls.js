@@ -60,13 +60,21 @@ export class Controls extends React.Component {
             )}
 
             {this.props.onImportClick && (
-              <div
-                className="import__button flex animated"
-                onClick={this.props.onImportClick}
-              >
+              <>                  
+                <div className="import__button flex animated">
+                <input
+                  style={{width: 0, height: 0}}
+                  id="files"
+                  type="file"
+                  encType="multipart/form-data"                  
+                  onChange={this.props.onImportClick}
+                />
                 <div className="import__button--icon animated"></div>
-                <div className="import__button--text animated">Импорт CSV</div>
+                <label className="import__button--text" htmlFor="files">                 
+                  <span className="image__add--text animated"> Импорт CSV</span>
+                </label>
               </div>
+              </>
             )}
           </div>
         </div>
@@ -78,10 +86,11 @@ export class Controls extends React.Component {
 Controls.propTypes = {
   onFilterClick: PropTypes.func,
   onAddItemClick: PropTypes.func,
-  onImportClick: PropTypes.func,
   onDeleteSelectedItems: PropTypes.func,
   onRefreshClick: PropTypes.func,
   isFilterVisible: PropTypes.bool.isRequired,
   count: PropTypes.number.isRequired,
-  selectedItemsQty: PropTypes.number.isRequired
+  selectedItemsQty: PropTypes.number.isRequired,
+
+  onImportClick: PropTypes.func,  
 };

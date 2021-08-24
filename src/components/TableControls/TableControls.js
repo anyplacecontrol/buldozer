@@ -66,14 +66,15 @@ export class TableControls extends React.Component {
     else return null;
   };
 
-  onImportClick = () => {
-    this.props.dispatch(this.props.actionsProvider.importCSV());
+  onImportClick = (event) => {
+    this.props.dispatch(this.props.actionsProvider.importCSV(event));
   }
+
 
   getImportHandler = () => {
     if (this.props.actionsProvider.importCSV) return this.onImportClick;
     else return null;
-  };  
+  };   
 
   onChangeFilterValue = (filterItem, newValue) => {
     this.props.dispatch(
@@ -97,7 +98,8 @@ export class TableControls extends React.Component {
           onFilterClick={onFilterClick}
           onRefreshClick={this.onRefreshClick}
           onAddItemClick={this.getAddItemHandler()}
-          onImportClick={this.getImportHandler()}
+          onImportClick={this.getImportHandler()}          
+
           onDeleteSelectedItems={
             this.props.actionsProvider.ALLOW_DELETE_ITEM
               ? this.onDeleteSelectedItems

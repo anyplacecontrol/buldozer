@@ -10,9 +10,9 @@ import {
 import * as tableFilters from "../../consts/tableFilters";
 import * as routing from "./routingRedux";
 import * as uiActions from "./uiRedux";
-import {restaurantsActions} from "./restaurantsRedux";
-import {recipientsActions} from "./recipientsRedux";
-import {serviceTypesActions} from "./serviceTypesRedux";
+import { restaurantsActions } from "./restaurantsRedux";
+import { recipientsActions } from "./recipientsRedux";
+import { serviceTypesActions } from "./serviceTypesRedux";
 import * as consts from "../../consts/constants";
 
 //*******************************************************************************
@@ -21,7 +21,7 @@ const PREFIX = "cards/";
 //*******************************************************************************
 
 export const cardsInitialState = {
-  ...BaseTableInitialState,  
+  ...BaseTableInitialState,
   sortBy: tableColumns.COLUMN_CREATED_DATE,
   columns: tableColumns.CARDS_COLUMNS
 };
@@ -29,12 +29,7 @@ export const cardsInitialState = {
 //*******************************************************************************
 
 export default function reducer(state = cardsInitialState, action = {}) {
-  let result = BaseTableReducer(
-    PREFIX,
-    state,
-    action,
-    cardsInitialState
-  );
+  let result = BaseTableReducer(PREFIX, state, action, cardsInitialState);
 
   if (result) return result;
 
@@ -58,8 +53,7 @@ class CertificatesActions extends BaseTableActions {
 
   // *** Filters
   loadFilterItems() {
-    return async (dispatch, getState) => {      
-
+    return async (dispatch, getState) => {
       let p1 = new Promise(async (resolve, reject) => {
         if (
           !getState().recipients.items ||
@@ -69,12 +63,10 @@ class CertificatesActions extends BaseTableActions {
             await dispatch(
               recipientsActions.fetchItems(0, false, false, null, true, true)
             );
-          } catch (e) {
-          }
+          } catch (e) {}
         }
         resolve();
       });
-     
 
       dispatch(uiActions.showBackdrop(true));
       await Promise.all([p1]);
@@ -82,10 +74,13 @@ class CertificatesActions extends BaseTableActions {
 
       let filterItems = [
         { ...tableFilters.FILTER_ID },
-        { ...tableFilters.FILTER_ISACTIVE },        
+        { ...tableFilters.FILTER_ISACTIVE },
         {
           ...tableFilters.FILTER_RECIPIENT,
-          items: [ { company: "Все", value: null }, ...getState().recipients.items]
+          items: [
+            { company: "Все", value: null },
+            ...getState().recipients.items
+          ]
         }
       ];
 
@@ -128,9 +123,28 @@ class CertificatesActions extends BaseTableActions {
     };
   }
 
-  importCSV() {
+  importCSV(event) {
     return async dispatch => {
-     
+      if (!event.target) return;
+      if (!event.target.files) return;
+
+      let selectedFile = event.target.files[0];
+      if (!selectedFile) return;
+
+      if (selectedFile.size > 1024 * 1024) {
+        alert("Файл превышает размер 1024 Кб");
+        return;
+      }
+
+      try {
+        dispatch(uiActions.showBackdrop(true));
+        let response = await cardsApi.Import(selectedFile);
+      } catch (e) {
+        console.log(e);
+        alert(e.message);
+      } finally {
+        dispatch(uiActions.showBackdrop(false));
+      }
     };
   }
 

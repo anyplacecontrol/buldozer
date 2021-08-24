@@ -10,6 +10,8 @@ const cardAdd_endPoint = cards_endPoint;
 const cardDelete_endPoint = cards_endPoint + "/"; //+{Id}
 const cardUpdate_endPoint = cards_endPoint + "/"; //+{Id}
 
+const cardsImport_endPoint =  "https://" + constants.apiDomain + "/imports/cards"
+
 //--------------------------------------------------------------------------------
 
 export async function getItems(
@@ -97,4 +99,20 @@ export async function AddOrUpdateItem(cardObj, endPoint, method) {
   });
 
   return null;
+}
+
+//--------------------------------------------------------------------------------
+
+export async function Import(file) {
+
+  let response = await fetchJSON(cardsImport_endPoint, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "text/csv"
+    },
+    body: JSON.stringify({file: file})
+  });
+
+  return response;
 }
