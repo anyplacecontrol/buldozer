@@ -105,14 +105,17 @@ export async function AddOrUpdateItem(cardObj, endPoint, method) {
 
 export async function Import(file) {
 
+  var formData = new FormData();  
+  formData.append("file", file);
+
   let response = await fetchJSON(cardsImport_endPoint, {
     method: "POST",
     headers: {
       Accept: "application/json",
-      "Content-Type": "text/csv"
+      // "Content-Type": "multipart/form-data"
     },
-    body: JSON.stringify({file: file})
+    body: formData
   });
 
-  return response;
+  return response.success;
 }

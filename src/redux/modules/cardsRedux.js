@@ -139,6 +139,10 @@ class CertificatesActions extends BaseTableActions {
       try {
         dispatch(uiActions.showBackdrop(true));
         let response = await cardsApi.Import(selectedFile);
+        if (response) {
+          alert("Успешно импортировано!");
+          window.location.replace("/cards");
+        }
       } catch (e) {
         console.log(e);
         alert(e.message);
