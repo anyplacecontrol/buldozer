@@ -8,6 +8,7 @@ const restaurants_endPoint = "https://" + constants.apiDomain + "/restaurants";
 const restaurantsAdd_endPoint = restaurants_endPoint;
 const restaurantsDelete_endPoint = restaurants_endPoint + "/"; //+{Id}
 const restaurantsUpdate_endPoint = restaurants_endPoint + "/"; //+{Id}
+const restaurantsImport_endPoint = "https://" + constants.apiDomain + "/imports/restaurants"
 
 //--------------------------------------------------------------------------------
 
@@ -89,4 +90,22 @@ export async function AddOrUpdateItem(Obj, endPoint, method) {
   });
 
   return null;
+}
+
+//--------------------------------------------------------------------------------
+
+export async function Import(file) {
+
+  var formData = new FormData();  
+  formData.append("file", file);
+
+  let response = await fetchJSON(restaurantsImport_endPoint, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",      
+    },
+    body: formData
+  });
+
+  return response.success;
 }

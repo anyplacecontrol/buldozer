@@ -754,4 +754,35 @@ export class BaseTableActions {
       }
     };
   };
+
+
+  
+  _importCSV(event, api, refreshRoute) {
+    return async dispatch => {
+      if (!event.target) return;
+      if (!event.target.files) return;
+
+      let selectedFile = event.target.files[0];
+      if (!selectedFile) return;
+
+      if (selectedFile.size > 1024 * 1024) {
+        alert("Файл превышает размер 1024 Кб");
+        return;
+      }
+
+      try {
+        dispatch(uiActions.showBackdrop(true));
+        let response = await api.Import(selectedFile);
+        if (response) {
+          alert("Успешно импортировано!");
+          window.location.replace(refreshRoute);
+        }
+      } catch (e) {
+        console.log(e);
+        alert(e.message);
+      } finally {
+        dispatch(uiActions.showBackdrop(false));
+      }
+    };
+  }
 }

@@ -124,32 +124,7 @@ class CertificatesActions extends BaseTableActions {
   }
 
   importCSV(event) {
-    return async dispatch => {
-      if (!event.target) return;
-      if (!event.target.files) return;
-
-      let selectedFile = event.target.files[0];
-      if (!selectedFile) return;
-
-      if (selectedFile.size > 1024 * 1024) {
-        alert("Файл превышает размер 1024 Кб");
-        return;
-      }
-
-      try {
-        dispatch(uiActions.showBackdrop(true));
-        let response = await cardsApi.Import(selectedFile);
-        if (response) {
-          alert("Успешно импортировано!");
-          window.location.replace("/cards");
-        }
-      } catch (e) {
-        console.log(e);
-        alert(e.message);
-      } finally {
-        dispatch(uiActions.showBackdrop(false));
-      }
-    };
+    return this._importCSV(event, cardsApi, "/cards");  
   }
 
   //------------------------------------------------------------------------------

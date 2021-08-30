@@ -52,7 +52,7 @@ export const ICertificateView = PropTypes.shape({
     id: PropTypes.string.isRequired
   }),
 
-  transactions: PropTypes.arrayOf(ITransaction)
+  transactions: PropTypes.arrayOf(ITransaction),  
 });
 
 //*******************************************************************************
@@ -97,10 +97,11 @@ export const certificateViewInitialState = {
   serviceType: null,
 
   issuingRestaurant: null,
-  redeemerRestaurants: null,
+  redeemerRestaurants: [],
   allRedeemerRestaurants: false,
 
-  card: null
+  card: null,
+  createdDate: null
 };
 
 //*******************************************************************************
@@ -383,7 +384,7 @@ class CertificateViewActions extends BaseViewActions {
   }
 
   _isNewItem(itemObj) {
-    return itemObj.id == 0;
+    return itemObj.createdDate ? false: true;
   }
 
   _getStateSlice = state => {

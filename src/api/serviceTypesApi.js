@@ -9,6 +9,7 @@ const serviceTypes_endPoint =
 const serviceTypesAdd_endPoint =serviceTypes_endPoint;
 const serviceTypesDelete_endPoint =serviceTypes_endPoint + "/"; //+{Id}
 const serviceTypesUpdate_endPoint =serviceTypes_endPoint + "/"; //+{Id}  
+const serviceTypesImport_endPoint = "https://" + constants.apiDomain + "/imports/service-types"
 
 //--------------------------------------------------------------------------------
 
@@ -82,4 +83,22 @@ export async function AddOrUpdateItem(Obj, endPoint, method) {
   });
 
   return null;
+}
+
+//--------------------------------------------------------------------------------
+
+export async function Import(file) {
+
+  var formData = new FormData();  
+  formData.append("file", file);
+
+  let response = await fetchJSON(serviceTypesImport_endPoint, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",      
+    },
+    body: formData
+  });
+
+  return response.success;
 }

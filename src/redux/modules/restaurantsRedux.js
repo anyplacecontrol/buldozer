@@ -101,6 +101,10 @@ class RestaurantsActions extends BaseTableActions {
     };
   }
 
+  importCSV(event) {
+    return this._importCSV(event, restaurantsApi, "/restaurants");  
+  }
+
   //------------------------------------------------------------------------------
   // ABSTRACT FUNCS REALIZATION
 

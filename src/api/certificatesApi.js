@@ -9,6 +9,7 @@ const certificates_endPoint =
 const certificateAdd_endPoint = certificates_endPoint;
 const certificateDelete_endPoint = certificates_endPoint + "/"; //+{Id}
 const certificateUpdate_endPoint = certificates_endPoint + "/"; //+{Id}
+const certImport_endPoint = "https://" + constants.apiDomain + "/imports/certificates"
 
 //--------------------------------------------------------------------------------
 
@@ -111,4 +112,22 @@ export async function AddOrUpdateItem(certObj, endPoint, method) {
   });
 
   return null;
+}
+
+//--------------------------------------------------------------------------------
+
+export async function Import(file) {
+
+  var formData = new FormData();  
+  formData.append("file", file);
+
+  let response = await fetchJSON(certImport_endPoint, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",      
+    },
+    body: formData
+  });
+
+  return response.success;
 }

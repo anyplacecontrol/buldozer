@@ -103,6 +103,10 @@ class RecipientsActions extends BaseTableActions {
     };
   }
 
+  importCSV(event) {
+    return this._importCSV(event, recipientsApi, "/recipients");  
+  }
+
   //------------------------------------------------------------------------------
   // ABSTRACT FUNCS REALIZATION
 

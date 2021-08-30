@@ -111,8 +111,7 @@ export async function Import(file) {
   let response = await fetchJSON(cardsImport_endPoint, {
     method: "POST",
     headers: {
-      Accept: "application/json",
-      // "Content-Type": "multipart/form-data"
+      Accept: "application/json",      
     },
     body: formData
   });

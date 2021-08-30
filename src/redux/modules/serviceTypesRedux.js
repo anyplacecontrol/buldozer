@@ -102,6 +102,11 @@ class ServiceTypesActions extends BaseTableActions {
     };
   }
 
+  importCSV(event) {
+    return this._importCSV(event, serviceTypesApi, "/serviceTypes");  
+  }
+
+
   //------------------------------------------------------------------------------
   // ABSTRACT FUNCS REALIZATION
 

@@ -166,6 +166,10 @@ class CertificatesActions extends BaseTableActions {
     };
   }
 
+  importCSV(event) {
+    return this._importCSV(event, certificatesApi, "/certificates");  
+  }
+
   //------------------------------------------------------------------------------
   // ABSTRACT FUNCS REALIZATION
 

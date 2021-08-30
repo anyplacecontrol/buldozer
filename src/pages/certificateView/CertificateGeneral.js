@@ -9,7 +9,7 @@ registerLocale("ru", ru);
 
 export class CertificateGeneral extends React.Component {
   render() {
-    let isEditExisting = this.props.certificate.id != 0;
+    let isEditExisting = this.props.certificate.createdDate ? true: false;
 
     return (
       <div className="block-set__box flex animated">

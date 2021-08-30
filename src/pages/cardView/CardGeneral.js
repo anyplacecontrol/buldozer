@@ -43,8 +43,7 @@ export class CardGeneral extends React.Component {
                     value={this.props.card.id}
                     onChange={e => this.props.onChangeId(e.target.value)}
                   />
-                </div>
-                <div style={{marginTop: "10px", fontSize: "small"}}>Автоматически будет добавлено приставку 778256460000</div>
+                </div>                
               </div>
             )}
 

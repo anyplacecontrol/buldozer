@@ -10,6 +10,7 @@ const recipients_endPoint = "https://" + constants.apiDomain + "/recipients";
 const recipientsAdd_endPoint = recipients_endPoint;
 const recipientsDelete_endPoint = recipients_endPoint + "/"; //+{Id}
 const recipientsUpdate_endPoint = recipients_endPoint + "/"; //+{Id}
+const recipientsImport_endPoint = "https://" + constants.apiDomain + "/imports/recipients"
 
 //--------------------------------------------------------------------------------
 
@@ -84,4 +85,22 @@ export async function AddOrUpdateItem(Obj, endPoint, method) {
   });
 
   return null;
+}
+
+//--------------------------------------------------------------------------------
+
+export async function Import(file) {
+
+  var formData = new FormData();  
+  formData.append("file", file);
+
+  let response = await fetchJSON(recipientsImport_endPoint, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",      
+    },
+    body: formData
+  });
+
+  return response.success;
 }
