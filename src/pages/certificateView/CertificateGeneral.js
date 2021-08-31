@@ -31,25 +31,7 @@ export class CertificateGeneral extends React.Component {
                   </div>
                 </div>
               </div>
-            ) : (
-              <div className="block-set__item--inner flex w100 animated">
-                <div className="block-set__sub-title flex w100 animated">
-                  Id*
-                </div>
-                <div className="block-set__content flex w100 animated">
-                  <input
-                    className={
-                      !this.props.certificate.isValidated ||
-                      this.props.certificate.id != ""
-                        ? "block-set__input animated"
-                        : "block-set__input animated  is--error"
-                    }
-                    value={this.props.certificate.id}
-                    onChange={e => this.props.onChangeId(e.target.value)}
-                  />
-                </div>
-              </div>
-            )}
+            ) : null}
             {/* Дата активации   */}
 
             <div className="block-set__item--inner flex w100 animated">

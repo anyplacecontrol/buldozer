@@ -73,7 +73,7 @@ export async function AddOrUpdateItem(Obj, endPoint, method) {
   }
 
   let cleanObj = { ...Obj };
-  delete cleanObj.id;
+  //delete cleanObj.id;
   delete cleanObj.isChecked;
   delete cleanObj.isValidated;    
   delete cleanObj.rowNumber;

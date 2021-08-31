@@ -3,7 +3,7 @@ import { ROUTE_NAMES } from "../../consts/routeNames";
 import { cardsActions } from "./cardsRedux";
 import * as viewValidators from "../../utils/viewValidators";
 import * as cardsApi from "../../api/cardsApi";
-import {  
+import {
   BaseViewActions,
   BaseViewInitialState,
   BaseViewReducer,
@@ -12,21 +12,22 @@ import {
 import * as dataFuncs from "../../utils/dataFuncs";
 import { IUserView } from "../../redux/modules/userViewRedux";
 import { IRecipientView } from "./recipientViewRedux";
-import { ICertificateView } from "./certificateViewRedux";
+import { ICertificateView, ITransaction } from "./certificateViewRedux";
 import * as uiActions from "./uiRedux";
 
 //*******************************************************************************
 
 export const ICardView = PropTypes.shape({
   ...IBaseView,
-  id: PropTypes.string.isRequired,
+  id: PropTypes.string,
   balance: PropTypes.number.isRequired,
   recipientComment: PropTypes.string,
-  isActive: PropTypes.bool, 
-  createdDate: PropTypes.string, 
+  isActive: PropTypes.bool,
+  createdDate: PropTypes.string,
   createdUser: IUserView, //api field: user_id
-  recipient: IRecipientView,  
-  certificates: PropTypes.arrayOf(ICertificateView)
+  recipient: IRecipientView,
+  certificates: PropTypes.arrayOf(ICertificateView),
+  transactions: PropTypes.arrayOf(ITransaction)
 });
 
 //*******************************************************************************
@@ -49,21 +50,14 @@ export const cardViewInitialState = {
   createdDate: "",
   createdUser: null,
   recipient: null,
-  certificates: [],  
+  certificates: [],
+  transactions: []
 };
 
 //*******************************************************************************
 
-export default function reducer(
-  state = cardViewInitialState,
-  action = {}
-) {
-  let result = BaseViewReducer(
-    PREFIX,
-    state,
-    action,
-    cardViewInitialState
-  );
+export default function reducer(state = cardViewInitialState, action = {}) {
+  let result = BaseViewReducer(PREFIX, state, action, cardViewInitialState);
 
   if (result) return result;
 
@@ -72,20 +66,21 @@ export default function reducer(
       return {
         ...state,
         id: action.payload
-      };   
+      };
 
     case CHANGE_RECIPIENT_COMMENT:
       return {
         ...state,
         recipientComment: action.payload
       };
-    
+   
+
     case CHANGE_IS_ACTIVE:
       return {
         ...state,
         isActive: action.payload
       };
-    
+
     case CHANGE_RECIPIENT:
       return {
         ...state,
@@ -95,9 +90,15 @@ export default function reducer(
     case UPDATE_CARD_DETAILS:
       return {
         ...state,
-        certificates: (action.card && action.card.certificates) ? action.card.certificates : []
-        //amount: (action.card && action.card.amount) ? action.card.amount : 0,
-      }
+        certificates:
+          action.card && action.card.certificates
+            ? action.card.certificates
+            : [],
+        transactions:
+            action.card && action.card.transactions
+              ? action.card.transactions
+              : []        
+      };
     default:
       return state;
   }
@@ -124,7 +125,6 @@ class CardViewActions extends BaseViewActions {
     };
   };
 
- 
   changeRecipientComment = payload => {
     return {
       type: CHANGE_RECIPIENT_COMMENT,
@@ -147,13 +147,14 @@ class CardViewActions extends BaseViewActions {
 
       try {
         dispatch(uiActions.showBackdrop(true));
-        let card = await cardsApi.getItem(
-          getState().cardView.id
-        );
+
+        let card = await cardsApi.getItem(getState().cardView.id);        
+
         await dispatch({
           type: UPDATE_CARD_DETAILS,
           card: card
-        });
+        });                
+
       } catch (e) {
         console.log(e);
         alert(e.message);

@@ -2,12 +2,12 @@ import React from "react";
 import * as dataFuncs from "../../utils/dataFuncs";
 import PropTypes from "prop-types";
 
-export class CertificateBalance extends React.Component {
+export class Balance extends React.Component {
   renderRows = () => {
-    if (!this.props.certificate || !this.props.certificate.transactions)
+    if (!this.props.item || !this.props.item.transactions)
       return null;
 
-    return this.props.certificate.transactions.map((transaction, index) => {
+    return this.props.item.transactions.map((transaction, index) => {
       let date = dataFuncs.truncateDate(transaction.createdDate);
       let amount = transaction.amount;
       let restaurant = transaction.restaurant
@@ -45,7 +45,7 @@ export class CertificateBalance extends React.Component {
     return (
       <div className="block-set__box flex animated">
         <div className="block-set__title animated">
-          {"Баланс: " + this.props.certificate.balance + " грн"}
+          {"Баланс: " + this.props.item.balance + " грн"}
         </div>
         {/* -- add class ".no-padding"-- */}
         <div className="block-set__inner flex w100 no-padding animated">
@@ -83,6 +83,6 @@ export class CertificateBalance extends React.Component {
   }
 }
 
-CertificateBalance.propTypes = {
-  certificate: PropTypes.ICertificateView
+Balance.propTypes = {
+  item: PropTypes.IView
 };

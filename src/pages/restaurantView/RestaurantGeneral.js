@@ -5,7 +5,7 @@ import * as dataFuncs from "../../utils/dataFuncs";
 
 export class RestaurantGeneral extends React.Component {
   render() {
-    let isEditExisting = this.props.restaurant.id != 0;
+    let isEditExisting = this.props.restaurant.createdDate != null;
 
     return (
       <div className="block-set__box flex animated">
@@ -13,6 +13,42 @@ export class RestaurantGeneral extends React.Component {
         <div className="block-set__inner flex w100 animated">
           {/*------- Left panel-------- */}
           <div className="block-set__item flex animated">
+
+           {/* Id */}
+           {isEditExisting ? (
+              <div className="block-set__item--inner flex w100 animated">
+                <div className="block-set__sub-title flex w100 animated">
+                  Id
+                </div>
+                <div className="block-set__content flex w100 animated">
+                  <div className="block-set__info flex animated">
+                    <div className="block-set__info--title animated">
+                      {this.props.restaurant.id}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="block-set__item--inner flex w100 animated">
+                <div className="block-set__sub-title flex w100 animated">
+                  Id*
+                </div>
+                <div className="block-set__content flex w100 animated">
+                  <input
+                  type="number"
+                    className={
+                      !this.props.restaurant.isValidated ||
+                      this.props.restaurant.id != ""
+                        ? "block-set__input animated"
+                        : "block-set__input animated  is--error"
+                    }
+                    value={this.props.restaurant.id}
+                    onChange={e => this.props.onChangeId(e.target.value)}
+                  />
+                </div>
+              </div>
+            )}
+
             {/* Ресторан */}
             <div className="block-set__item--inner flex w100 animated">
               <div className="block-set__sub-title flex w100 animated">
@@ -145,5 +181,6 @@ RestaurantGeneral.propTypes = {
   onChangeAddress: PropTypes.func.isRequired,
   onChangePhone: PropTypes.func.isRequired,
   onChangeEmail: PropTypes.func.isRequired,
-  onChangeComment: PropTypes.func.isRequired
+  onChangeComment: PropTypes.func.isRequired,
+  onChangeId: PropTypes.func.isRequired,
 };

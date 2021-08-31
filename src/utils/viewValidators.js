@@ -141,19 +141,10 @@ export function validateCertificateView(viewObj) {
 
 //--------------------------------------------------------------------------
 
-export function validateCardView(viewObj) {
-  if (
-    isEmptyString(viewObj.id) 
-  )
-    throw "Проверка не удалась: пустые поля";
+export function validateCardView(viewObj) {  
   
   if (!viewObj.recipient) throw "Проверка не удалась: контрагент не задан";
-    
-  if (
-    viewObj.id.length != 6
-  ) {
-    throw "Проверка не удалась: id должен содержать 6 цифр";
-  }
+     
 
   if (isLongString(viewObj.recipientComment, 500)) {
     throw "Проверка не удалась: слишком длинный комментарий (>500 символов)";
@@ -202,7 +193,7 @@ export function validateRestaurantView(viewObj) {
   if (isEmptyString(viewObj.name) || isEmptyString(viewObj.address))
     throw "Проверка не удалась: пустые поля";
 
-  if (
+  if (    
     isLongString(viewObj.name) ||
     isLongString(viewObj.address) ||
     isLongString(viewObj.phone) ||
@@ -210,6 +201,9 @@ export function validateRestaurantView(viewObj) {
   ) {
     throw "Проверка не удалась: слишком длинные поля (>255 символов)";
   }
+
+  if  (viewObj.id==0 || viewObj.id.length<9)
+    throw "поле Id должно содержать 9 цифр";
 
   if (isLongString(viewObj.comment, 500)) {
     throw "Проверка не удалась: слишком длинный комментарий (>500 символов)";

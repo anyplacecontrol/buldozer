@@ -9,6 +9,7 @@ import { BaseView } from "../../components/BaseView/BaseView";
 import { recipientsActions } from "../../redux/modules/recipientsRedux";
 import { IRecipientView } from "../../redux/modules/recipientViewRedux";
 import { CertificatesTable } from "../../components/CertificatesTable/CertificatesTable";
+import { Balance } from "../../components/Balance/Balance";
 
 export class cardView_ extends React.Component {
   onChangeId = newValue => {
@@ -49,6 +50,10 @@ export class cardView_ extends React.Component {
         />       
 
          {isEditExisting ? <CertificatesTable hideCardId certificates={this.props.card.certificates}/>: null} 
+
+         {isEditExisting ? (
+          <Balance item={this.props.card} />
+        ) : null}
 
       </BaseView>
     );

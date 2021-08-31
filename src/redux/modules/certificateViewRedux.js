@@ -17,7 +17,7 @@ import { IRestaurantView } from "./restaurantViewRedux";
 import * as uiActions from "./uiRedux";
 
 //*******************************************************************************
-const ITransaction = PropTypes.shape({
+export const ITransaction = PropTypes.shape({
   createdDate: PropTypes.string,
   amount: PropTypes.number, //Погашено
   balance: PropTypes.number, //Баланс
@@ -101,7 +101,8 @@ export const certificateViewInitialState = {
   allRedeemerRestaurants: false,
 
   card: null,
-  createdDate: null
+  createdDate: null,
+  transactions: []
 };
 
 //*******************************************************************************

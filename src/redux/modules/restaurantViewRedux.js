@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import {IUserView} from "../../redux/modules/userViewRedux";  
+import { IUserView } from "../../redux/modules/userViewRedux";
 import { ROUTE_NAMES } from "../../consts/routeNames";
 import { restaurantsActions } from "./restaurantsRedux";
 import * as viewValidators from "../../utils/viewValidators";
@@ -19,45 +19,45 @@ import { ICertificateView } from "./certificateViewRedux";
 
 export const IRestaurantView = PropTypes.shape({
   ...IBaseView,
-  id: PropTypes.number.isRequired,  
+  id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
-  email: PropTypes.string,  
+  email: PropTypes.string,
   address: PropTypes.string,
   phone: PropTypes.string,
   comment: PropTypes.string,
   isActive: PropTypes.bool,
   createdDate: PropTypes.string,
-  createdUser: IUserView,  
+  createdUser: IUserView,
   issuingCertificates: PropTypes.arrayOf(PropTypes.object),
-  redeemerCertificates: PropTypes.arrayOf(PropTypes.object), 
+  redeemerCertificates: PropTypes.arrayOf(PropTypes.object)
 });
-
 
 //*******************************************************************************
 const PREFIX = "restaurantView/";
 
 const CHANGE_IS_ACTIVE = PREFIX + "CHANGE_IS_ACTIVE";
 const CHANGE_COMMENT = PREFIX + "CHANGE_COMMENT";
+const CHANGE_ID = PREFIX + "CHANGE_ID";
 const CHANGE_NAME = PREFIX + "CHANGE_NAME";
 const CHANGE_COMPANY = PREFIX + "CHANGE_COMPANY";
 const CHANGE_ADDRESS = PREFIX + "CHANGE_ADDRESS";
 const CHANGE_PHONE = PREFIX + "CHANGE_PHONE";
 const CHANGE_EMAIL = PREFIX + "CHANGE_EMAIL";
-const UPDATE_RESTAURANT_DETAILS = PREFIX + "UPDATE_RESTAURANT_DETAILS"
+const UPDATE_RESTAURANT_DETAILS = PREFIX + "UPDATE_RESTAURANT_DETAILS";
 
 //*******************************************************************************
 
 export const restaurantViewInitialState = {
   ...BaseViewInitialState,
-  id: 0,  
+  id: 0,
   name: "",
-  email: "",  
+  email: "",
   address: "",
   phone: "",
   comment: "",
   isActive: false,
   createdDate: null,
-  createdUser: null,  
+  createdUser: null,
   issuingCertificates: [],
   redeemerCertificates: []
 };
@@ -120,12 +120,18 @@ export default function reducer(
         email: action.payload
       };
 
-    case UPDATE_RESTAURANT_DETAILS: 
+    case CHANGE_ID:
+      return {
+        ...state,
+        id: action.payload
+      };
+
+    case UPDATE_RESTAURANT_DETAILS:
       return {
         ...state,
         issuingCertificates: action.payload.issuingCertificates,
         redeemerCertificates: action.payload.redeemerCertificates
-      }
+      };
     default:
       return state;
   }
@@ -159,7 +165,6 @@ class RestaurantViewActions extends BaseViewActions {
     };
   };
 
-  
   changeAddress = payload => {
     return {
       type: CHANGE_ADDRESS,
@@ -180,6 +185,14 @@ class RestaurantViewActions extends BaseViewActions {
       payload: payload
     };
   };
+
+  changeId = payload => {
+    return {
+      type: CHANGE_ID,
+      payload: payload
+    };
+  };
+  
 
   initializeView_end = () => {
     return async (dispatch, getState) => {
@@ -230,7 +243,7 @@ class RestaurantViewActions extends BaseViewActions {
   }
 
   _isNewItem(itemObj) {
-    return itemObj.id == 0;
+    return itemObj.createdDate == null;
   }
 
   _getStateSlice = state => {

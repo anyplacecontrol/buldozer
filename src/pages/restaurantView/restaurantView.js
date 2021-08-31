@@ -31,12 +31,16 @@ export class restaurantView_ extends React.Component {
     this.props.dispatch(restaurantViewActions.changeEmail(newValue));
   };
 
+  onChangeId = newValue => {
+    this.props.dispatch(restaurantViewActions.changeId(newValue));
+  };
+
   onChangeComment = newValue => {
     this.props.dispatch(restaurantViewActions.changeComment(newValue));
   };
 
   render() {
-    let isEditExisting = this.props.restaurant.id != 0;
+    let isEditExisting = this.props.restaurant.createdDate != null;
 
     return (
       <BaseView
@@ -51,6 +55,7 @@ export class restaurantView_ extends React.Component {
           onChangeAddress={this.onChangeAddress}
           onChangePhone={this.onChangePhone}
           onChangeEmail={this.onChangeEmail}
+          onChangeId={this.onChangeId}
         />
 
         {isEditExisting ? <CertificatesTable title="Карточки и сертификаты / Рестораны эмитеты" certificates={this.props.restaurant.issuingCertificates}/>: null}

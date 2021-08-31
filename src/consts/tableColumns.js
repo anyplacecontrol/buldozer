@@ -46,7 +46,7 @@ export const COLUMN_IS_ACTIVE = {
   accessor: item => (item.isActive ? "Да" : "Нет"),  
   accessorSort: "isActive",
   text: "Активность",
-  className: "status"  
+  className: "id"  
 }
 
 export const COLUMN_ISSUING_RESTAURANT = {  
@@ -291,7 +291,7 @@ export const COLUMN_BALANCE =
 {
   accessor: "balance",
   accessorSort: "balance",
-  text: "Номинал, грн",
+  text: "Баланс, грн",
   className: "price"  
 }
 

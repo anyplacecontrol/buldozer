@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { ICardView } from "../../redux/modules/cardViewRedux";
 
-
 export class CardGeneral extends React.Component {
   render() {
     let isEditExisting = this.props.card.createdDate != "";
@@ -30,20 +29,16 @@ export class CardGeneral extends React.Component {
             ) : (
               <div className="block-set__item--inner flex w100 animated">
                 <div className="block-set__sub-title flex w100 animated">
-                  Id *
+                  Id
                 </div>
-                <div className="block-set__content flex w100 animated">                                  
+                <div className="block-set__content flex w100 animated">
                   <input
-                    className={
-                      !this.props.card.isValidated || this.props.card.id != ""
-                        ? "block-set__input animated"
-                        : "block-set__input animated  is--error"
-                    }
+                    className="block-set__input animated"
                     placeholder="последние 6 цифр"
                     value={this.props.card.id}
                     onChange={e => this.props.onChangeId(e.target.value)}
                   />
-                </div>                
+                </div>
               </div>
             )}
 
@@ -93,19 +88,20 @@ export class CardGeneral extends React.Component {
             </div>
 
             {/* Номинал */}
-            {isEditExisting?
-            <div className="block-set__item--inner flex w100 animated">
-              <div className="block-set__sub-title flex w100 animated">
-                Баланс (грн)
-              </div>
-              <div className="block-set__content flex w100 animated">
-                <div className="block-set__info flex animated">
-                  <div className="block-set__info--title animated">
-                    {this.props.card.balance ? this.props.card.balance : "-"}
+            {isEditExisting ? (
+              <div className="block-set__item--inner flex w100 animated">
+                <div className="block-set__sub-title flex w100 animated">
+                  Баланс (грн)
+                </div>
+                <div className="block-set__content flex w100 animated">
+                  <div className="block-set__info flex animated">
+                    <div className="block-set__info--title animated">
+                      {this.props.card.balance ? this.props.card.balance : "-"}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>: null}
+            ) : null}
           </div>
         </div>
       </div>

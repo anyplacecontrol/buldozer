@@ -79,6 +79,7 @@ export async function AddOrUpdateItem(certObj, endPoint, method) {
   }
 
   let cleanCert = { ...certObj };
+  delete cleanCert.id;
   delete cleanCert.recipient;
   delete cleanCert.serviceType;
   delete cleanCert.issuingRestaurant;
