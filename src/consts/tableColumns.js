@@ -85,7 +85,7 @@ export const CERTIFICATES_COLUMNS = _addIsDefault([
   {...COLUMN_ACTIVE_TO, isVisible: true},
   {...COLUMN_IS_ACTIVE, isVisible: true},
   {...COLUMN_ISSUING_RESTAURANT, isVisible: true},
-  {...COLUMN_REDEEMER_RESTAURANT, isVisible: true},
+  // {...COLUMN_REDEEMER_RESTAURANT, isVisible: true},
   {...COLUMN_AMOUNT, isVisible: true},
 ]);
 
@@ -101,6 +101,7 @@ export const COLUMN_NAME = {
 };
 
 export const RESTAURANTS_COLUMNS = _addIsDefault([
+  {...COLUMN_ID, isVisible: true}, 
   {...COLUMN_NAME, isVisible: true}, 
   {...COLUMN_CREATED_DATE, isVisible: true}, 
   {...COLUMN_IS_ACTIVE, isVisible: true},   

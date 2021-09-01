@@ -1,5 +1,5 @@
 export const isFakeData = false;
-export const appVersion = "2.0.0.0";
+export const appVersion = "2.1.0.0";
 export const fakeDelay = 300;
 export const chooseStr = "Выбрать...";
 export const noStr = "Нет";

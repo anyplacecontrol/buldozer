@@ -20,6 +20,7 @@ import { ICertificateView } from "./certificateViewRedux";
 export const IRestaurantView = PropTypes.shape({
   ...IBaseView,
   id: PropTypes.number.isRequired,
+  id_: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   email: PropTypes.string,
   address: PropTypes.string,
@@ -50,6 +51,7 @@ const UPDATE_RESTAURANT_DETAILS = PREFIX + "UPDATE_RESTAURANT_DETAILS";
 export const restaurantViewInitialState = {
   ...BaseViewInitialState,
   id: 0,
+  id_: 0,  
   name: "",
   email: "",
   address: "",
@@ -123,7 +125,7 @@ export default function reducer(
     case CHANGE_ID:
       return {
         ...state,
-        id: action.payload
+        id_: action.payload
       };
 
     case UPDATE_RESTAURANT_DETAILS:

@@ -26,7 +26,7 @@ export const ITransaction = PropTypes.shape({
 
 export const ICertificateView = PropTypes.shape({
   ...IBaseView,
-  id: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
   activeFromDate: PropTypes.string, //api field: active_from_date
   validityPeriodInMonths: PropTypes.number.isRequired, //api field validity_period_in_months
   isActive: PropTypes.bool, //api field is_active
@@ -78,7 +78,7 @@ const CHANGE_IS_BARTERABLE = PREFIX + "CHANGE_IS_BARTERABLE"
 
 export const certificateViewInitialState = {
   ...BaseViewInitialState,
-  id: "",
+  id: 0,
   activeFromDate: null,
   validityPeriodInMonths: 12,
   isActive: false,

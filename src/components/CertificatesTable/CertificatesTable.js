@@ -31,7 +31,7 @@ export class CertificatesTable extends React.Component {
 
       return certificates.map((certificate, index) => {
         try {
-          let id = "..." + certificate.id.substr(certificate.id.length - 5);
+          let id = "..." + certificate.id.toString().substr(certificate.id.length - 5);
           let activeFromDate = dataFuncs.truncateDate(
             certificate.activeFromDate
           );
@@ -52,7 +52,7 @@ export class CertificatesTable extends React.Component {
             ? "Частич. погаш."
             : "Обычный";
           let certKind = certificate.isBarterable ? "Бартерный" : "Подарочный";
-          let balance = certificate.balance;
+          let balance = certificate.balance || 0;
 
           return (
             <div

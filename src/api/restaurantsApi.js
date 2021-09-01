@@ -31,6 +31,11 @@ export async function getItems(
     sortOrder,
     FAKE_RESTAURANTS_RESPONSE
   );
+
+  result.items.forEach(item => {
+    item.id_ = item.id;
+  });
+
   return result;
 }
 
@@ -52,14 +57,19 @@ export async function deleteItem(Obj) {
 
 //--------------------------------------------------------------------------------
 export async function addItem(Obj) {
-  return await AddOrUpdateItem(Obj, restaurantsAdd_endPoint, "POST");
+  let obj = {...Obj};
+  obj.id = obj.id_;
+  return await AddOrUpdateItem(obj, restaurantsAdd_endPoint, "POST");
 }
 
 //--------------------------------------------------------------------------------
 
 export async function updateItem(Obj) {  
-  let endPoint = restaurantsUpdate_endPoint + Obj.id;
-  return await AddOrUpdateItem(Obj, endPoint, "PUT");
+  let obj = {...Obj};
+  let id = obj.id;
+  obj.id = obj.id_;
+  let endPoint = restaurantsUpdate_endPoint + id;
+  return await AddOrUpdateItem(obj, endPoint, "PUT");
 }
 
 //--------------------------------------------------------------------------------
@@ -72,8 +82,7 @@ export async function AddOrUpdateItem(Obj, endPoint, method) {
     return;
   }
 
-  let cleanObj = { ...Obj };
-  //delete cleanObj.id;
+  let cleanObj = { ...Obj };  
   delete cleanObj.isChecked;
   delete cleanObj.isValidated;    
   delete cleanObj.rowNumber;

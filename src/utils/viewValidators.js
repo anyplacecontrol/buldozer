@@ -95,13 +95,13 @@ export function getPhoneValidationError(phone) {
 //=========================================================================
 
 export function validateCertificateView(viewObj) {
-  if (
-    isEmptyString(viewObj.id) ||
+  if (   
     isEmptyString(viewObj.amount) ||
     isEmptyString(viewObj.validityPeriodInMonths) ||
     isEmptyString(viewObj.cardId)
   )
     throw "Проверка не удалась: пустые поля";
+  
 
   if (isEmptyString(viewObj.activeFromDate))
     throw "Проверка не удалась: дата активации не задана";
@@ -202,7 +202,7 @@ export function validateRestaurantView(viewObj) {
     throw "Проверка не удалась: слишком длинные поля (>255 символов)";
   }
 
-  if  (viewObj.id==0 || viewObj.id.length<9)
+  if  (viewObj.id_==0 || viewObj.id_.length<9)
     throw "поле Id должно содержать 9 цифр";
 
   if (isLongString(viewObj.comment, 500)) {

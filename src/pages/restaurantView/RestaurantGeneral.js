@@ -15,20 +15,7 @@ export class RestaurantGeneral extends React.Component {
           <div className="block-set__item flex animated">
 
            {/* Id */}
-           {isEditExisting ? (
-              <div className="block-set__item--inner flex w100 animated">
-                <div className="block-set__sub-title flex w100 animated">
-                  Id
-                </div>
-                <div className="block-set__content flex w100 animated">
-                  <div className="block-set__info flex animated">
-                    <div className="block-set__info--title animated">
-                      {this.props.restaurant.id}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ) : (
+           
               <div className="block-set__item--inner flex w100 animated">
                 <div className="block-set__sub-title flex w100 animated">
                   Id*
@@ -38,16 +25,16 @@ export class RestaurantGeneral extends React.Component {
                   type="number"
                     className={
                       !this.props.restaurant.isValidated ||
-                      this.props.restaurant.id != ""
+                      this.props.restaurant.id_ != ""
                         ? "block-set__input animated"
                         : "block-set__input animated  is--error"
                     }
-                    value={this.props.restaurant.id}
+                    value={this.props.restaurant.id_}
                     onChange={e => this.props.onChangeId(e.target.value)}
                   />
                 </div>
               </div>
-            )}
+            
 
             {/* Ресторан */}
             <div className="block-set__item--inner flex w100 animated">
