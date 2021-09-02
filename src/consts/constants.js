@@ -10,4 +10,3 @@ export const AUTH_INACTIVITY_TIME = 30 * 60 * 1000; //30 minutes
 export const apiDomain = "api-marketing.bulldozergroup.ua/api"; //prod
 //export const apiDomain = "bulldozer-api.madency.com/api"; //dev
 
-export const cardIdPrefix = "778256460000";

@@ -152,7 +152,7 @@ export function validateCardView(viewObj) {
   
   return {
     ...viewObj,
-    id: consts.cardIdPrefix + viewObj.id
+    id: viewObj.id
   };
 }
 

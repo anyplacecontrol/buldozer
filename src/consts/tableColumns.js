@@ -131,7 +131,7 @@ export const COLUMN_EMAIL = {
   accessor: "email",
   accessorSort: "email",
   text: "E-mail",
-  className: "name"
+  className: "name --lowercase"
 };
 
 
