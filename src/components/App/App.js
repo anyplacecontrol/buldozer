@@ -21,7 +21,8 @@ import {
   statsIssuingRestaurants,
   statsRedeemerRestaurants,
   statsRecipients,
-  statsUnusedCertificates
+  statsUnusedCertificates,
+  userRoles
 } from "../../pages/tablePages/tablePages";
 import { cardView } from "../../pages/cardView/cardView";
 import { certificateView } from "../../pages/certificateView/certificateView";
@@ -47,6 +48,15 @@ class App_ extends React.Component {
   };
 
   render() {
+    let isAdmin = false;
+    if (
+      window.authData &&
+      window.authData.user &&
+      window.authData.user.role &&
+      window.authData.user.role.id == 1
+    )
+      isAdmin = true;
+
     return (
       <>
         {//hack for electron for url from file://....index.html instead of http://localhost/
@@ -94,7 +104,7 @@ class App_ extends React.Component {
                               return <Component />;
                             }}
                           />
-                           <Route
+                          <Route
                             path={ROUTE_NAMES.cardView}
                             render={() => {
                               const Component = cardView;
@@ -147,17 +157,27 @@ class App_ extends React.Component {
                             }}
                           />
                           {/* ------ Users ----- */}
-                          <Route
-                            path={ROUTE_NAMES.users}
-                            render={() => {
-                              const Component = users;
-                              return <Component />;
-                            }}
-                          />
+                          {isAdmin ? (
+                            <Route
+                              path={ROUTE_NAMES.users}
+                              render={() => {
+                                const Component = users;
+                                return <Component />;
+                              }}
+                            />
+                          ) : null}
+
                           <Route
                             path={ROUTE_NAMES.userView}
                             render={() => {
                               const Component = userView;
+                              return <Component />;
+                            }}
+                          />
+                          <Route
+                            path={ROUTE_NAMES.userRoles}
+                            render={() => {
+                              const Component = userRoles;
                               return <Component />;
                             }}
                           />

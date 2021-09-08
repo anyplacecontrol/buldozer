@@ -9,12 +9,14 @@ import {statsIssuingRestaurantsActions} from "../../redux/modules/statsIssuingRe
 import {statsRedeemerRestaurantsActions} from "../../redux/modules/statsRedeemerRestaurantsRedux";
 import {statsRecipientsActions} from "../../redux/modules/statsRecipientsRedux";
 import {statsUnusedCertificatesActions} from "../../redux/modules/statsUnusedCertificatesRedux";
+import {userRolesActions} from "../../redux/modules/userRolesRedux";
 
 export const cards = tablePageWithProvider(cardsActions);
 export const certificates = tablePageWithProvider(certificatesActions);
 export const restaurants = tablePageWithProvider(restaurantsActions);
 export const recipients = tablePageWithProvider(recipientsActions);
 export const users = tablePageWithProvider(usersActions);
+export const userRoles = tablePageWithProvider(userRolesActions);
 export const serviceTypes = tablePageWithProvider(serviceTypesActions);
 export const statsIssuingRestaurants  = tablePageWithProvider(statsIssuingRestaurantsActions);
 export const statsRedeemerRestaurants = tablePageWithProvider(statsRedeemerRestaurantsActions);

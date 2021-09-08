@@ -10,6 +10,7 @@ export const ROUTE_NAMES = {
       recipientView: "/recipientView",
     users: "/users",
       userView: "/userView",
+      userRoles: "/userRoles",        
     serviceTypes: "/serviceTypes",
       serviceTypeView: "/serviceTypeView",
     statsIssuingRestaurants: "/statsIssuingRestaurants",

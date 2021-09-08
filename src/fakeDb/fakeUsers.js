@@ -13,6 +13,10 @@ export const FAKE_USERS = [
             "phone": "(35222) 14-0502",
             "isActive": true,
             "createdDate": "2021-06-17T14:32:46.000000Z"
+        },
+        role: {
+            id:2,
+            name:"Пользователь"
         }
     },
   ];

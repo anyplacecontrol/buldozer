@@ -62,17 +62,23 @@ export const MAIN_MENU_ITEMS = [
   },
 
   {
-    name: "Администраторы",
+    name: "Пользователи",
     cssCls: "users",
     path: ROUTE_NAMES.users,
     comment: "",
     items: [
       {
-        name: "Администратор",
+        name: "Пользователь",
         path: ROUTE_NAMES.userView,
         isHidden: true,
         comment: ""
-      }
+      },
+      {
+        name: "Роли",
+        path: ROUTE_NAMES.userRoles,
+        isHidden: false,
+        comment: ""
+      },     
     ]
   },
 

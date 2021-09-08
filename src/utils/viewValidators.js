@@ -240,6 +240,9 @@ export function validateUserView(viewObj) {
     throw "Проверка не удалась: слишком длинные поля (>255 символов)";
   }
 
+  if (!viewObj.role) 
+    throw "Проверка не удалась: Роль не указана";
+
   let emailError = getEmailValidationError(viewObj.email);
   if (emailError) throw "Проверка E-mail не удалась: " + emailError;
 

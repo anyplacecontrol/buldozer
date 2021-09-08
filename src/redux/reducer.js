@@ -20,6 +20,8 @@ import restaurantView from "./modules/restaurantViewRedux";
 import users from "./modules/usersRedux";
 import userView from "./modules/userViewRedux";
 
+import userRoles from "./modules/userRolesRedux";
+
 import statsIssuingRestaurants from "./modules/statsIssuingRestaurantsRedux";
 import statsRedeemerRestaurants from "./modules/statsRedeemerRestaurantsRedux";
 import statsRecipients from "./modules/statsRecipientsRedux";
@@ -46,6 +48,7 @@ const reducers = {
 
   users,  
   userView,
+  userRoles,
 
   statsIssuingRestaurants,
   statsRedeemerRestaurants,

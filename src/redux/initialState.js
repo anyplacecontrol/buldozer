@@ -19,6 +19,8 @@ import { restaurantViewInitialState } from "./modules/restaurantViewRedux";
 import { usersInitialState } from "./modules/usersRedux";
 import { userViewInitialState } from "./modules/userViewRedux";
 
+import {userRolesInitialState} from "./modules/userRolesRedux";
+
 import { statsIssuingRestaurantsInitialState} from "./modules/statsIssuingRestaurantsRedux";
 import { statsRedeemerRestaurantsInitialState } from "./modules/statsRedeemerRestaurantsRedux";
 import { statsRecipientsInitialState } from "./modules/statsRecipientsRedux";
@@ -46,6 +48,8 @@ export const initialState = {
 
   users: usersInitialState,
   userView: userViewInitialState,
+
+  userRoles: userRolesInitialState,
 
   statsIssuingRestaurants: statsIssuingRestaurantsInitialState,
   statsRedeemerRestaurants: statsRedeemerRestaurantsInitialState,

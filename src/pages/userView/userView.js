@@ -3,9 +3,11 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import * as userViewRedux from "../../redux/modules/userViewRedux";
 import { userViewActions } from "../../redux/modules/userViewRedux";
+import { userRolesActions } from "../../redux/modules/userRolesRedux";
 import { BaseView } from "../../components/BaseView/BaseView";
 import { UserGeneral } from "./UserGeneral";
 import { UserCreatedBy } from "./UserCreatedBy";
+import { UserPermissions } from "./UserPermissions";
 
 export class userView_ extends React.Component {
   onChangeName = newValue => {
@@ -32,6 +34,10 @@ export class userView_ extends React.Component {
     this.props.dispatch(userViewActions.changePassword(newValue));
   };
 
+  onChangeRole = newValue => {
+    this.props.dispatch(userViewActions.changeRole(newValue));
+  };
+
   render() {
     return (
       <BaseView
@@ -39,7 +45,7 @@ export class userView_ extends React.Component {
         actionsProvider={userViewActions}
       >
         <UserGeneral
-          user={this.props.user}
+          user={this.props.user}          
           onChangePosition={this.onChangePosition}
           onTriggerIsActive={this.onTriggerIsActive}
           onChangeName={this.onChangeName}
@@ -47,6 +53,12 @@ export class userView_ extends React.Component {
           onChangePhone={this.onChangePhone}
           onChangeEmail={this.onChangeEmail}
         />
+        <UserPermissions
+          user={this.props.user}
+          allUserRoles={this.props.allUserRoles}
+          onChangeRole = {this.onChangeRole}
+        />
+
         {this.props.user.createdUser ? (
           <UserCreatedBy user={this.props.user} />
         ) : null}
@@ -57,12 +69,14 @@ export class userView_ extends React.Component {
 
 userView_.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  user: userViewRedux.IUserView
+  user: userViewRedux.IUserView,
+  allUserRoles: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 function mapStateToProps(state) {
   return {
-    user: state.userView
+    user: state.userView,
+    allUserRoles: userRolesActions.getItems(state)
   };
 }
 

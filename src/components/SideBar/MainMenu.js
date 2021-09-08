@@ -80,9 +80,17 @@ export class MainMenu extends React.Component {
   renderItems = () => {
     let jsxArr = [];
    
-    for (let i = 0; i < this.props.items.length; i++) {
-      let item = this.props.items[i];                
+    let isAdmin = false;
+    if (window.authData && window.authData.user && window.authData.user.role &&
+      window.authData.user.role.id == 1 ) 
+      isAdmin = true;
 
+    for (let i = 0; i < this.props.items.length; i++) {
+      let item = this.props.items[i];                     
+
+      //Прячем разделы меню, которые не разрешены обычным пользователям
+      if (!isAdmin  && (item.path === routeNames.ROUTE_NAMES.users))
+        continue;
 
       //if item does not contain sub-items
       if (!item.items && !item.isHidden) {

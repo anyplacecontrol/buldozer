@@ -129,7 +129,7 @@ export class UserGeneral extends React.Component {
 }
 
 UserGeneral.propTypes = {
-  user: IUserView,
+  user: IUserView, 
   onTriggerIsActive: PropTypes.func.isRequired,
   onChangeName: PropTypes.func.isRequired,
   onChangePosition: PropTypes.func.isRequired,

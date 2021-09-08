@@ -134,6 +134,12 @@ export const COLUMN_EMAIL = {
   className: "name --lowercase"
 };
 
+export const COLUMN_ROLE = {
+  accessor: item => item.role ? item.role.name : "",  
+  text: "Роль",
+  className: "name"
+};
+
 
 export const COLUMN_CREATED_BY = {  
   accessor: item => (item.createdUser ? item.createdUser.email : ""),  
@@ -144,6 +150,7 @@ export const COLUMN_CREATED_BY = {
 export const USERS_COLUMNS = _addIsDefault([
   {...COLUMN_NAME, isVisible: true}, 
   {...COLUMN_EMAIL, isVisible: true},   
+  {...COLUMN_ROLE, isVisible: true},   
   {...COLUMN_CREATED_DATE, isVisible: true},   
   {...COLUMN_IS_ACTIVE, isVisible: true},  
   {...COLUMN_CREATED_BY, isVisible: true}
@@ -302,4 +309,12 @@ export const CARDS_COLUMNS = _addIsDefault([
   {...COLUMN_IS_ACTIVE, isVisible: true},
   {...COLUMN_RECIPIENT, isVisible: true},  
   {...COLUMN_BALANCE, isVisible: true},
+]);
+
+//-----------------------------------------------------------------------------
+//User Roles
+
+export const USER_ROLES_COLUMNS = _addIsDefault([
+  {...COLUMN_NAME, isVisible: true},   
+  {...COLUMN_ID, isVisible: true},       
 ]);

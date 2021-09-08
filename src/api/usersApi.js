@@ -65,12 +65,15 @@ export async function AddOrUpdateItem(Obj, endPoint, method) {
   }
 
   let cleanObj = { ...Obj };
+  cleanObj.roleId  = Obj.role.id;
+
   delete cleanObj.id;
   delete cleanObj.isChecked;
   delete cleanObj.isValidated;
   delete cleanObj.rowNumber;
   delete cleanObj.createdUser;
   delete cleanObj.createdDate;
+  delete cleanObj.role;
   if (Obj.createdUser) {
     delete delete cleanObj.password;
   }

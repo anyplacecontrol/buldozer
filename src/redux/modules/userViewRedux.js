@@ -1,33 +1,39 @@
-  import PropTypes from "prop-types";
-  import { ROUTE_NAMES } from "../../consts/routeNames";
-  import { usersActions } from "./usersRedux";
-  import * as viewValidators from "../../utils/viewValidators";
-  import * as usersApi from "../../api/usersApi";
-  import {
-    BaseViewActions,
-    BaseViewInitialState,
-    BaseViewReducer,
-    IBaseView
-  } from "./baseViewRedux";
-  import * as dataFuncs from "../../utils/dataFuncs";
-  import * as uiActions from "./uiRedux";
-  import { certificatesActions } from "./certificatesRedux";
+import PropTypes from "prop-types";
+import { ROUTE_NAMES } from "../../consts/routeNames";
+import { usersActions } from "./usersRedux";
+import * as viewValidators from "../../utils/viewValidators";
+import * as usersApi from "../../api/usersApi";
+import { userRolesActions } from "./userRolesRedux";
+import {
+  BaseViewActions,
+  BaseViewInitialState,
+  BaseViewReducer,
+  IBaseView
+} from "./baseViewRedux";
+import * as dataFuncs from "../../utils/dataFuncs";
+import * as uiActions from "./uiRedux";
+import { certificatesActions } from "./certificatesRedux";
 
 //*******************************************************************************
 
-export const IUserView = PropTypes.shape({
-  ...IBaseView,
-  id: PropTypes.number.isRequired,  
-  name: PropTypes.string.isRequired,
-  phone: PropTypes.string,  
-  isActive: PropTypes.bool,
-  position: PropTypes.string,
-  email: PropTypes.string.isRequired,   
-  password: PropTypes.string,    
-  createdDate: PropTypes.string,
-  createdUser: PropTypes.object,
+const IRole = PropTypes.shape({
+  id: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired
 });
 
+export const IUserView = PropTypes.shape({
+  ...IBaseView,
+  id: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  phone: PropTypes.string,
+  isActive: PropTypes.bool,
+  position: PropTypes.string,
+  email: PropTypes.string.isRequired,
+  password: PropTypes.string,
+  createdDate: PropTypes.string,
+  createdUser: PropTypes.object,
+  role: IRole
+});
 
 //*******************************************************************************
 const PREFIX = "userView/";
@@ -38,44 +44,45 @@ const CHANGE_IS_ACTIVE = PREFIX + "CHANGE_IS_ACTIVE";
 const CHANGE_POSITION = PREFIX + "CHANGE_POSITION";
 const CHANGE_PASSWORD = PREFIX + "CHANGE_PASSWORD";
 const CHANGE_EMAIL = PREFIX + "CHANGE_EMAIL";
+const CHANGE_ROLE = PREFIX + "CHANGE_ROLE";
 
 //*******************************************************************************
 
 export const userViewInitialState = {
   ...BaseViewInitialState,
-  id: 0,  
+  id: 0,
   name: "",
-  email: "",    
-  phone: "",  
+  email: "",
+  phone: "",
   position: "",
   password: "",
   isActive: false,
   createdDate: null,
-  createdUser: null,  
+  createdUser: null,
+  role: null
 };
 
 //*******************************************************************************
 
-export default function reducer(
-  state = userViewInitialState,
-  action = {}
-) {
-  let result = BaseViewReducer(
-    PREFIX,
-    state,
-    action,
-    userViewInitialState
-  );
+export default function reducer(state = userViewInitialState, action = {}) {
+  let result = BaseViewReducer(PREFIX, state, action, userViewInitialState);
 
   if (result) return result;
 
   switch (action.type) {
+
     case CHANGE_IS_ACTIVE:
       return {
         ...state,
         isActive: action.payload
       };
-      
+
+    case CHANGE_ROLE:
+      return {
+        ...state,
+        role: action.payload
+      };
+
     case CHANGE_POSITION:
       return {
         ...state,
@@ -87,13 +94,13 @@ export default function reducer(
         ...state,
         name: action.payload
       };
-      
+
     case CHANGE_PASSWORD:
       return {
         ...state,
         password: action.payload
       };
-    
+
     case CHANGE_PHONE:
       return {
         ...state,
@@ -139,7 +146,6 @@ class UserViewActions extends BaseViewActions {
     };
   };
 
-  
   changePassword = payload => {
     return {
       type: CHANGE_PASSWORD,
@@ -158,6 +164,37 @@ class UserViewActions extends BaseViewActions {
     return {
       type: CHANGE_EMAIL,
       payload: payload
+    };
+  };
+
+  changeRole = payload => {
+    return {
+      type: CHANGE_ROLE,
+      payload: payload
+    };
+  };
+
+  initializeView_end = () => {
+    return async (dispatch, getState) => {
+      //get userRoles
+
+      let p1 = new Promise(async (resolve, reject) => {
+        if (
+          !getState().userRoles.items ||
+          getState().userRoles.items.length === 0
+        ) {
+          try {
+            await dispatch(
+              userRolesActions.fetchItems(0, false, false, null, true, true)
+            );
+          } catch (e) {}
+        }
+        resolve();
+      });
+
+      dispatch(uiActions.showBackdrop(true));
+      await Promise.all([p1]);
+      dispatch(uiActions.showBackdrop(false));
     };
   };
 
