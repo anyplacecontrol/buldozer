@@ -22,6 +22,7 @@ import {
   statsRedeemerRestaurants,
   statsRecipients,
   statsUnusedCertificates,
+  statsMutualSettlement,
   userRoles
 } from "../../pages/tablePages/tablePages";
 import { cardView } from "../../pages/cardView/cardView";
@@ -228,6 +229,14 @@ class App_ extends React.Component {
                               return <Component />;
                             }}
                           />
+                          {/* ------Статистика взаиморасчет----- */}
+                          <Route
+                            path={ROUTE_NAMES.statsMutualSettlement}
+                            render={() => {
+                              const Component = statsMutualSettlement;
+                              return <Component />;
+                            }}
+                          />                          
                         </Switch>
                       </div>
                     </div>

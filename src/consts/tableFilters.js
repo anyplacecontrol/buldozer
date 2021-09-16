@@ -151,14 +151,87 @@ export const FILTER_CREATED_DATE_STATS = _addDefaultValue({
   value: {startDate: null, endDate: null}
 });
 
+export const FILTER_ACTIVATION_DATE_STATS = _addDefaultValue({
+  type: "dateRange",
+  apiParamName: "activationDate ",
+  labelText: "Отчетный период",
+  value: {startDate: null, endDate: null}
+});
+
+export const FILTER_CERT_ID = _addDefaultValue({
+  type: "input",
+  apiParamName: "id",
+  labelText: "ID сертификата",
+  value: ""
+});
+
 export const FILTER_RECIPIENT_STATS = _addDefaultValue({
   type: "multiSelectBox",
   apiParamName: "recipients",
   labelText: "Контрагент",
-  items: [ ], //items are store objects
+  items: [ ], 
   accessorText: item => item.company,
   accessorApi: item => item.id,
   value: []
 });
+
+export const FILTER_SINGLE_RECIPIENT_STATS = _addDefaultValue({
+  type: "selectBox",
+  apiParamName: "recipientId",
+  labelText: "Контрагент",
+  items: [ ], //items are store objects
+  accessorText: item => item.company,
+  accessorApi: item => item.id,
+  value: ""
+});
+
+export const FILTER_SERVICE_TYPE_STATS = _addDefaultValue({
+  type: "selectBox",
+  apiParamName: "serviceTypeId",
+  labelText: "Вид услуг",
+  items: [ ], 
+  accessorText: item => item.name,
+  accessorApi: item => item.id,
+  value: ""
+});
+
+
+export const FILTER_CERT_KIND = _addDefaultValue({
+  type: "selectBox",
+  apiParamName: "isActive",
+  labelText: "Статус сертификата",
+  items: [
+    { name: "Все", value: null },
+    { name: "Погашеные", value: "false" },
+    { name: "Активные", value: "true" }
+  ], 
+  accessorText: item => item.name,
+  accessorApi: item => item.value,
+  value: ""
+});
+
+export const FILTER_PRICE = _addDefaultValue({
+  type: "sliderRange",
+  apiParamName: "amount",
+  labelText: "Номинал",
+  minValue: 0,
+  maxValue: 10000,
+  value: {startValue: 0, endValue: 10000, }
+});
+
+export const FILTER_CERT_STATUS = _addDefaultValue({
+  type: "selectBox",
+  apiParamName: "isPartiallyRedeemable",
+  labelText: "Вид сертификата",
+  items: [
+    { name: "Все", value: null },
+    { name: "Частично погаш", value: "true" },
+    { name: "Обычные", value: "false" }
+  ], 
+  accessorText: item => item.name,
+  accessorApi: item => item.value,
+  value: ""
+});
+
 
 export const FILTER_ISACTIVE_STATS = {...FILTER_ISACTIVE, labelText: "Активность сертификата"};

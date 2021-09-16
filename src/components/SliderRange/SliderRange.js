@@ -51,8 +51,8 @@ export class SliderRange extends React.Component {
           }}
         />
         <div className="rangeValues flex w100 animated">
-          <span className="rangeValues__item rangeValueStart">${this.props.rangeObject.value.startValue}</span>
-          <span className="rangeValues__item rangeValueEnd">${this.props.rangeObject.value.endValue}</span>
+          <span className="rangeValues__item rangeValueStart">{this.props.rangeObject.value.startValue} грн</span>
+          <span className="rangeValues__item rangeValueEnd">{this.props.rangeObject.value.endValue} грн</span>
         </div>
       </div>
     );

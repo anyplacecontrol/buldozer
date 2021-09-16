@@ -25,6 +25,7 @@ import { statsIssuingRestaurantsInitialState} from "./modules/statsIssuingRestau
 import { statsRedeemerRestaurantsInitialState } from "./modules/statsRedeemerRestaurantsRedux";
 import { statsRecipientsInitialState } from "./modules/statsRecipientsRedux";
 import { statsUnusedCertificatesInitialState } from "./modules/statsUnusedCertificatesRedux";
+import { statsMutualSettlementReduxInitialState } from "./modules/statsMutualSettlementRedux"
 
 
 export const initialState = {
@@ -54,5 +55,6 @@ export const initialState = {
   statsIssuingRestaurants: statsIssuingRestaurantsInitialState,
   statsRedeemerRestaurants: statsRedeemerRestaurantsInitialState,
   statsRecipients: statsRecipientsInitialState,
-  statsUnusedCertificates: statsUnusedCertificatesInitialState
+  statsUnusedCertificates: statsUnusedCertificatesInitialState,
+  statsMutualSettlement: statsMutualSettlementReduxInitialState,
 };

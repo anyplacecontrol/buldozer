@@ -16,7 +16,8 @@ export const ROUTE_NAMES = {
     statsIssuingRestaurants: "/statsIssuingRestaurants",
     statsRedeemerRestaurants: "/statsRedeemerRestaurants",
     statsRecipients: "/statsRecipients",
-    statsUnusedCertificates: "/statsUnusedCertificates"
+    statsUnusedCertificates: "/statsUnusedCertificates",
+    statsMutualSettlement: "/statsMutualSettlement"
 };
 
 export const QUERY_PARAMS = {

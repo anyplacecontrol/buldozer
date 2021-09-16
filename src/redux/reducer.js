@@ -26,6 +26,7 @@ import statsIssuingRestaurants from "./modules/statsIssuingRestaurantsRedux";
 import statsRedeemerRestaurants from "./modules/statsRedeemerRestaurantsRedux";
 import statsRecipients from "./modules/statsRecipientsRedux";
 import statsUnusedCertificates from "./modules/statsUnusedCertificatesRedux";
+import statsMutualSettlement from "./modules/statsMutualSettlementRedux";
 
 const reducers = {
   ui,
@@ -53,7 +54,8 @@ const reducers = {
   statsIssuingRestaurants,
   statsRedeemerRestaurants,
   statsRecipients,
-  statsUnusedCertificates
+  statsUnusedCertificates,
+  statsMutualSettlement
 };
 
 export default combineReducers(reducers);

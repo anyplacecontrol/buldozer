@@ -126,7 +126,14 @@ export const MAIN_MENU_ITEMS = [
         path: ROUTE_NAMES.statsUnusedCertificates,
         isHidden: false,
         comment: ""
-      },      
+      },  
+      {
+        name: "Взаиморасчет",
+        path: ROUTE_NAMES.statsMutualSettlement,
+        isHidden: false,
+        comment: ""
+      },  
+          
     ]
   }
 

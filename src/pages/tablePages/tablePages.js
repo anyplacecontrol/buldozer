@@ -9,6 +9,7 @@ import {statsIssuingRestaurantsActions} from "../../redux/modules/statsIssuingRe
 import {statsRedeemerRestaurantsActions} from "../../redux/modules/statsRedeemerRestaurantsRedux";
 import {statsRecipientsActions} from "../../redux/modules/statsRecipientsRedux";
 import {statsUnusedCertificatesActions} from "../../redux/modules/statsUnusedCertificatesRedux";
+import {statsMutualSettlementActions} from "../../redux/modules/statsMutualSettlementRedux";
 import {userRolesActions} from "../../redux/modules/userRolesRedux";
 
 export const cards = tablePageWithProvider(cardsActions);
@@ -22,3 +23,4 @@ export const statsIssuingRestaurants  = tablePageWithProvider(statsIssuingRestau
 export const statsRedeemerRestaurants = tablePageWithProvider(statsRedeemerRestaurantsActions);
 export const statsRecipients = tablePageWithProvider(statsRecipientsActions);
 export const statsUnusedCertificates = tablePageWithProvider(statsUnusedCertificatesActions);
+export const statsMutualSettlement = tablePageWithProvider(statsMutualSettlementActions);

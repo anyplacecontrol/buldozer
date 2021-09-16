@@ -84,8 +84,7 @@ export const CERTIFICATES_COLUMNS = _addIsDefault([
   {...COLUMN_ACTIVE_FROM, isVisible: true},
   {...COLUMN_ACTIVE_TO, isVisible: true},
   {...COLUMN_IS_ACTIVE, isVisible: true},
-  {...COLUMN_ISSUING_RESTAURANT, isVisible: true},
-  // {...COLUMN_REDEEMER_RESTAURANT, isVisible: true},
+  {...COLUMN_ISSUING_RESTAURANT, isVisible: true},  
   {...COLUMN_AMOUNT, isVisible: true},
 ]);
 
@@ -284,9 +283,27 @@ export const STATS_UNUSED_CERTIFICATES_COLUMNS = _addIsDefault([
   {...COLUMN_EXPIRED_AMOUNT, isVisible: true},       
 ]);
 
-
 //-----------------------------------------------------------------------------
-//Cards
+//statsMutualSettlement
+
+export const COLUMN_CARD_ID = {
+  accessor: item => (item.card ? item.card.id : ""),    
+  text: "ID карты",
+  className: "id"  
+}
+
+export const COLUMN_CERT_ID = {
+  accessor: "id",  
+  text: "ID серт",
+  className: "id"
+};
+
+export const COLUMN_CERT_KIND = {
+  accessor: item => (item.isPartiallyRedeemable ? "Частично погаш" : "Обычный"),    
+  accessorSort: "isPartiallyRedeemable",
+  text: "Вид серт",
+  className: "id"  
+}
 
 export const COLUMN_RECIPIENT = {  
   accessor: item => (item.recipient ? item.recipient.company : ""),  
@@ -294,6 +311,70 @@ export const COLUMN_RECIPIENT = {
   text: "Контрагент",
   className: "name"
 };
+
+export const SERVICE_TYPE_NAME = {
+  accessor: item => (item.serviceType  ? item.serviceType.name : ""),      
+  text: "Вид серт",
+  className: "id"  
+}
+
+
+export const CERT_STATUS = {
+  accessor: item => (item.isRedeemed  ? "Погашен" : "Активен"),      
+  text: "Вид серт",
+  className: "id"  
+}
+
+
+export const USED_AMOUNT = {
+  accessor: item => item.usedAmount,      
+  text: "Погаш., грн",
+  className: "price"  
+}
+
+export const COLUMN_OSTATOK = 
+{
+  accessor: "balance",
+  accessorSort: "balance",
+  text: "Остаток, грн",
+  className: "price"  
+}
+
+export const COLUMN_REDEEMER_RESTAURANTS = {
+  accessor: item => {
+    if (!item.redeemerRestaurants)
+      return ""
+    let result = "";
+
+    if (item.redeemerRestaurants.length>0) {
+    result = item.redeemerRestaurants[0].name;    
+    if (item.redeemerRestaurants.length > 1)
+      result = result + "...";
+    }
+
+    return result;
+  },      
+  text: "Ресторан погас.",
+  className: "name"  
+}
+
+
+export const STATS_MUTUAL_SETTLEMENT_COLUMNS = _addIsDefault([
+  {...COLUMN_CARD_ID, isVisible: true}, 
+  {...COLUMN_CERT_ID, isVisible: true}, 
+  {...COLUMN_CERT_KIND, isVisible: true}, 
+  {...COLUMN_AMOUNT, isVisible: true},
+  {...COLUMN_ISSUING_RESTAURANT, isVisible: true},    
+  {...COLUMN_RECIPIENT, isVisible: true},    
+  {...SERVICE_TYPE_NAME, isVisible: true},      
+  {...CERT_STATUS, isVisible: true},      
+  {...USED_AMOUNT, isVisible: true},      
+  {...COLUMN_OSTATOK, isVisible: true},      
+  {...COLUMN_REDEEMER_RESTAURANTS, isVisible: true},      
+]);
+
+//-----------------------------------------------------------------------------
+//Cards
 
 export const COLUMN_BALANCE = 
 {
