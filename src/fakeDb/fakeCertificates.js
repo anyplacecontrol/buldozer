@@ -25,8 +25,7 @@ const FAKE_CERTIFICATES = [
       //phone: "8-800-959-5848",
       //isActive: true,
       //createdDate: "2021-06-17T12:54:51.000000Z"
-    },
-    isRedeemed: false,
+    },    
         
     createdDate: "2021-06-17T12:54:58.000000Z",
     

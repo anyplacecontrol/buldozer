@@ -38,8 +38,7 @@ export const ICertificateView = PropTypes.shape({
   balance: PropTypes.number.isRequired,
   isPartiallyRedeemable: PropTypes.bool,
   isBarterable: PropTypes.bool,
-
-  isRedeemed: PropTypes.bool,
+  
   recipient: IRecipientView,
   recipientComment: PropTypes.string,
   serviceType: IServiceTypeView,
@@ -88,9 +87,7 @@ export const certificateViewInitialState = {
   balance: 0,
   isPartiallyRedeemable: false,
   isBarterable: false,
-  cardId: "",
-
-  isRedeemed: false,
+  cardId: "",  
 
   recipient: null,
   recipientComment: null,

@@ -289,20 +289,22 @@ export const STATS_UNUSED_CERTIFICATES_COLUMNS = _addIsDefault([
 export const COLUMN_CARD_ID = {
   accessor: item => (item.card ? item.card.id : ""),    
   text: "ID карты",
-  className: "id"  
+  className: "id",
+  accessorSort: "card",  
 }
 
 export const COLUMN_CERT_ID = {
   accessor: "id",  
   text: "ID серт",
-  className: "id"
+  className: "id",
+  accessorSort: "id",  
 };
 
 export const COLUMN_CERT_KIND = {
   accessor: item => (item.isPartiallyRedeemable ? "Частично погаш" : "Обычный"),    
   accessorSort: "isPartiallyRedeemable",
-  text: "Вид серт",
-  className: "id"  
+  text: "Тип серт",
+  className: "id",    
 }
 
 export const COLUMN_RECIPIENT = {  
@@ -314,22 +316,25 @@ export const COLUMN_RECIPIENT = {
 
 export const SERVICE_TYPE_NAME = {
   accessor: item => (item.serviceType  ? item.serviceType.name : ""),      
-  text: "Вид серт",
-  className: "id"  
+  text: "Вид услуг",
+  className: "id",
+  accessorSort: "serviceType", 
 }
 
 
 export const CERT_STATUS = {
-  accessor: item => (item.isRedeemed  ? "Погашен" : "Активен"),      
+  accessor: item => (item.isActive  ? "Активен" : "Погашен"),      
   text: "Вид серт",
-  className: "id"  
+  className: "id",  
+  accessorSort: "isActive",
 }
 
 
 export const USED_AMOUNT = {
   accessor: item => item.usedAmount,      
   text: "Погаш., грн",
-  className: "price"  
+  className: "price",
+  accessorSort: "amount",  
 }
 
 export const COLUMN_OSTATOK = 
