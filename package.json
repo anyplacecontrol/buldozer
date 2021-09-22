@@ -52,6 +52,7 @@
     "react-date-range": "1.0.0-beta",
     "react-datepicker": "2.9.4",
     "react-dom": "16.11.0",
+    "react-double-scrollbar": "0.0.15",
     "react-js-pagination": "3.0.2",
     "react-localization": "1.0.13",
     "react-redux": "5.0.7",

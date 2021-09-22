@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import * as dataFuncs from "../../utils/dataFuncs";
 import * as serviceFuncs from "../../utils/serviceFunctions";
+import DoubleScrollbar from "react-double-scrollbar";
 
 export class SimpleTable extends React.Component {
   renderHeaders = () => {
@@ -108,8 +109,9 @@ export class SimpleTable extends React.Component {
       tableCls = tableCls + " " + this.props.tableClassName;
 
     return (
+     
       <div className={tableCls}>
-       
+        <DoubleScrollbar>
         <div className="table__inner flex animated">
           {/* --Table Header -- */}
           <div className="table__thead animated">
@@ -138,7 +140,9 @@ export class SimpleTable extends React.Component {
           }
 
         </div>
+        </DoubleScrollbar>
       </div>
+      
     );
   }
 }
