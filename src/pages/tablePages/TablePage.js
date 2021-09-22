@@ -174,6 +174,7 @@ export class TablePage extends React.Component {
         {/* --Hidden Export CSV component -- */}
         {this.state.csvData && (
           <CSVLink
+            separator={";"}
             ref={this.simulateExportCsvClick}
             filename={
               this.props.tableName + " (" + new Date().toString() + ").csv"

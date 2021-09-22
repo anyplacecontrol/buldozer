@@ -48,8 +48,23 @@ export class SelectBox extends React.Component {
     );
   };
 
+
   renderItems = () => {
-    return this.props.items.map((item, index) => {
+
+    function compare( a, b ) {
+      if ( a.text < b.text ){
+        return -1;
+      }
+      if ( a.text > b.text ){
+        return 1;
+      }
+      return 0;
+    }
+    
+    let sortedItems = [...this.props.items];
+    sortedItems.sort( compare );
+
+    return sortedItems.map((item, index) => {
       if (!item) return null;
       return (
         <div
