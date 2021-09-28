@@ -39,6 +39,7 @@ export async function getItems(
   result.items.forEach(item => {
     item.cardId = item.card ? item.card.id : "";
   });
+    
   return result;
 }
 

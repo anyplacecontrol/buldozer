@@ -149,7 +149,7 @@ class CertificatesActions extends BaseTableActions {
         sortBy,
         sortOrder
       );
-
+      
       return fetchedResponse;
     };
   }

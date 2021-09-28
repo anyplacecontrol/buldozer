@@ -52,7 +52,8 @@ export async function getFilteredItems(
   return {
     items: Json.data || Json,
     topRowNumber: topRowNumber,
-    count: Json.count
+    count: Json.count,
+    json: Json
   };
 }
 

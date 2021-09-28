@@ -16,7 +16,7 @@ export class BaseTableTypes {
   static REPLACE_FILTER_ITEMS = "REPLACE_FILTER_ITEMS";
   static RESET_STATE = "RESET_STATE";
   static CHANGE_NEED_CLEAN_FETCH = "CHANGE_NEED_CLEAN_FETCH";
-  static CHANGE_SORT_MODE = "CHANGE_SORT_MODE";
+  static CHANGE_SORT_MODE = "CHANGE_SORT_MODE";  
 }
 
 //*******************************************************************************
@@ -30,7 +30,8 @@ export const BaseTableInitialState = {
   filterItems: [], //Should be overridden by child
   needCleanFetch: false, //if true, page should do clean fetch after its mount, because happened background fetch with unknown filter
   sortBy: tableColumns.COLUMN_ID, //Should be overridden by child
-  sortOrder: "descending" //Should be overridden by child
+  sortOrder: "descending", //Should be overridden by child
+  totals: null
 };
 
 //*******************************************************************************
@@ -52,7 +53,8 @@ export function BaseTableReducer(
         items: action.items,
         topRowNumber: action.topRowNumber,
         count: action.count,
-        checkedItems: []
+        checkedItems: [],
+        totals: action.totals,
       };
     }
 
@@ -91,11 +93,9 @@ export function showException(e, isStandardAlert) {
         if (typeof message === "object" && message !== null) {
           let tmp = message;
           message = tmp.message;
-          if (tmp.data)
-            message = message + " " + JSON.stringify(tmp.data);
-          message = message + ". Url:" + json.url;          
-        }
-        else if (message.indexOf("http") < 0)
+          if (tmp.data) message = message + " " + JSON.stringify(tmp.data);
+          message = message + ". Url:" + json.url;
+        } else if (message.indexOf("http") < 0)
           message = message + ". Url=" + json.url;
       }
     } catch (e) {}
@@ -230,7 +230,8 @@ export class BaseTableActions {
           type: this._withPrefix(BaseTableTypes.FETCH_ITEMS_COMPLETE),
           items: fetchedResponse.items,
           count: fetchedResponse.count,
-          topRowNumber: fetchedResponse.topRowNumber
+          topRowNumber: fetchedResponse.topRowNumber,
+          totals: fetchedResponse.totals
         });
       }
 
@@ -272,8 +273,8 @@ export class BaseTableActions {
 
   fetchCsv = () => {
     return async (dispatch, getState) => {
-      let fetchedResponse = {items: this._getStateSlice(getState()).items};
-      
+      let fetchedResponse = { items: this._getStateSlice(getState()).items };
+
       //await dispatch(this.fetchItems(0, true));
       //if (!fetchedResponse) return;
 
@@ -545,6 +546,10 @@ export class BaseTableActions {
   //------------------------------------------------------------------------------
   //SELECTORS
 
+  getTotals = globalState => {
+    return this._getStateSlice(globalState).totals;
+  };
+
   getColumns = globalState => {
     return this._getStateSlice(globalState).columns;
   };
@@ -707,9 +712,8 @@ export class BaseTableActions {
         if (!isBulkOperation) {
           if (func === this._deleteItem) {
             await serviceFuncs.delayTime(500);
-            location.reload(true)
-          }
-          else {
+            location.reload(true);
+          } else {
             let topRowNumber = this._getStateSlice(getState()).topRowNumber;
             await dispatch(
               this.fetchItems(topRowNumber, false, false, null, true)
@@ -755,8 +759,6 @@ export class BaseTableActions {
     };
   };
 
-
-  
   _importCSV(event, api, refreshRoute) {
     return async dispatch => {
       if (!event.target) return;

@@ -18,6 +18,7 @@ export const tablePageWithProvider = (actionsProvider) => {
       itemsPerPage: actionsProvider.getItemsPerPage(state),
       isAllItemsChecked: actionsProvider.isAllItemsChecked(state),    
       items: actionsProvider.getItems(state),            
+      totals: actionsProvider.getTotals(state),
       columns: actionsProvider.getColumns(state), 
       tableName: routing.getHeader(state).name,
       

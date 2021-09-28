@@ -40,6 +40,10 @@ export async function getItems(
     sortOrder,
     FAKE_CERTIFICATES_RESPONSE
   );
+
+  result.totals = {card: {id: "Итого"}, balance: result.json.totalBalance, usedAmount: result.json.totalUsedAmount}
+  delete result.json;
+  
   return result;
 }
 

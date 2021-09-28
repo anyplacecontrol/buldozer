@@ -83,6 +83,7 @@ export class TablePage extends React.Component {
   onItemsPerPageChange = async quantity => {
     await this.props.dispatch(changeItemsPerPage(quantity));
     this.props.dispatch(this.props.actionsProvider.fetchItems(0));
+    this.setState({ csvData: null });
   };
 
   onExportCSV = async () => {
@@ -146,6 +147,7 @@ export class TablePage extends React.Component {
         />
 
         <FunctionalTable
+          totals={this.props.totals}
           data={this.props.items}
           columns={this.props.columns}
           sortBy={this.props.sortBy}
@@ -191,6 +193,7 @@ TablePage.propTypes = {
   dispatch: PropTypes.func.isRequired,
   tableName: PropTypes.string,
   isAllItemsChecked: PropTypes.bool.isRequired,
+  totals:  PropTypes.object,
   items: PropTypes.arrayOf(PropTypes.object).isRequired,
   columns: PropTypes.arrayOf(IColumn).isRequired,
   sortBy: IColumn.isRequired,

@@ -179,21 +179,21 @@ export const COLUMN_ALL_COUNT = {
   accessor: "allCount",
   accessorSort: "allCount",
   text: "Серт. всего",
-  className: "name"
+  className: "short-name"
 };
 
 export const COLUMN_ALL_AMOUNT = {
   accessor: "allAmount",
   accessorSort: "allAmount",
   text: "Сумма, грн",
-  className: "name"
+  className: "price"
 };
  
 export const COLUMN_REDEEMED_COUNT = {
   accessor: "redeemedCount",
   accessorSort: "redeemedCount",
   text: "Серт. погаш.",
-  className: "name"
+  className: "short-name"
 };
 
 export const COLUMN_REDEEMED_AMOUNT = {
@@ -207,14 +207,14 @@ export const COLUMN_ACTIVE_COUNT = {
   accessor: "activeCount",
   accessorSort: "activeCount",
   text: "Серт. акт.",
-  className: "name"
+  className: "short-name"
 };
 
 export const COLUMN_ACTIVE_AMOUNT = {
   accessor: "activeAmount",
   accessorSort: "activeAmount",
   text: "Сумма акт., грн",
-  className: "name"
+  className: "price"
 };
 
  
@@ -301,7 +301,10 @@ export const COLUMN_CERT_ID = {
 };
 
 export const COLUMN_CERT_KIND = {
-  accessor: item => (item.isPartiallyRedeemable ? "Частично погаш" : "Обычный"),    
+  accessor: (item) => {
+    if (item.isPartiallyRedeemable === true) return "Частично погаш" 
+    if (item.isPartiallyRedeemable === false) return "Обычный"     
+  },    
   accessorSort: "isPartiallyRedeemable",
   text: "Тип серт",
   className: "id",    
@@ -323,7 +326,10 @@ export const SERVICE_TYPE_NAME = {
 
 
 export const CERT_STATUS = {
-  accessor: item => (item.isActive  ? "Активен" : "Погашен"),      
+  accessor: (item) => {
+    if (item.isActive === true) return "Активен";
+    if (item.isActive === false) return "Погашен"
+  },     
   text: "Вид серт",
   className: "id",  
   accessorSort: "isActive",
@@ -343,6 +349,13 @@ export const COLUMN_OSTATOK =
   accessorSort: "balance",
   text: "Остаток, грн",
   className: "price"  
+}
+
+export const COLUMN_COMMENT = 
+{
+  accessor: "recipientComment",  
+  text: "Комментарий",
+  className: "name"  
 }
 
 export const COLUMN_REDEEMER_RESTAURANTS = {
@@ -366,16 +379,17 @@ export const COLUMN_REDEEMER_RESTAURANTS = {
 
 export const STATS_MUTUAL_SETTLEMENT_COLUMNS = _addIsDefault([
   {...COLUMN_CARD_ID, isVisible: true}, 
-  {...COLUMN_CERT_ID, isVisible: true}, 
-  {...COLUMN_CERT_KIND, isVisible: true}, 
-  {...COLUMN_AMOUNT, isVisible: true},
+  {...COLUMN_CERT_ID, isVisible: true},   
+  {...COLUMN_OSTATOK, isVisible: true},      
+  {...USED_AMOUNT, isVisible: true},        
+  {...COLUMN_CERT_KIND, isVisible: true},   
   {...COLUMN_ISSUING_RESTAURANT, isVisible: true},    
   {...COLUMN_RECIPIENT, isVisible: true},    
   {...SERVICE_TYPE_NAME, isVisible: true},      
   {...CERT_STATUS, isVisible: true},      
-  {...USED_AMOUNT, isVisible: true},      
-  {...COLUMN_OSTATOK, isVisible: true},      
-  {...COLUMN_REDEEMER_RESTAURANTS, isVisible: true},      
+  {...COLUMN_AMOUNT, isVisible: true},
+  {...COLUMN_REDEEMER_RESTAURANTS, isVisible: true},  
+  {...COLUMN_COMMENT, isVisible: true},  
 ]);
 
 //-----------------------------------------------------------------------------
