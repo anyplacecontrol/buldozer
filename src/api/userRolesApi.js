@@ -5,7 +5,7 @@ import { fetchJSON, throwFetchError } from "../utils/fetchUtils.js";
 import * as serviceFuncs from "../utils/serviceFunctions";
 
 const userRoles_endPoint =
-  "https://" + constants.apiDomain + "/user-roles";
+  "ttps://" + constants.apiDomain + "/user-roles";
 //const userRolesAdd_endPoint =userRoles_endPoint;
 //const userRolesDelete_endPoint =userRoles_endPoint + "/"; //+{Id}
 //const userRolesUpdate_endPoint =userRoles_endPoint + "/"; //+{Id}  

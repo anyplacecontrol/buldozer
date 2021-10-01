@@ -379,15 +379,15 @@ export const COLUMN_REDEEMER_RESTAURANTS = {
 
 export const STATS_MUTUAL_SETTLEMENT_COLUMNS = _addIsDefault([
   {...COLUMN_CARD_ID, isVisible: true}, 
-  {...COLUMN_CERT_ID, isVisible: true},   
-  {...COLUMN_OSTATOK, isVisible: true},      
+  {...COLUMN_CERT_ID, isVisible: true},     
+  {...COLUMN_AMOUNT, isVisible: true},
   {...USED_AMOUNT, isVisible: true},        
+  {...COLUMN_OSTATOK, isVisible: true},        
   {...COLUMN_CERT_KIND, isVisible: true},   
   {...COLUMN_ISSUING_RESTAURANT, isVisible: true},    
   {...COLUMN_RECIPIENT, isVisible: true},    
   {...SERVICE_TYPE_NAME, isVisible: true},      
-  {...CERT_STATUS, isVisible: true},      
-  {...COLUMN_AMOUNT, isVisible: true},
+  {...CERT_STATUS, isVisible: true},        
   {...COLUMN_REDEEMER_RESTAURANTS, isVisible: true},  
   {...COLUMN_COMMENT, isVisible: true},  
 ]);

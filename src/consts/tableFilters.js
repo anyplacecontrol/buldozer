@@ -153,7 +153,7 @@ export const FILTER_CREATED_DATE_STATS = _addDefaultValue({
 
 export const FILTER_ACTIVATION_DATE_STATS = _addDefaultValue({
   type: "dateRange",
-  apiParamName: "activationDate ",
+  apiParamName: "activationDate",
   labelText: "Отчетный период",
   value: {startDate: null, endDate: null}
 });
