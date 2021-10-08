@@ -42,7 +42,7 @@ export const FILTER_ISACTIVE = _addDefaultValue({
   apiParamName: "isActive",
   labelText: "Активность",
   items: [
-    { name: "Все", value: null },
+    { name: " Все", value: null },
     { name: "Только активные", value: "true" },
     { name: "Только неактивные", value: "false" }
   ], //items are store objects
@@ -153,7 +153,7 @@ export const FILTER_CREATED_DATE_STATS = _addDefaultValue({
 
 export const FILTER_ACTIVATION_DATE_STATS = _addDefaultValue({
   type: "dateRange",
-  apiParamName: "activationDate",
+  apiParamName: "period",
   labelText: "Отчетный период",
   value: {startDate: null, endDate: null}
 });
@@ -162,6 +162,13 @@ export const FILTER_CERT_ID = _addDefaultValue({
   type: "input",
   apiParamName: "id",
   labelText: "ID сертификата",
+  value: ""
+});
+
+export const FILTER_CARD_ID = _addDefaultValue({
+  type: "input",
+  apiParamName: "cardId",
+  labelText: "ID карты",
   value: ""
 });
 
@@ -201,9 +208,23 @@ export const FILTER_CERT_KIND = _addDefaultValue({
   apiParamName: "isActive",
   labelText: "Статус сертификата",
   items: [
-    { name: "Все", value: null },
+    { name: " Все", value: null },
     { name: "Погашеные", value: "false" },
     { name: "Активные", value: "true" }
+  ], 
+  accessorText: item => item.name,
+  accessorApi: item => item.value,
+  value: ""
+});
+
+export const FILTER_IS_BARTERABLE = _addDefaultValue({
+  type: "selectBox",
+  apiParamName: "isBarterable",
+  labelText: "Вид сертификата",
+  items: [
+    { name: " Все", value: null },
+    { name: "Бартерный", value: "true" },
+    { name: "Подарочный", value: "false" }
   ], 
   accessorText: item => item.name,
   accessorApi: item => item.value,
@@ -222,9 +243,9 @@ export const FILTER_PRICE = _addDefaultValue({
 export const FILTER_CERT_STATUS = _addDefaultValue({
   type: "selectBox",
   apiParamName: "isPartiallyRedeemable",
-  labelText: "Вид сертификата",
+  labelText: "Тип сертификата",
   items: [
-    { name: "Все", value: null },
+    { name: " Все", value: null },
     { name: "Частично погаш", value: "true" },
     { name: "Обычные", value: "false" }
   ], 

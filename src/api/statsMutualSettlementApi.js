@@ -3,7 +3,7 @@ import * as baseAPI from "./baseApi";
 import * as constants from "../consts/constants";
 
 const statsMutualSettlement_endPoint =
-  "https://" + constants.apiDomain + "/certificates";
+  "https://" + constants.apiDomain + "/transactions";
 
 //--------------------------------------------------------------------------------
 
@@ -17,6 +17,10 @@ export async function getItems(
 
   if (filter) {
     delete filter.notImplemented;
+    
+
+    if (filter.isBarterable === "true") filter.isBarterable = true;
+    if (filter.isBarterable === "false") filter.isBarterable = false;
 
     if (filter.isPartiallyRedeemable === "true") filter.isPartiallyRedeemable = true;
     if (filter.isPartiallyRedeemable === "false") filter.isPartiallyRedeemable = false;

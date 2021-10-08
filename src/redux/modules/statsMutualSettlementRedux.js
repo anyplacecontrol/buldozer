@@ -20,7 +20,7 @@ const PREFIX = "statsMutualSettlementRedux/";
 
 export const statsMutualSettlementReduxInitialState = {
   ...BaseTableInitialState,
-  sortBy: tableColumns.COLUMN_RECIPIENT,
+  sortBy: tableColumns.COLUMN_CARD_ID,
   columns: tableColumns.STATS_MUTUAL_SETTLEMENT_COLUMNS
 };
 
@@ -101,6 +101,7 @@ class StatsMutualSettlementActions extends BaseTableActions {
 
       let filterItems = [
         { ...tableFilters.FILTER_ACTIVATION_DATE_STATS },
+        { ...tableFilters.FILTER_CARD_ID },        
         { ...tableFilters.FILTER_CERT_ID },
         { ...tableFilters.FILTER_CERT_KIND },
         { ...tableFilters.FILTER_CERT_STATUS },
@@ -123,7 +124,8 @@ class StatsMutualSettlementActions extends BaseTableActions {
         {
           ...tableFilters.FILTER_SERVICE_TYPE_STATS,
           items: [{ name: "Все", value: null }, ...getState().serviceTypes.items]
-        }
+        },
+        {...tableFilters.FILTER_IS_BARTERABLE}
       ];
       return dispatch({
         type: this._withPrefix(BaseTableTypes.REPLACE_FILTER_ITEMS),

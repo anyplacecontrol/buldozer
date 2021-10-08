@@ -311,8 +311,7 @@ export const COLUMN_CERT_KIND = {
 }
 
 export const COLUMN_RECIPIENT = {  
-  accessor: item => (item.recipient ? item.recipient.company : ""),  
-  accessorSort: "recipient",
+  accessor: item => (item.recipient ? item.recipient.company : ""),    
   text: "Контрагент",
   className: "name"
 };
@@ -320,8 +319,7 @@ export const COLUMN_RECIPIENT = {
 export const SERVICE_TYPE_NAME = {
   accessor: item => (item.serviceType  ? item.serviceType.name : ""),      
   text: "Вид услуг",
-  className: "id",
-  accessorSort: "serviceType", 
+  className: "id",  
 }
 
 
@@ -330,7 +328,7 @@ export const CERT_STATUS = {
     if (item.isActive === true) return "Активен";
     if (item.isActive === false) return "Погашен"
   },     
-  text: "Вид серт",
+  text: "Статус серт",
   className: "id",  
   accessorSort: "isActive",
 }
@@ -340,7 +338,7 @@ export const USED_AMOUNT = {
   accessor: item => item.usedAmount,      
   text: "Погаш., грн",
   className: "price",
-  accessorSort: "amount",  
+  accessorSort: "usedAmount",  
 }
 
 export const COLUMN_OSTATOK = 
@@ -371,11 +369,17 @@ export const COLUMN_REDEEMER_RESTAURANTS = {
     }
 
     return result;
-  },      
+  },  
+  accessorSort: "redeemerRestaurant",    
   text: "Ресторан погас.",
   className: "name"  
 }
 
+export const COLUMN_STAT_ISSUING_RESTAURANT = {  
+  accessor: item => (item.issuingRestaurant ? item.issuingRestaurant.name : ""),    
+  text: "Рест. эмит.",
+  className: "name"  
+}
 
 export const STATS_MUTUAL_SETTLEMENT_COLUMNS = _addIsDefault([
   {...COLUMN_CARD_ID, isVisible: true}, 
@@ -384,7 +388,7 @@ export const STATS_MUTUAL_SETTLEMENT_COLUMNS = _addIsDefault([
   {...USED_AMOUNT, isVisible: true},        
   {...COLUMN_OSTATOK, isVisible: true},        
   {...COLUMN_CERT_KIND, isVisible: true},   
-  {...COLUMN_ISSUING_RESTAURANT, isVisible: true},    
+  {...COLUMN_STAT_ISSUING_RESTAURANT, isVisible: true},    
   {...COLUMN_RECIPIENT, isVisible: true},    
   {...SERVICE_TYPE_NAME, isVisible: true},      
   {...CERT_STATUS, isVisible: true},        
