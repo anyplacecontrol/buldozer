@@ -66,7 +66,7 @@ export async function fetchJSON(url, init) {
 
     return json;
   } catch (err) {
-    if (!token || err.includes('Unauthenticated')) {
+    if (!token || (!err.message && err.includes('Unauthenticated'))) {
       //Not Authorized
       window.location.replace("/");
       throw err;
@@ -87,7 +87,7 @@ export async function fetchJSON(url, init) {
 
           if (!response) {
             //Probably token is invalid
-            errorBody.errorMessage = "Authorization failed: " + err.message;
+            errorBody.errorMessage = "Error: " + err.message;
             //TODO: may be token has expired and we need to refresh it. Ot navigate to login page
           }
         }

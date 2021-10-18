@@ -19,8 +19,8 @@ import { certificatesActions } from "./certificatesRedux";
 export const IRecipientView = PropTypes.shape({
   ...IBaseView,
   id: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
-  email: PropTypes.string.isRequired,
+  name: PropTypes.string,
+  email: PropTypes.string,
   company: PropTypes.string,
   address: PropTypes.string,
   phone: PropTypes.string,

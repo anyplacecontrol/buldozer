@@ -22,7 +22,7 @@ export const ALERT_WARNING = "ALERT_WARNING";
 
 //-----------------------------------
 export const uiInitialState = {
-  itemsPerPage: 30, //quantity of items per page to display lists
+  itemsPerPage: 100, //quantity of items per page to display lists
   alert: { text: "", kind: "" }, //message displayed in the panel on the top of table
   isLoading: false,
   isHamburgerButtonPressed: false,

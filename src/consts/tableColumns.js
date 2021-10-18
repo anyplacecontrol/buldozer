@@ -113,7 +113,7 @@ export const COLUMN_COMPANY = {
   accessor: "company",
   accessorSort: "company",
   text: "Компания",
-  className: "id"
+  className: "name"
 };
 
 export const RECIPIENTS_COLUMNS = _addIsDefault([
@@ -351,26 +351,13 @@ export const COLUMN_OSTATOK =
 
 export const COLUMN_COMMENT = 
 {
-  accessor: "recipientComment",  
+  accessor: item => (item.recipient  ? item.recipient.comment : ""),  
   text: "Комментарий",
   className: "name"  
 }
 
 export const COLUMN_REDEEMER_RESTAURANTS = {
-  accessor: item => {
-    if (!item.redeemerRestaurants)
-      return ""
-    let result = "";
-
-    if (item.redeemerRestaurants.length>0) {
-    result = item.redeemerRestaurants[0].name;    
-    if (item.redeemerRestaurants.length > 1)
-      result = result + "...";
-    }
-
-    return result;
-  },  
-  accessorSort: "redeemerRestaurant",    
+  accessor: item => (item.redeemerRestaurant  ? item.redeemerRestaurant.name : ""),  
   text: "Ресторан погас.",
   className: "name"  
 }

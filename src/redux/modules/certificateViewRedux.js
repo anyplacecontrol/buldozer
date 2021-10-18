@@ -26,16 +26,16 @@ export const ITransaction = PropTypes.shape({
 
 export const ICertificateView = PropTypes.shape({
   ...IBaseView,
-  id: PropTypes.number.isRequired,
+  id: PropTypes.number,
   activeFromDate: PropTypes.string, //api field: active_from_date
-  validityPeriodInMonths: PropTypes.number.isRequired, //api field validity_period_in_months
+  validityPeriodInMonths: PropTypes.number, //api field validity_period_in_months
   isActive: PropTypes.bool, //api field is_active
   createdUser: IUserView, //api field: user_id
-  amount: PropTypes.number.isRequired,
+  amount: PropTypes.number,
 
-  cardId: PropTypes.string.isRequired,
-  usedAmount: PropTypes.number.isRequired,
-  balance: PropTypes.number.isRequired,
+  cardId: PropTypes.string,
+  usedAmount: PropTypes.number,
+  balance: PropTypes.number,
   isPartiallyRedeemable: PropTypes.bool,
   isBarterable: PropTypes.bool,
   

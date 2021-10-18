@@ -19,8 +19,8 @@ import { ICertificateView } from "./certificateViewRedux";
 
 export const IRestaurantView = PropTypes.shape({
   ...IBaseView,
-  id: PropTypes.number.isRequired,
-  id_: PropTypes.number.isRequired,
+  id: PropTypes.number,
+  id_: PropTypes.number,
   name: PropTypes.string.isRequired,
   email: PropTypes.string,
   address: PropTypes.string,

@@ -84,5 +84,5 @@ export class Balance extends React.Component {
 }
 
 Balance.propTypes = {
-  item: PropTypes.IView
+  item: PropTypes.object
 };
