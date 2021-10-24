@@ -14,6 +14,7 @@ import { restaurantsActions } from "./restaurantsRedux";
 import { recipientsActions } from "./recipientsRedux";
 import { serviceTypesActions } from "./serviceTypesRedux";
 import * as consts from "../../consts/constants";
+import * as dataFuncs from "../../utils/dataFuncs";
 
 //*******************************************************************************
 const PREFIX = "cards/";
@@ -54,35 +55,40 @@ class CertificatesActions extends BaseTableActions {
   // *** Filters
   loadFilterItems() {
     return async (dispatch, getState) => {
-      let p1 = new Promise(async (resolve, reject) => {
-        if (
-          !getState().recipients.items ||
-          getState().recipients.items.length === 0
-        ) {
-          try {
-            await dispatch(
-              recipientsActions.fetchItems(0, false, false, null, true, true)
-            );
-          } catch (e) {}
-        }
-        resolve();
-      });
-
-      dispatch(uiActions.showBackdrop(true));
-      await Promise.all([p1]);
-      dispatch(uiActions.showBackdrop(false));
-
       let filterItems = [
         { ...tableFilters.FILTER_ID },
-        { ...tableFilters.FILTER_ISACTIVE },
-        {
-          ...tableFilters.FILTER_RECIPIENT,
-          items: [
-            { company: "Все", value: null },
-            ...getState().recipients.items
-          ]
-        }
+        { ...tableFilters.FILTER_ISACTIVE }
       ];
+
+      let role = dataFuncs.getUserRole();
+      if (role != "recipient") {
+        dispatch(uiActions.showBackdrop(true));
+        let p1 = new Promise(async (resolve, reject) => {
+          if (
+            !getState().recipients.items ||
+            getState().recipients.items.length === 0
+          ) {
+            try {
+              await dispatch(
+                recipientsActions.fetchItems(0, false, false, null, true, true)
+              );
+            } catch (e) {}
+          }
+          resolve();
+        });
+        await Promise.all([p1]);
+        dispatch(uiActions.showBackdrop(false));
+        filterItems = [
+          ...filterItems,
+          {
+            ...tableFilters.FILTER_RECIPIENT,
+            items: [
+              { company: "Все", value: null },
+              ...getState().recipients.items
+            ]
+          }
+        ];
+      }
 
       return dispatch({
         type: this._withPrefix(BaseTableTypes.REPLACE_FILTER_ITEMS),
@@ -124,7 +130,7 @@ class CertificatesActions extends BaseTableActions {
   }
 
   importCSV(event) {
-    return this._importCSV(event, cardsApi, "/cards");  
+    return this._importCSV(event, cardsApi, "/cards");
   }
 
   //------------------------------------------------------------------------------

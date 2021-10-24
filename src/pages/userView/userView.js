@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import * as userViewRedux from "../../redux/modules/userViewRedux";
 import { userViewActions } from "../../redux/modules/userViewRedux";
 import { userRolesActions } from "../../redux/modules/userRolesRedux";
+import { recipientsActions } from "../../redux/modules/recipientsRedux";
 import { BaseView } from "../../components/BaseView/BaseView";
 import { UserGeneral } from "./UserGeneral";
 import { UserCreatedBy } from "./UserCreatedBy";
@@ -38,6 +39,12 @@ export class userView_ extends React.Component {
     this.props.dispatch(userViewActions.changeRole(newValue));
   };
 
+  onChangeRecipient = (recipient, isChecked) => {
+    this.props.dispatch(
+      userViewActions.changeRecipient(recipient, isChecked)
+    );
+  };
+
   render() {
     return (
       <BaseView
@@ -56,7 +63,9 @@ export class userView_ extends React.Component {
         <UserPermissions
           user={this.props.user}
           allUserRoles={this.props.allUserRoles}
+          allRecipients={this.props.allRecipients}
           onChangeRole = {this.onChangeRole}
+          onChangeRecipient = {this.onChangeRecipient}
         />
 
         {this.props.user.createdUser ? (
@@ -71,12 +80,14 @@ userView_.propTypes = {
   dispatch: PropTypes.func.isRequired,
   user: userViewRedux.IUserView,
   allUserRoles: PropTypes.arrayOf(PropTypes.object).isRequired,
+  allRecipients: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 function mapStateToProps(state) {
   return {
     user: state.userView,
-    allUserRoles: userRolesActions.getItems(state)
+    allUserRoles: userRolesActions.getItems(state),
+    allRecipients: recipientsActions.getItems(state),
   };
 }
 

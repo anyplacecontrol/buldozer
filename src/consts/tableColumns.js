@@ -96,7 +96,7 @@ export const COLUMN_NAME = {
   accessor: "name",
   accessorSort: "name",
   text: "Название",
-  className: "id"
+  className: "name"
 };
 
 export const RESTAURANTS_COLUMNS = _addIsDefault([

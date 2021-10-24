@@ -67,6 +67,10 @@ export async function AddOrUpdateItem(Obj, endPoint, method) {
   let cleanObj = { ...Obj };
   cleanObj.roleId  = Obj.role.id;
 
+  let recipientsIds = cleanObj.recipients.map((value) => value.id);
+
+  cleanObj.recipientsIds  = recipientsIds;
+
   delete cleanObj.id;
   delete cleanObj.isChecked;
   delete cleanObj.isValidated;
@@ -74,6 +78,7 @@ export async function AddOrUpdateItem(Obj, endPoint, method) {
   delete cleanObj.createdUser;
   delete cleanObj.createdDate;
   delete cleanObj.role;
+  delete cleanObj.recipients;
   if (Obj.createdUser) {
     delete delete cleanObj.password;
   }

@@ -193,9 +193,7 @@ export function dateRangeToISOFormat(date1, date2) {
     };
 
     return result;
-  }
-  else
-    return year1 + "-" + month1 + "-" + day1 + "T00:00:00.000Z"
+  } else return year1 + "-" + month1 + "-" + day1 + "T00:00:00.000Z";
 }
 
 export function timestampToShortDate(timestamp) {
@@ -497,4 +495,18 @@ export function isColumnVisible(columnsArr, columnObj) {
   }
 
   return false;
+}
+
+export function getUserRole() {
+  let authData = null;
+  let result =  "recipient" //"user";
+  
+  try {
+    authData = JSON.parse(localStorage.getItem("authData"));
+  } catch {}
+  
+  if (authData && authData.user && authData.user.role && authData.user.role.slug) {
+    result = authData.user.role.slug;
+  }
+  return result;
 }

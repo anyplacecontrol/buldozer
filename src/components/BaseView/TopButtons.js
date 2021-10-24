@@ -1,8 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
+import * as dataFuncs from "../../utils/dataFuncs";
 
 export class TopButtons extends React.Component {
   render() {
+    let userRole = dataFuncs.getUserRole();
+
     return (
       <>
         {this.props.caption && (
@@ -26,7 +29,7 @@ export class TopButtons extends React.Component {
               Отменить
             </button>
           )}
-          {this.props.onSubmitClick && (
+          {this.props.onSubmitClick && userRole != "recipient" && (
             <button
               className="buttons__main button--save animated"
               type="button"

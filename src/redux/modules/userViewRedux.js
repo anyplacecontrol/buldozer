@@ -4,6 +4,7 @@ import { usersActions } from "./usersRedux";
 import * as viewValidators from "../../utils/viewValidators";
 import * as usersApi from "../../api/usersApi";
 import { userRolesActions } from "./userRolesRedux";
+import { recipientsActions } from "./recipientsRedux";
 import {
   BaseViewActions,
   BaseViewInitialState,
@@ -32,6 +33,7 @@ export const IUserView = PropTypes.shape({
   password: PropTypes.string,
   createdDate: PropTypes.string,
   createdUser: PropTypes.object,
+  recipients: PropTypes.arrayOf(PropTypes.object),
   role: IRole
 });
 
@@ -45,6 +47,7 @@ const CHANGE_POSITION = PREFIX + "CHANGE_POSITION";
 const CHANGE_PASSWORD = PREFIX + "CHANGE_PASSWORD";
 const CHANGE_EMAIL = PREFIX + "CHANGE_EMAIL";
 const CHANGE_ROLE = PREFIX + "CHANGE_ROLE";
+const CHANGE_RECIPIENT = PREFIX + "CHANGE_RECIPIENT";
 
 //*******************************************************************************
 
@@ -59,7 +62,8 @@ export const userViewInitialState = {
   isActive: false,
   createdDate: null,
   createdUser: null,
-  role: null
+  role: null,
+  recipients: []
 };
 
 //*******************************************************************************
@@ -70,7 +74,6 @@ export default function reducer(state = userViewInitialState, action = {}) {
   if (result) return result;
 
   switch (action.type) {
-
     case CHANGE_IS_ACTIVE:
       return {
         ...state,
@@ -112,6 +115,22 @@ export default function reducer(state = userViewInitialState, action = {}) {
         ...state,
         email: action.payload
       };
+
+    case CHANGE_RECIPIENT: {
+      let recipients = [];
+      if (!action.isPresent) {
+        recipients = [action.recipient, ...state.recipients];
+      } else {
+        for (let i = 0; i < state.recipients.length; i++) {
+          if (state.recipients[i].id != action.recipient.id)
+          recipients.push(state.recipients[i]);
+        }
+      }
+      return {
+        ...state,
+        recipients: recipients
+      };
+    }
 
     default:
       return state;
@@ -174,6 +193,14 @@ class UserViewActions extends BaseViewActions {
     };
   };
 
+  changeRecipient = (recipient, isPresent) => {
+    return {
+      type: CHANGE_RECIPIENT,
+      recipient,
+      isPresent
+    };
+  };
+
   initializeView_end = () => {
     return async (dispatch, getState) => {
       //get userRoles
@@ -192,8 +219,22 @@ class UserViewActions extends BaseViewActions {
         resolve();
       });
 
+      let p2 = new Promise(async (resolve, reject) => {
+        if (
+          !getState().recipients.items ||
+          getState().recipients.items.length === 0
+        ) {
+          try {
+            await dispatch(
+              recipientsActions.fetchItems(0, false, false, null, true, true)
+            );
+          } catch (e) {}
+        }
+        resolve();
+      });
+
       dispatch(uiActions.showBackdrop(true));
-      await Promise.all([p1]);
+      await Promise.all([p1, p2]);
       dispatch(uiActions.showBackdrop(false));
     };
   };

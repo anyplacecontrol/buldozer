@@ -26,6 +26,44 @@ export class UserPermissions extends React.Component {
       />
     );
   };
+  //------------
+
+  renderRecipientsSelectBox = () => {
+    let itemsArr = this.props.allRecipients.map((recipient, index) => {
+      let isChecked = false;
+      if (this.props.user.recipients) {
+        for (
+          let i = 0;
+          i < this.props.user.recipients.length;
+          i++
+        ) {
+          if (
+            this.props.user.recipients[i].id === recipient.id
+          ) {
+            isChecked = true;
+            break;
+          }
+        }
+      }
+      
+      return {
+        text: recipient.company,
+        isChecked,
+        onClick: () =>
+          this.props.onChangeRecipient(recipient, isChecked)
+      };
+    });
+
+    return (
+      <SelectBox
+        style={{ zIndex: 3 }}
+        className="w100"
+        text={"Выбрать..."}
+        items={[...itemsArr]}
+        isCheckboxItems
+      />
+    );
+  };
 
   render() {
     return (
@@ -47,7 +85,16 @@ export class UserPermissions extends React.Component {
 
           {/*------- Right panel-------- */}
 
-          <div className="block-set__item flex animated"></div>
+          <div className="block-set__item flex animated">
+            <div className="block-set__item--inner flex w100 animated">
+              <div className="block-set__sub-title flex w100 animated">
+                Контрагенты
+              </div>
+              <div className="block-set__content flex w100 animated">
+                {this.renderRecipientsSelectBox()}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -56,6 +103,8 @@ export class UserPermissions extends React.Component {
 
 UserPermissions.propTypes = {
   allUserRoles: PropTypes.arrayOf(PropTypes.object).isRequired,
+  allRecipients: PropTypes.arrayOf(PropTypes.object).isRequired,
   user: userViewRedux.IUserView,
-  onChangeRole: PropTypes.func.isRequired
+  onChangeRole: PropTypes.func.isRequired,
+  onChangeRecipient: PropTypes.func.isRequired,
 };

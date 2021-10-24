@@ -1,9 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { SelectBox } from "../SelectBox/SelectBox";
+import * as dataFuncs from "../../utils/dataFuncs";
 
 export class Controls extends React.Component {
   render() {
+    let userRole = dataFuncs.getUserRole();
+
     let filterBtnCls = this.props.isFilterVisible
       ? "filter__button flex active animated"
       : "filter__button flex animated";
@@ -12,7 +15,7 @@ export class Controls extends React.Component {
       <>
         {/* -- Nav before table-- */}
         <div className="main-nav flex w100 animated">
-          {this.props.onDeleteSelectedItems && (
+          {(this.props.onDeleteSelectedItems && userRole != "recipient") && (
             <div className="main-nav__left flex animated">
               <div className="filter__select animated">
                 <SelectBox
@@ -50,7 +53,7 @@ export class Controls extends React.Component {
               </div>
             )}
 
-            {this.props.onAddItemClick && (
+            {this.props.onAddItemClick && userRole != "recipient" && (
               <button
                 className="add animated"
                 onClick={this.props.onAddItemClick}
@@ -59,7 +62,7 @@ export class Controls extends React.Component {
               </button>
             )}
 
-            {this.props.onImportClick && (
+            {this.props.onImportClick && userRole != "recipient" && (
               <>                  
                 <div className="import__button flex animated">
                 <input

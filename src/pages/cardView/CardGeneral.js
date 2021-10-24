@@ -1,10 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { ICardView } from "../../redux/modules/cardViewRedux";
+import * as dataFuncs from "../../utils/dataFuncs";
 
 export class CardGeneral extends React.Component {
   render() {
     let isEditExisting = this.props.card.createdDate != "";
+    let userRole = dataFuncs.getUserRole();
 
     return (
       <div className="block-set__box flex animated">
@@ -78,7 +80,7 @@ export class CardGeneral extends React.Component {
                         ? "block-set__tumbler active animated"
                         : "block-set__tumbler animated"
                     }
-                    onClick={this.props.onTriggerIsActive}
+                    onClick={ userRole != "recipient" ? this.props.onTriggerIsActive: null}
                   />
                   <div className="block-set__info--title animated">
                     {this.props.card.isActive ? "Да" : "Нет"}

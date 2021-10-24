@@ -37,8 +37,8 @@ export class CardRecipient extends React.Component {
   };
 
 
-  render() {
-    let isEditExisting = this.props.card.id != 0;
+  render() {    
+    let userRole = dataFuncs.getUserRole();
 
     return (
       <div className="block-set__box flex animated">
@@ -51,8 +51,8 @@ export class CardRecipient extends React.Component {
               <div className="block-set__sub-title flex w100 animated">
                 Контрагент*
               </div>
-              <div className="block-set__content flex w100 animated">
-                {this.renderRecipientsSelectBox()}
+              <div className="block-set__content flex w100 animated">               
+                {userRole != "recipient" ? this.renderRecipientsSelectBox(userRole): this.props.card.recipient.company}
               </div>
             </div>
 
@@ -73,7 +73,7 @@ export class CardRecipient extends React.Component {
                   type="text"
                   value={this.props.card.recipientComment || ""}
                   onChange={e =>
-                    this.props.onRecipientCommentChange(e.target.value)
+                    userRole != "recipient" ? this.props.onRecipientCommentChange(e.target.value): null
                   }
                 />
               </div>

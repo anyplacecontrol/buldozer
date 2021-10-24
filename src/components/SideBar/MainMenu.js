@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { NavLink } from "react-router-dom";
 import * as routeNames from "../../consts/routeNames";
+import * as dataFuncs from "../../utils/dataFuncs";
 
 export class MainMenu extends React.Component {
   onClick = path => {
@@ -79,18 +79,18 @@ export class MainMenu extends React.Component {
 
   renderItems = () => {
     let jsxArr = [];
-   
-    let isAdmin = false;
-    if (window.authData && window.authData.user && window.authData.user.role &&
-      window.authData.user.role.id == 1 ) 
-      isAdmin = true;
+
+    let userRole = dataFuncs.getUserRole();
 
     for (let i = 0; i < this.props.items.length; i++) {
-      let item = this.props.items[i];                     
+      let item = this.props.items[i];
 
       //Прячем разделы меню, которые не разрешены обычным пользователям
-      if (!isAdmin  && (item.path === routeNames.ROUTE_NAMES.users))
-        continue;
+      if (!(userRole==="admin") && item.path === routeNames.ROUTE_NAMES.users) continue;
+      if (userRole==="recipient" && 
+          item.path != routeNames.ROUTE_NAMES.cards &&
+          item.path != routeNames.ROUTE_NAMES.cardView &&
+          item.path != routeNames.ROUTE_NAMES.cardView ) continue;
 
       //if item does not contain sub-items
       if (!item.items && !item.isHidden) {
@@ -116,7 +116,7 @@ export class MainMenu extends React.Component {
         for (let index = 0; index < item.items.length; index++) {
           let subitem = item.items[index];
 
-          if (!subitem.isHidden ) {
+          if (!subitem.isHidden) {
             innerJsxArr.push(
               <li
                 key={"subitem_" + index}
@@ -146,7 +146,7 @@ export class MainMenu extends React.Component {
           </div>
 
           {/* subitems */}
-          {innerJsxArr.length>0 ? (
+          {innerJsxArr.length > 0 ? (
             <ul className="main-menu__sub animated">{innerJsxArr}</ul>
           ) : null}
         </li>

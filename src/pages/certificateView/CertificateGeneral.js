@@ -1,14 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { ICertificateView } from "../../redux/modules/certificateViewRedux";
-import * as dataFuncs from "../../utils/dataFuncs";
 import DatePicker, { registerLocale, setDefaultLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import ru from "date-fns/locale/ru";
 registerLocale("ru", ru);
 
 export class CertificateGeneral extends React.Component {
-  render() {
+  render() {    
     let isEditExisting = this.props.certificate.createdDate ? true: false;
 
     return (
