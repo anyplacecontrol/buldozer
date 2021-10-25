@@ -52,7 +52,7 @@ export class CardRecipient extends React.Component {
                 Контрагент*
               </div>
               <div className="block-set__content flex w100 animated">               
-                {userRole != "recipient" ? this.renderRecipientsSelectBox(userRole): this.props.card.recipient.company}
+                {userRole != "recipient" ? this.renderRecipientsSelectBox(userRole): (this.props.card.recipient && this.props.card.recipient.company ? this.props.card.recipient.company : "")}
               </div>
             </div>
 
