@@ -1,8 +1,8 @@
 const webpack = require('webpack')
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const { spawn } = require('child_process')
-const HardSourceWebpackPlugin = require('hard-source-webpack-plugin'); 
+const {spawn} = require('child_process')
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 
 
 module.exports = {
@@ -84,15 +84,17 @@ module.exports = {
           }, {
             loader: 'sass-loader',
             options: {
-              includePaths: [path.resolve(__dirname, 'src', 'scss')],
-              sourceMap: true
+              sassOptions: {
+                includePaths: [path.resolve(__dirname, 'src', 'scss')],
+                sourceMap: true
+              }
             }
           }
         ]
       }
     ]
   },
-  target: 'electron-renderer',  
+  target: 'electron-renderer',
   plugins: [
     new HardSourceWebpackPlugin(),
     new webpack.HotModuleReplacementPlugin(),
@@ -119,11 +121,11 @@ module.exports = {
       spawn(
         'electron',
         ['.'],
-        { shell: true, env: process.env, stdio: 'inherit' }
+        {shell: true, env: process.env, stdio: 'inherit'}
       )
-      .on('close', code => process.exit(0))
-      .on('error', spawnError => console.error(spawnError))
+        .on('close', code => process.exit(0))
+        .on('error', spawnError => console.error(spawnError))
     }
-    
+
   }
 }

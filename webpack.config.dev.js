@@ -1,13 +1,13 @@
 const webpack = require('webpack')
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const HardSourceWebpackPlugin = require('hard-source-webpack-plugin'); 
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 
 module.exports = {
   resolve: {
     extensions: ['*', '.js', '.jsx', '.json']
   },
-  devtool: 'cheap-module-eval-source-map', // more info:https://webpack.js.org/guides/development/#using-source-maps and https://webpack.js.org/configuration/devtool/  
+  devtool: 'cheap-module-eval-source-map', // more info:https://webpack.js.org/guides/development/#using-source-maps and https://webpack.js.org/configuration/devtool/
   entry: [
     // must be first entry to properly set public path
     './src/webpack-public-path',
@@ -15,7 +15,7 @@ module.exports = {
     'webpack-hot-middleware/client?reload=true',
     path.resolve(__dirname, 'src/index.js') // Defining path seems necessary for this to work consistently on Windows machines.
   ],
-  target: 'web',  
+  target: 'web',
   mode: 'development',
   output: {
     path: path.resolve(__dirname, 'dist'), // Note: Physical files are only output by the production build task `npm run build`.
@@ -113,8 +113,10 @@ module.exports = {
           }, {
             loader: 'sass-loader',
             options: {
-              includePaths: [path.resolve(__dirname, 'src', 'scss')],
-              sourceMap: true
+              sassOptions: {
+                includePaths: [path.resolve(__dirname, 'src', 'scss')],
+                sourceMap: true
+              }
             }
           }
         ]
