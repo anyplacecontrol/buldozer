@@ -409,3 +409,29 @@ export const USER_ROLES_COLUMNS = _addIsDefault([
   {...COLUMN_NAME, isVisible: true},   
   {...COLUMN_ID, isVisible: true},       
 ]);
+
+//-----------------------------------------------------------------------------
+//Manifestations
+
+export const MANIFESTATIONS_COLUMNS = _addIsDefault([
+  {...COLUMN_ID, isVisible: true},   
+  {...COLUMN_NAME, isVisible: true},       
+  {...COLUMN_CREATED_DATE, isVisible: true},   
+]);
+
+//-----------------------------------------------------------------------------
+//Expense Items
+
+export const COLUMN_EXPENSE_CATEGORY = {  
+  accessor: item => (item.expenseCategory ? item.expenseCategory.name : ""),    
+  text: "кат. расходов",
+  accessorSort: "expenseCategory",   
+  className: "name"  
+}
+
+export const EXPENSE_ITEMS_COLUMNS = _addIsDefault([
+  {...COLUMN_ID, isVisible: true},   
+  {...COLUMN_NAME, isVisible: true},       
+  {...COLUMN_EXPENSE_CATEGORY, isVisible: true},       
+  {...COLUMN_CREATED_DATE, isVisible: true},   
+]);

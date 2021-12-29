@@ -86,11 +86,28 @@ export class MainMenu extends React.Component {
       let item = this.props.items[i];
 
       //Прячем разделы меню, которые не разрешены обычным пользователям
-      if (!(userRole==="admin") && item.path === routeNames.ROUTE_NAMES.users) continue;
-      if (userRole==="recipient" && 
-          item.path != routeNames.ROUTE_NAMES.cards &&
-          item.path != routeNames.ROUTE_NAMES.cardView &&
-          item.path != routeNames.ROUTE_NAMES.cardView ) continue;
+      if (
+        !(userRole === "admin") &&
+        (item.path === routeNames.ROUTE_NAMES.users ||
+          item.path === routeNames.ROUTE_NAMES.userView ||
+          item.path === routeNames.ROUTE_NAMES.userRoles ||
+          item.path === routeNames.ROUTE_NAMES.manifestations ||
+          item.path === routeNames.ROUTE_NAMES.manifestationView ||
+          item.path === routeNames.ROUTE_NAMES.expenseCategoryView ||
+          item.path === routeNames.ROUTE_NAMES.expenseCategories ||
+          item.path === routeNames.ROUTE_NAMES.expenseItems ||
+          item.path === routeNames.ROUTE_NAMES.expenseItemView ||
+          item.path === routeNames.ROUTE_NAMES.budgetTable                     
+          )
+      )
+        continue;
+      if (
+        userRole === "recipient" &&
+        item.path != routeNames.ROUTE_NAMES.cards &&
+        item.path != routeNames.ROUTE_NAMES.cardView &&
+        item.path != routeNames.ROUTE_NAMES.cardView
+      )
+        continue;
 
       //if item does not contain sub-items
       if (!item.items && !item.isHidden) {

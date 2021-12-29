@@ -28,6 +28,15 @@ import statsRecipients from "./modules/statsRecipientsRedux";
 import statsUnusedCertificates from "./modules/statsUnusedCertificatesRedux";
 import statsMutualSettlement from "./modules/statsMutualSettlementRedux";
 
+import manifestations from "./modules/manifestationsRedux";
+import manifestationView from "./modules/manifestationViewRedux";
+import expenseCategories from "./modules/expenseCategoriesRedux";
+import expenseCategoryView from "./modules/expenseCategoryViewRedux";
+import expenseItems from "./modules/expenseItemsRedux";
+import expenseItemView from "./modules/expenseItemViewRedux";
+
+import budgetTable from "./modules/budgetTableRedux";
+
 const reducers = {
   ui,
   routing,  
@@ -55,7 +64,16 @@ const reducers = {
   statsRedeemerRestaurants,
   statsRecipients,
   statsUnusedCertificates,
-  statsMutualSettlement
+  statsMutualSettlement,
+
+  manifestations,
+  manifestationView,
+  expenseCategories,
+  expenseCategoryView,
+  expenseItems,
+  expenseItemView,
+
+  budgetTable
 };
 
 export default combineReducers(reducers);

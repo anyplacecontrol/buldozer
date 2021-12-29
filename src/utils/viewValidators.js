@@ -273,3 +273,41 @@ export function validateServiceTypeView(viewObj) {
     ...viewObj
   };
 }
+
+//--------------------------------------------------------------------------
+
+export function validateManifestationView(viewObj) {
+  let isEditExisting = viewObj.id != 0;
+
+  if (isEmptyString(viewObj.name)) {
+    throw "Проверка не удалась: пустые поля";
+  }
+  
+  if (
+    isLongString(viewObj.name) 
+  ) {
+    throw "Проверка не удалась: слишком длинные поля (>255 символов)";
+  }
+    
+  return {
+    ...viewObj
+  };
+}
+
+//--------------------------------------------------------------------------
+
+export function validateExpenseItemView(viewObj) {
+  let isEditExisting = viewObj.id != 0;
+
+  validateManifestationView(viewObj);
+    
+  if (viewObj.expenseCategory == null ) 
+  {
+    throw "Проверка не удалась: Категория расходов не задана";
+  }
+
+  return {
+    ...viewObj
+  };
+}
+

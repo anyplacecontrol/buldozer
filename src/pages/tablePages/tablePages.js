@@ -11,6 +11,9 @@ import {statsRecipientsActions} from "../../redux/modules/statsRecipientsRedux";
 import {statsUnusedCertificatesActions} from "../../redux/modules/statsUnusedCertificatesRedux";
 import {statsMutualSettlementActions} from "../../redux/modules/statsMutualSettlementRedux";
 import {userRolesActions} from "../../redux/modules/userRolesRedux";
+import {manifestationsActions} from "../../redux/modules/manifestationsRedux";
+import {expenseCategoriesActions} from "../../redux/modules/expenseCategoriesRedux";
+import {expenseItemsActions} from "../../redux/modules/expenseItemsRedux";
 
 export const cards = tablePageWithProvider(cardsActions);
 export const certificates = tablePageWithProvider(certificatesActions);
@@ -24,3 +27,6 @@ export const statsRedeemerRestaurants = tablePageWithProvider(statsRedeemerResta
 export const statsRecipients = tablePageWithProvider(statsRecipientsActions);
 export const statsUnusedCertificates = tablePageWithProvider(statsUnusedCertificatesActions);
 export const statsMutualSettlement = tablePageWithProvider(statsMutualSettlementActions);
+export const manifestations = tablePageWithProvider(manifestationsActions);
+export const expenseCategories = tablePageWithProvider(expenseCategoriesActions);
+export const expenseItems = tablePageWithProvider(expenseItemsActions);

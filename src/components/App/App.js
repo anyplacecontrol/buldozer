@@ -24,7 +24,10 @@ import {
   statsRecipients,
   statsUnusedCertificates,
   statsMutualSettlement,
-  userRoles
+  userRoles,
+  manifestations,
+  expenseCategories,
+  expenseItems
 } from "../../pages/tablePages/tablePages";
 import { cardView } from "../../pages/cardView/cardView";
 import { certificateView } from "../../pages/certificateView/certificateView";
@@ -32,7 +35,11 @@ import { recipientView } from "../../pages/recipientView/recipientView";
 import { restaurantView } from "../../pages/restaurantView/restaurantView";
 import { userView } from "../../pages/userView/userView";
 import { serviceTypeView } from "../../pages/serviceTypeView/serviceTypeView";
+import { manifestationView } from "../../pages/manifestationView/manifestationView";
+import { expenseCategoryView } from "../../pages/expenseCategoryView/expenseCategoryView";
+import { expenseItemView } from "../../pages/expenseItemView/expenseItemView";
 import { login } from "../../pages/login/login";
+import { budgetTable } from "../../pages/budgetTable/budgetTable"
 import * as authApi from "../../api/authApi";
 
 class App_ extends React.Component {
@@ -51,7 +58,7 @@ class App_ extends React.Component {
 
   render() {
     let userRole = dataFuncs.getUserRole();
-    
+
     return (
       <>
         {//hack for electron for url from file://....index.html instead of http://localhost/
@@ -107,61 +114,67 @@ class App_ extends React.Component {
                             }}
                           />
                           {/* ------Certificates----- */}
-                          {userRole != "recipient" ?
-                          <Route
-                            path={ROUTE_NAMES.certificates}
-                            render={() => {
-                              const Component = certificates;
-                              return <Component />;
-                            }}
-                          />: null}
+                          {userRole != "recipient" ? (
+                            <Route
+                              path={ROUTE_NAMES.certificates}
+                              render={() => {
+                                const Component = certificates;
+                                return <Component />;
+                              }}
+                            />
+                          ) : null}
 
-                          {userRole != "recipient" ?
-                          <Route
-                            path={ROUTE_NAMES.certificateView}
-                            render={() => {
-                              const Component = certificateView;
-                              return <Component />;
-                            }}
-                          />: null}
+                          {userRole != "recipient" ? (
+                            <Route
+                              path={ROUTE_NAMES.certificateView}
+                              render={() => {
+                                const Component = certificateView;
+                                return <Component />;
+                              }}
+                            />
+                          ) : null}
 
                           {/* ------Restaurants ----- */}
-                          {userRole != "recipient" ?
-                          <Route
-                            path={ROUTE_NAMES.restaurants}
-                            render={() => {
-                              const Component = restaurants;
-                              return <Component />;
-                            }}
-                          />: null}
+                          {userRole != "recipient" ? (
+                            <Route
+                              path={ROUTE_NAMES.restaurants}
+                              render={() => {
+                                const Component = restaurants;
+                                return <Component />;
+                              }}
+                            />
+                          ) : null}
 
-                          {userRole != "recipient" ?
-                          <Route
-                            path={ROUTE_NAMES.restaurantView}
-                            render={() => {
-                              const Component = restaurantView;
-                              return <Component />;
-                            }}
-                          />: null}
+                          {userRole != "recipient" ? (
+                            <Route
+                              path={ROUTE_NAMES.restaurantView}
+                              render={() => {
+                                const Component = restaurantView;
+                                return <Component />;
+                              }}
+                            />
+                          ) : null}
 
                           {/* ------Recipients ----- */}
-                          {userRole != "recipient" ?
-                          <Route
-                            path={ROUTE_NAMES.recipients}
-                            render={() => {
-                              const Component = recipients;
-                              return <Component />;
-                            }}
-                          />: null}
+                          {userRole != "recipient" ? (
+                            <Route
+                              path={ROUTE_NAMES.recipients}
+                              render={() => {
+                                const Component = recipients;
+                                return <Component />;
+                              }}
+                            />
+                          ) : null}
 
-                          {userRole != "recipient" ?
-                          <Route
-                            path={ROUTE_NAMES.recipientView}
-                            render={() => {
-                              const Component = recipientView;
-                              return <Component />;
-                            }}
-                          />: null}
+                          {userRole != "recipient" ? (
+                            <Route
+                              path={ROUTE_NAMES.recipientView}
+                              render={() => {
+                                const Component = recipientView;
+                                return <Component />;
+                              }}
+                            />
+                          ) : null}
 
                           {/* ------ Users ----- */}
                           {userRole === "admin" ? (
@@ -173,94 +186,173 @@ class App_ extends React.Component {
                               }}
                             />
                           ) : null}
-                          
-                          {userRole === "admin" ? 
-                          <Route
-                            path={ROUTE_NAMES.userView}
-                            render={() => {
-                              const Component = userView;
-                              return <Component />;
-                            }}
-                          />: null}
 
-                          {userRole === "admin" ? 
-                          <Route
-                            path={ROUTE_NAMES.userRoles}
-                            render={() => {
-                              const Component = userRoles;
-                              return <Component />;
-                            }}
-                          />: null}
+                          {userRole === "admin" ? (
+                            <Route
+                              path={ROUTE_NAMES.userView}
+                              render={() => {
+                                const Component = userView;
+                                return <Component />;
+                              }}
+                            />
+                          ) : null}
+
+                          {userRole === "admin" ? (
+                            <Route
+                              path={ROUTE_NAMES.userRoles}
+                              render={() => {
+                                const Component = userRoles;
+                                return <Component />;
+                              }}
+                            />
+                          ) : null}
 
                           {/* ------Виды услуг----- */}
-                          {userRole != "recipient" ?
-                          <Route
-                            path={ROUTE_NAMES.serviceTypes}
-                            render={() => {
-                              const Component = serviceTypes;
-                              return <Component />;
-                            }}
-                          />: null}
+                          {userRole != "recipient" ? (
+                            <Route
+                              path={ROUTE_NAMES.serviceTypes}
+                              render={() => {
+                                const Component = serviceTypes;
+                                return <Component />;
+                              }}
+                            />
+                          ) : null}
 
-                          {userRole != "recipient" ?
-                          <Route
-                            path={ROUTE_NAMES.serviceTypeView}
-                            render={() => {
-                              const Component = serviceTypeView;
-                              return <Component />;
-                            }}
-                          />: null}
+                          {userRole != "recipient" ? (
+                            <Route
+                              path={ROUTE_NAMES.serviceTypeView}
+                              render={() => {
+                                const Component = serviceTypeView;
+                                return <Component />;
+                              }}
+                            />
+                          ) : null}
 
                           {/* ------Статистика рест. эмитеты----- */}
-                          {userRole != "recipient" ?
-                          <Route
-                            path={ROUTE_NAMES.statsIssuingRestaurants}
-                            render={() => {
-                              const Component = statsIssuingRestaurants;
-                              return <Component />;
-                            }}
-                          />: null}
+                          {userRole != "recipient" ? (
+                            <Route
+                              path={ROUTE_NAMES.statsIssuingRestaurants}
+                              render={() => {
+                                const Component = statsIssuingRestaurants;
+                                return <Component />;
+                              }}
+                            />
+                          ) : null}
 
                           {/* ------Статистика рест. погас----- */}
-                          {userRole != "recipient" ?
-                          <Route
-                            path={ROUTE_NAMES.statsRedeemerRestaurants}
-                            render={() => {
-                              const Component = statsRedeemerRestaurants;
-                              return <Component />;
-                            }}
-                          />: null}
+                          {userRole != "recipient" ? (
+                            <Route
+                              path={ROUTE_NAMES.statsRedeemerRestaurants}
+                              render={() => {
+                                const Component = statsRedeemerRestaurants;
+                                return <Component />;
+                              }}
+                            />
+                          ) : null}
 
                           {/* ------Статистика контрагенты----- */}
-                          {userRole != "recipient" ?
-                          <Route
-                            path={ROUTE_NAMES.statsRecipients}
-                            render={() => {
-                              const Component = statsRecipients;
-                              return <Component />;
-                            }}
-                          />: null}
+                          {userRole != "recipient" ? (
+                            <Route
+                              path={ROUTE_NAMES.statsRecipients}
+                              render={() => {
+                                const Component = statsRecipients;
+                                return <Component />;
+                              }}
+                            />
+                          ) : null}
 
                           {/* ------Статистика unused certificates----- */}
-                          {userRole != "recipient" ?
-                          <Route
-                            path={ROUTE_NAMES.statsUnusedCertificates}
-                            render={() => {
-                              const Component = statsUnusedCertificates;
-                              return <Component />;
-                            }}
-                          />: null}
+                          {userRole != "recipient" ? (
+                            <Route
+                              path={ROUTE_NAMES.statsUnusedCertificates}
+                              render={() => {
+                                const Component = statsUnusedCertificates;
+                                return <Component />;
+                              }}
+                            />
+                          ) : null}
 
                           {/* ------Статистика взаиморасчет----- */}
-                          {userRole != "recipient" ?
-                          <Route
-                            path={ROUTE_NAMES.statsMutualSettlement}
-                            render={() => {
-                              const Component = statsMutualSettlement;
-                              return <Component />;
-                            }}
-                          />: null}
-                                                    
+                          {userRole != "recipient" ? (
+                            <Route
+                              path={ROUTE_NAMES.statsMutualSettlement}
+                              render={() => {
+                                const Component = statsMutualSettlement;
+                                return <Component />;
+                              }}
+                            />
+                          ) : null}
+
+                          {/* ------Проявления----- */}
+                          {userRole === "admin" ? (
+                            <Route
+                              path={ROUTE_NAMES.manifestations}
+                              render={() => {
+                                const Component = manifestations;
+                                return <Component />;
+                              }}
+                            />
+                          ) : null}
+                          {userRole === "admin" ? (
+                            <Route
+                              path={ROUTE_NAMES.manifestationView}
+                              render={() => {
+                                const Component = manifestationView;
+                                return <Component />;
+                              }}
+                            />
+                          ) : null}
+
+                          {/* ----- Категории расходов ---- */}
+                          {userRole === "admin" ? (
+                            <Route
+                              path={ROUTE_NAMES.expenseCategories}
+                              render={() => {
+                                const Component = expenseCategories;
+                                return <Component />;
+                              }}
+                            />
+                          ) : null}
+                          {userRole === "admin" ? (
+                            <Route
+                              path={ROUTE_NAMES.expenseCategoryView}
+                              render={() => {
+                                const Component = expenseCategoryView;
+                                return <Component />;
+                              }}
+                            />
+                          ) : null}
+
+                          {/* ----- Статьи расходов ---- */}
+                          {userRole === "admin" ? (
+                            <Route
+                              path={ROUTE_NAMES.expenseItems}
+                              render={() => {
+                                const Component = expenseItems;
+                                return <Component />;
+                              }}
+                            />
+                          ) : null}
+                          {userRole === "admin" ? (
+                            <Route
+                              path={ROUTE_NAMES.expenseItemView}
+                              render={() => {
+                                const Component = expenseItemView;
+                                return <Component />;
+                              }}
+                            />
+                          ) : null}
+
+                          {/* ----- Бюджет ---- */}
+                          {userRole === "admin" ? (
+                            <Route
+                              path={ROUTE_NAMES.budgetTable}
+                              render={() => {
+                                const Component = budgetTable;
+                                return <Component />;
+                              }}
+                            />
+                          ) : null}
                         </Switch>
                       </div>
                     </div>

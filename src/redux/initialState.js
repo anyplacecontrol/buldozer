@@ -27,6 +27,14 @@ import { statsRecipientsInitialState } from "./modules/statsRecipientsRedux";
 import { statsUnusedCertificatesInitialState } from "./modules/statsUnusedCertificatesRedux";
 import { statsMutualSettlementReduxInitialState } from "./modules/statsMutualSettlementRedux"
 
+import {manifestationsInitialState} from "./modules/manifestationsRedux";
+import {manifestationViewInitialState} from "./modules/manifestationViewRedux";
+import {expenseCategoriesInitialState} from "./modules/expenseCategoriesRedux";
+import {expenseCategoryViewInitialState} from "./modules/expenseCategoryViewRedux";
+import {expenseItemsInitialState} from "./modules/expenseItemsRedux";
+import {expenseItemViewInitialState} from "./modules/expenseItemViewRedux";
+
+import {budgetTableInitialState} from "./modules/budgetTableRedux";
 
 export const initialState = {
   ui: uiInitialState,
@@ -57,4 +65,13 @@ export const initialState = {
   statsRecipients: statsRecipientsInitialState,
   statsUnusedCertificates: statsUnusedCertificatesInitialState,
   statsMutualSettlement: statsMutualSettlementReduxInitialState,
+
+  manifestations: manifestationsInitialState,
+  manifestationView: manifestationViewInitialState,
+  expenseCategories: expenseCategoriesInitialState,
+  expenseCategoryView: expenseCategoryViewInitialState,
+  expenseItems: expenseItemsInitialState,
+  expenseItemView: expenseItemViewInitialState,
+
+  budgetTable: budgetTableInitialState
 };

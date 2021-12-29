@@ -17,7 +17,15 @@ export const ROUTE_NAMES = {
     statsRedeemerRestaurants: "/statsRedeemerRestaurants",
     statsRecipients: "/statsRecipients",
     statsUnusedCertificates: "/statsUnusedCertificates",
-    statsMutualSettlement: "/statsMutualSettlement"
+    statsMutualSettlement: "/statsMutualSettlement",
+
+    budgetTable: "/budgetTable",
+    expenseCategories: "/expenseCategories",
+      expenseCategoryView: "/expenseCategoryView",
+    expenseItems: "/expenseItems",
+      expenseItemView: "/expenseItemView",
+    manifestations: "/manifestations",
+      manifestationView: "/manifestationView"
 };
 
 export const QUERY_PARAMS = {

@@ -55,32 +55,31 @@ export const FILTER_ACTIVATION_DATE = _addDefaultValue({
   type: "dateRange",
   apiParamName: "activationDate",
   labelText: "Дата активации серт.",
-  value: {startDate: null, endDate: null}
+  value: { startDate: null, endDate: null }
 });
 
 export const FILTER_VALIDITY_DATE = _addDefaultValue({
   type: "dateRange",
   apiParamName: "validityDate",
   labelText: "Срок действия серт.",
-  value: {startDate: null, endDate: null}
+  value: { startDate: null, endDate: null }
 });
 
 export const FILTER_ISSUING_RESTAURANT = _addDefaultValue({
   type: "multiSelectBox",
   apiParamName: "issuingRestaurants",
   labelText: "Ресторан-эмитент",
-  items: [ ], //items are store objects
+  items: [], //items are store objects
   accessorText: item => item.name,
   accessorApi: item => item.id,
   value: []
 });
 
-
 export const FILTER_REDEEMER_RESTAURANT = _addDefaultValue({
   type: "multiSelectBox",
   apiParamName: "redeemerRestaurants",
   labelText: "Ресторан погашающий",
-  items: [ ], //items are store objects
+  items: [], //items are store objects
   accessorText: item => item.name,
   accessorApi: item => item.id,
   value: []
@@ -90,7 +89,7 @@ export const FILTER_RECIPIENT = _addDefaultValue({
   type: "selectBox",
   apiParamName: "recipientId",
   labelText: "Контрагент",
-  items: [ ], //items are store objects
+  items: [], //items are store objects
   accessorText: item => item.company,
   accessorApi: item => item.id,
   value: ""
@@ -110,7 +109,7 @@ export const FILTER_CREATED_DATE = _addDefaultValue({
   type: "dateRange",
   apiParamName: "createdDate",
   labelText: "Дата добавления",
-  value: {startDate: null, endDate: null}
+  value: { startDate: null, endDate: null }
 });
 
 //------------------------------------------------------------------
@@ -122,7 +121,6 @@ export const FILTER_COMPANY = _addDefaultValue({
   labelText: "Компания",
   value: ""
 });
-
 
 //------------------------------------------------------------------
 // Администраторы
@@ -148,14 +146,14 @@ export const FILTER_CREATED_DATE_STATS = _addDefaultValue({
   type: "dateRange",
   apiParamName: "createdDate",
   labelText: "Период создания серт.",
-  value: {startDate: null, endDate: null}
+  value: { startDate: null, endDate: null }
 });
 
 export const FILTER_ACTIVATION_DATE_STATS = _addDefaultValue({
   type: "dateRange",
   apiParamName: "period",
   labelText: "Отчетный период",
-  value: {startDate: null, endDate: null}
+  value: { startDate: null, endDate: null }
 });
 
 export const FILTER_CERT_ID = _addDefaultValue({
@@ -176,7 +174,7 @@ export const FILTER_RECIPIENT_STATS = _addDefaultValue({
   type: "multiSelectBox",
   apiParamName: "recipients",
   labelText: "Контрагент",
-  items: [ ], 
+  items: [],
   accessorText: item => item.company,
   accessorApi: item => item.id,
   value: []
@@ -186,7 +184,7 @@ export const FILTER_SINGLE_RECIPIENT_STATS = _addDefaultValue({
   type: "selectBox",
   apiParamName: "recipientId",
   labelText: "Контрагент",
-  items: [ ], //items are store objects
+  items: [], //items are store objects
   accessorText: item => item.company,
   accessorApi: item => item.id,
   value: ""
@@ -196,12 +194,11 @@ export const FILTER_SERVICE_TYPE_STATS = _addDefaultValue({
   type: "selectBox",
   apiParamName: "serviceTypeId",
   labelText: "Вид услуг",
-  items: [ ], 
+  items: [],
   accessorText: item => item.name,
   accessorApi: item => item.id,
   value: ""
 });
-
 
 export const FILTER_CERT_KIND = _addDefaultValue({
   type: "selectBox",
@@ -211,7 +208,7 @@ export const FILTER_CERT_KIND = _addDefaultValue({
     { name: " Все", value: null },
     { name: "Погашеные", value: "false" },
     { name: "Активные", value: "true" }
-  ], 
+  ],
   accessorText: item => item.name,
   accessorApi: item => item.value,
   value: ""
@@ -225,7 +222,7 @@ export const FILTER_IS_BARTERABLE = _addDefaultValue({
     { name: " Все", value: null },
     { name: "Бартерный", value: "true" },
     { name: "Подарочный", value: "false" }
-  ], 
+  ],
   accessorText: item => item.name,
   accessorApi: item => item.value,
   value: ""
@@ -237,7 +234,7 @@ export const FILTER_PRICE = _addDefaultValue({
   labelText: "Номинал",
   minValue: 0,
   maxValue: 10000,
-  value: {startValue: 0, endValue: 10000, }
+  value: { startValue: 0, endValue: 10000 }
 });
 
 export const FILTER_CERT_STATUS = _addDefaultValue({
@@ -248,11 +245,36 @@ export const FILTER_CERT_STATUS = _addDefaultValue({
     { name: " Все", value: null },
     { name: "Частично погаш", value: "true" },
     { name: "Обычные", value: "false" }
-  ], 
+  ],
   accessorText: item => item.name,
   accessorApi: item => item.value,
   value: ""
 });
 
+export const FILTER_ISACTIVE_STATS = {
+  ...FILTER_ISACTIVE,
+  labelText: "Активность сертификата"
+};
 
-export const FILTER_ISACTIVE_STATS = {...FILTER_ISACTIVE, labelText: "Активность сертификата"};
+//------------------------------------------------------------------
+//Бюджет
+
+export const FILTER_RESTAURANT = _addDefaultValue({
+  type: "multiSelectBox",
+  apiParamName: "Restaurants",
+  labelText: "Ресторан",
+  items: [], //items are store objects
+  accessorText: item => item.name,
+  accessorApi: item => item.id,
+  value: []
+});
+
+export const FILTER_BUDGET_TYPE = _addDefaultValue({
+  type: "selectBox",
+  apiParamName: "BudgetType",
+  labelText: "Тип бюджета",
+  items: [ ],
+  accessorText: item => item.name,
+  accessorApi: item => item.id,
+  value: []
+});

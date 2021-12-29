@@ -135,6 +135,57 @@ export const MAIN_MENU_ITEMS = [
       },  
           
     ]
-  }
+  },
 
+  
+  {
+    name: "Бюджет",
+    cssCls: "budget",
+    path: ROUTE_NAMES.budgetTable,
+    comment: "",
+    items: [
+      {
+        name: "Бюджет",
+        path: ROUTE_NAMES.budgetTable,
+        isHidden: false,
+        comment: ""
+      },
+      {
+        name: "Категории расходов",
+        path: ROUTE_NAMES.expenseCategories,
+        isHidden: false,
+        comment: ""
+      },
+          {
+            name: "Категория расходов",
+            path: ROUTE_NAMES.expenseCategoryView,
+            isHidden: true,
+            comment: ""
+          },
+      {
+        name: "Статьи расходов",
+        path: ROUTE_NAMES.expenseItems,
+        isHidden: false,
+        comment: ""
+      },
+          {
+            name: "Статья расходов",
+            path: ROUTE_NAMES.expenseItemView,
+            isHidden: true,
+            comment: ""
+          },
+      {
+        name: "Проявления",
+        path: ROUTE_NAMES.manifestations,
+        isHidden: false,
+        comment: ""
+      },      
+          {
+            name: "Проявление",
+            path: ROUTE_NAMES.manifestationView,
+            isHidden: true,
+            comment: ""
+          },                
+    ]
+  }
 ];
