@@ -1,4 +1,4 @@
-//import * as budgetTableApi from "../../api/budgetTableApi";
+import * as budgetApi from "../../api/budgetApi";
 import { ROUTE_NAMES } from "../../consts/routeNames";
 import { BaseTableTypes, showException } from "./baseTableRedux";
 import * as tableFilters from "../../consts/tableFilters";
@@ -14,9 +14,10 @@ const PREFIX = "budgetTable/";
 
 export const budgetTableInitialState = {
   filterItems: [],
-  sortBy: "",
+  sortBy: { columnName: "budget", currency: "ГРН" },
   sortOrder: "descending",
-  items: []
+  sections: [],
+  totalSummary: null
 };
 
 //*******************************************************************************
@@ -26,22 +27,25 @@ export default function reducer(state = budgetTableInitialState, action = {}) {
     case PREFIX + BaseTableTypes.RESET_STATE:
       return { ...budgetTableInitialState };
 
-    case PREFIX + BaseTableTypes.FETCH_ITEMS_COMPLETE: {
-      return {
+    case PREFIX + BaseTableTypes.FETCH_COMPLETE: {
+      let newObj = {
         ...state,
-        items: action.items
+        sections: action.sections
       };
-    }
-
-    case PREFIX + BaseTableTypes.REPLACE_ITEMS: {
-      return { ...state, items: action.items };
+      if (action.totalSummary)
+        newObj = { ...newObj, totalSummary: action.totalSummary };
+      return newObj;
     }
 
     case PREFIX + BaseTableTypes.REPLACE_FILTER_ITEMS:
       return { ...state, filterItems: action.filterItems };
 
     case PREFIX + BaseTableTypes.CHANGE_SORT_MODE:
-      return { ...state, sortBy: action.sortBy, sortOrder: action.sortOrder };
+      return { ...state, 
+        sortBy: action.sortBy, 
+        sortOrder: action.sortOrder,
+        sections: action.sections
+       };
 
     default:
       return state;
@@ -117,18 +121,10 @@ class BudgetTableActions {
         filter = dataFuncs.createFilterObject(filterItems);
       }
 
-      let sortBy = this.getSortBy(getState());
-      let sortOrder = this.getSortOrder(getState());
-
       let fetchedResponse;
       try {
         dispatch(uiActions.showBackdrop(true));
-        // let fetchedResponse = await budgetTableApi.getItems(
-        //   filter,
-        //   sortBy,
-        //   sortOrder
-        // );
-        fetchedResponse = { items: [] };
+        fetchedResponse = await budgetApi.getItems(filter);
       } catch (e) {
         dispatch(showException(e, keepBackdropOpened));
         if (!keepBackdropOpened) {
@@ -139,7 +135,11 @@ class BudgetTableActions {
 
       dispatch(uiActions.showBackdrop(false || keepBackdropOpened));
 
-      if (!fetchedResponse || !fetchedResponse.items) {
+      if (
+        !fetchedResponse ||
+        !fetchedResponse.sections ||
+        !fetchedResponse.totalSummary
+      ) {
         let message =
           "Problem in fetchItems. Empty data received for table: " +
           this._ACTION_TYPE_PREFIX;
@@ -159,19 +159,28 @@ class BudgetTableActions {
         return;
       }
 
+      let currentSortBy = this.getSortBy(getState());
+      let sortedSections = this.sortItems(       
+        fetchedResponse.sections,
+        currentSortBy,
+        "descending"
+      );
+
       await dispatch({
-        type: this._withPrefix(BaseTableTypes.FETCH_ITEMS_COMPLETE),
-        items: fetchedResponse.items
+        type: this._withPrefix(BaseTableTypes.FETCH_COMPLETE),
+        sections: sortedSections,
+        totalSummary: fetchedResponse.totalSummary
       });
 
+      fetchedResponse.sections = sortedSections;
       return fetchedResponse;
     };
   };
 
   cleanFetch = () => {
     return async (dispatch, getState) => {
-      let items = this.getItems(getState());
-      if (!items || items.length === 0) {
+      let sections = this.getSections(getState());
+      if (!sections || sections.length === 0) {
         try {
           dispatch(uiActions.showBackdrop(true));
           await dispatch(this.loadFilterItems());
@@ -184,25 +193,58 @@ class BudgetTableActions {
     };
   };
 
-  sortItemsBy = newSortColumn => {
+  sortItems = (oldSections, newSortBy, newSortOrder) => {
+    let newSections = [];
+
+    for (let i = 0; i < oldSections.length; i++) {
+      let sortedSection = {
+        total: oldSections[i].total,
+        items: dataFuncs.sortItems(
+          oldSections[i].items,
+          newSortBy,
+          newSortOrder
+        )
+      };
+      newSections.push(sortedSection);
+    }
+    return newSections;
+  };
+
+  sortItemsBy = newSortBy => {
     return async (dispatch, getState) => {
-      let currentSortColumn = this.getSortBy(getState());
+      let currentSortBy = this.getSortBy(getState());
       let newSortOrder = "descending";
 
       //if clicked to the same column - just change sort order mode
-      if (currentSortColumn === newSortColumn) {
+      if (
+        newSortBy &&
+        currentSortBy.columnName === newSortBy.columnName &&
+        currentSortBy.currency === newSortBy.currency
+      ) {
         if (this.getSortOrder(getState()) === "descending")
           newSortOrder = "ascending";
         else newSortOrder = "descending";
       }
 
+      if (!newSortBy) newSortBy = currentSortBy;     
+
+      let sortedSections = this.sortItems(
+        this.getSections(getState()),
+        newSortBy,
+        newSortOrder
+      );
+
       await dispatch({
         type: this._withPrefix(BaseTableTypes.CHANGE_SORT_MODE),
-        sortBy: newSortColumn,
-        sortOrder: newSortOrder
+        sortBy: newSortBy,
+        sortOrder: newSortOrder,
+        sections: sortedSections
       });
 
-      dispatch(this.fetchItems());
+      // await dispatch({
+      //   type: this._withPrefix(BaseTableTypes.FETCH_COMPLETE),
+      //   sections: sortedSections
+      // });
     };
   };
 
@@ -275,8 +317,8 @@ class BudgetTableActions {
     return this._getStateSlice(globalState).filterItems;
   };
 
-  getItems = globalState => {
-    return this._getStateSlice(globalState).items;
+  getSections = globalState => {
+    return this._getStateSlice(globalState).sections;
   };
 
   getWasFilterChanged = globalState => {

@@ -17,7 +17,7 @@ export async function getFilteredItems(
     if (FAKE_DATA) return JSON.parse(JSON.stringify(FAKE_DATA));
     else
       return {
-        items: [],
+        items: [],        
         topRowNumber: 0,
         count: 0
       };

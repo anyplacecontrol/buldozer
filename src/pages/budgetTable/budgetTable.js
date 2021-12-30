@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { BudgetTableRow } from "./BudgetTableRow";
+import { BudgetTableSection } from "./BudgetTableSection";
 import { BudgetTableFooter } from "./BudgetTableFooter";
 import { connect } from "react-redux";
 import { budgetTableActions } from "./../../redux/modules/budgetTableRedux";
@@ -11,6 +11,7 @@ import { AlertPanel } from "../../components/TableControls/AlertPanel";
 export class _budgetTable extends React.Component {
   constructor(props) {
     super(props);
+    this.state = { expandedSections: [0] };
   }
 
   async componentDidMount() {
@@ -43,7 +44,128 @@ export class _budgetTable extends React.Component {
     this.props.dispatch(uiActions.HideAlert());
   };
 
+  onTotalClick = (index, isExpanded) => {
+    let newState = [];
+    if (!isExpanded) {
+      newState = [...this.state.expandedSections, index];
+    } else {
+      for (let i = 0; i < this.state.expandedSections.length; i++) {
+        if (this.state.expandedSections[i] != index)
+          newState.push(this.state.expandedSections[i]);
+      }
+    }
+    this.setState({ expandedSections: newState });
+  };
+
   //-----------------------------------------------------------------------------
+  renderSections = () => {
+    if (!this.props.sections) return null;
+
+    return this.props.sections.map((section, index) => {
+      let isExpanded = this.state.expandedSections.includes(index);
+      return (
+        <BudgetTableSection
+          key={index}
+          total={section.total}
+          items={section.items}
+          isExpanded={isExpanded}
+          onTotalClick={() => this.onTotalClick(index, isExpanded)}
+        />
+      );
+    });
+  };
+
+  renderCurrencyColumnHeaders = columnName => {
+    let baseCls = "sort sortable";
+    let clsUAH = baseCls;
+    let clsUSD = baseCls;
+    let clsEUR = baseCls;
+    let clsUahBarter = baseCls;
+    let sortDirectionCls = " sort-up active";
+    if (this.props.sortOrder == "descending")
+      sortDirectionCls = " sort-down active";
+
+    if (this.props.sortBy.columnName == columnName) {
+      if (this.props.sortBy.currency == "ГРН")
+        clsUAH = clsUAH + sortDirectionCls;
+      if (this.props.sortBy.currency == "USD")
+        clsUSD = clsUSD + sortDirectionCls;
+      if (this.props.sortBy.currency == "EUR")
+        clsEUR = clsEUR + sortDirectionCls;
+      if (this.props.sortBy.currency == "ГРН (бартер)")
+        clsUahBarter = clsUahBarter + sortDirectionCls;
+    }
+
+    return (
+      <div className="table-grid-inner">
+        <div className="table-grid-item">
+          <button
+            className={clsUAH}
+            type="button"
+            onClick={() =>
+              this.props.dispatch(
+                budgetTableActions.sortItemsBy({
+                  columnName: columnName,
+                  currency: "ГРН"
+                })
+              )
+            }
+          >
+            ГРН
+          </button>
+        </div>
+        <div className="table-grid-item">
+          <button
+            className={clsUSD}
+            type="button"
+            onClick={() =>
+              this.props.dispatch(
+                budgetTableActions.sortItemsBy({
+                  columnName: columnName,
+                  currency: "USD"
+                })
+              )
+            }
+          >
+            USD
+          </button>
+        </div>
+        <div className="table-grid-item">
+          <button
+            className={clsEUR}
+            type="button"
+            onClick={() =>
+              this.props.dispatch(
+                budgetTableActions.sortItemsBy({
+                  columnName: columnName,
+                  currency: "EUR"
+                })
+              )
+            }
+          >
+            EUR
+          </button>
+        </div>
+        <div className="table-grid-item">
+          <button
+            className={clsUahBarter}
+            type="button"
+            onClick={() =>
+              this.props.dispatch(
+                budgetTableActions.sortItemsBy({
+                  columnName: columnName,
+                  currency: "ГРН (бартер)"
+                })
+              )
+            }
+          >
+            ГРН бартер
+          </button>
+        </div>
+      </div>
+    );
+  };
+
   render() {
     return (
       <div>
@@ -105,157 +227,36 @@ export class _budgetTable extends React.Component {
                   <div className="table-td"></div>
                   <div className="table-td">
                     <div className="table-grid">
-                      <div className="table-grid-inner">
-                        <div className="table-grid-item">
-                          <button
-                            className="sort sortable sort-up sort-down active"
-                            type="button"
-                          >
-                            ГРН
-                          </button>
-                        </div>
-                        <div className="table-grid-item">
-                          <button className="sort sortable" type="button">
-                            USD
-                          </button>
-                        </div>
-                        <div className="table-grid-item">
-                          <button className="sort sortable" type="button">
-                            EUR
-                          </button>
-                        </div>
-                        <div className="table-grid-item">
-                          <button className="sort sortable" type="button">
-                            ГРН бартер
-                          </button>
-                        </div>
-                      </div>
+                      {this.renderCurrencyColumnHeaders("budget")}
                     </div>
                   </div>
                   <div className="table-td">
                     <div className="table-grid">
-                      <div className="table-grid-inner">
-                        <div className="table-grid-item">
-                          <button
-                            className="sort sortable sort-up sort-down active"
-                            type="button"
-                          >
-                            ГРН
-                          </button>
-                        </div>
-                        <div className="table-grid-item">
-                          <button className="sort sortable" type="button">
-                            USD
-                          </button>
-                        </div>
-                        <div className="table-grid-item">
-                          <button className="sort sortable" type="button">
-                            EUR
-                          </button>
-                        </div>
-                        <div className="table-grid-item">
-                          <button className="sort sortable" type="button">
-                            ГРН бартер
-                          </button>
-                        </div>
-                      </div>
+                      {this.renderCurrencyColumnHeaders("updatedBudget")}
                     </div>
                   </div>
                   <div className="table-td">
                     <div className="table-grid">
-                      <div className="table-grid-inner">
-                        <div className="table-grid-item">
-                          <button
-                            className="sort sortable sort-up sort-down active"
-                            type="button"
-                          >
-                            ГРН
-                          </button>
-                        </div>
-                        <div className="table-grid-item">
-                          <button className="sort sortable" type="button">
-                            USD
-                          </button>
-                        </div>
-                        <div className="table-grid-item">
-                          <button className="sort sortable" type="button">
-                            EUR
-                          </button>
-                        </div>
-                        <div className="table-grid-item">
-                          <button className="sort sortable" type="button">
-                            ГРН бартер
-                          </button>
-                        </div>
-                      </div>
+                      {this.renderCurrencyColumnHeaders("budgetsDifference")}
                     </div>
                   </div>
                   <div className="table-td">
                     <div className="table-grid">
-                      <div className="table-grid-inner">
-                        <div className="table-grid-item">
-                          <button
-                            className="sort sortable sort-up sort-down active"
-                            type="button"
-                          >
-                            ГРН
-                          </button>
-                        </div>
-                        <div className="table-grid-item">
-                          <button className="sort sortable" type="button">
-                            USD
-                          </button>
-                        </div>
-                        <div className="table-grid-item">
-                          <button className="sort sortable" type="button">
-                            EUR
-                          </button>
-                        </div>
-                        <div className="table-grid-item">
-                          <button className="sort sortable" type="button">
-                            ГРН бартер
-                          </button>
-                        </div>
-                      </div>
+                      {this.renderCurrencyColumnHeaders("paid")}
                     </div>
                   </div>
                   <div className="table-td">
                     <div className="table-grid">
-                      <div className="table-grid-inner">
-                        <div className="table-grid-item">
-                          <button
-                            className="sort sortable sort-up sort-down active"
-                            type="button"
-                          >
-                            ГРН
-                          </button>
-                        </div>
-                        <div className="table-grid-item">
-                          <button className="sort sortable" type="button">
-                            USD
-                          </button>
-                        </div>
-                        <div className="table-grid-item">
-                          <button className="sort sortable" type="button">
-                            EUR
-                          </button>
-                        </div>
-                        <div className="table-grid-item">
-                          <button className="sort sortable" type="button">
-                            ГРН бартер
-                          </button>
-                        </div>
-                      </div>
+                      {this.renderCurrencyColumnHeaders("needToPay")}
                     </div>
                   </div>
                   <div className="table-td"></div>
                   <div className="table-td"></div>
                 </div>
-
-                <BudgetTableRow />
+                {this.renderSections()}
               </div>
 
-              <BudgetTableFooter />
+              <BudgetTableFooter totalSummary={this.props.totalSummary} />
             </div>
           </div>
           <div className="table__tfoot flex animated">
@@ -269,8 +270,9 @@ export class _budgetTable extends React.Component {
 
 _budgetTable.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  items: PropTypes.arrayOf(PropTypes.object).isRequired,
-  sortBy: PropTypes.string.isRequired,
+  sections: PropTypes.arrayOf(PropTypes.object).isRequired,
+  totalSummary: PropTypes.object,
+  sortBy: PropTypes.object.isRequired,
   sortOrder: PropTypes.string.isRequired,
   filterItems: PropTypes.arrayOf(PropTypes.object),
   alert: uiActions.IAlert
@@ -278,7 +280,10 @@ _budgetTable.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    table: state.budgetTable,
+    sections: state.budgetTable.sections,
+    sortBy: state.budgetTable.sortBy,
+    sortOrder: state.budgetTable.sortOrder,
+    totalSummary: state.budgetTable.totalSummary,
     alert: state.ui.alert,
     filterItems: budgetTableActions.getFilterItems(state)
   };

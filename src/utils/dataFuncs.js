@@ -510,3 +510,38 @@ export function getUserRole() {
   }
   return result;
 }
+
+export function getValueByCurrency(allValues, currency) {  
+  let result = "";
+  for (let i = 0; i < allValues.length; i++) {
+    let valueObj = allValues[i];
+    if (valueObj.currency.name == currency) {
+      result = valueObj.amount;
+      break;
+    }
+  }
+  return result;
+}
+
+export function sortItems(items, sortBy, sortOrder) {
+
+  function compare( a, b ) {
+    let columnA = a[sortBy.columnName];
+    let columnB = b[sortBy.columnName];
+
+    let currencyA = getValueByCurrency(columnA, sortBy.currency);
+    let currencyB = getValueByCurrency(columnB, sortBy.currency);
+
+    let sortOrderDirection = (sortOrder == "descending")?1:-1;
+    if ( currencyA <currencyB ){
+      return -1 * sortOrderDirection;
+    }
+    if ( currencyA > currencyB ){
+      return 1 * sortOrderDirection;
+    }
+    return 0;
+  }
+
+  let result = [...items].sort( compare );
+  return result;
+}
