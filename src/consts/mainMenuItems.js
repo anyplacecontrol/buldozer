@@ -150,6 +150,12 @@ export const MAIN_MENU_ITEMS = [
         isHidden: false,
         comment: ""
       },
+        {
+          name: "Создание статьи бюджета",
+          path: ROUTE_NAMES.budgetView,
+          isHidden: true,
+          comment: ""
+        },
       {
         name: "Категории расходов",
         path: ROUTE_NAMES.expenseCategories,

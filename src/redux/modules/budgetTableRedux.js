@@ -9,6 +9,7 @@ import { restaurantsActions } from "./restaurantsRedux";
 
 //*******************************************************************************
 const PREFIX = "budgetTable/";
+const REPLACE_SELECTED_ITEM = "REPLACE_SELECTED_ITEM";
 
 //*******************************************************************************
 
@@ -17,7 +18,8 @@ export const budgetTableInitialState = {
   sortBy: { columnName: "budget", currency: "ГРН" },
   sortOrder: "descending",
   sections: [],
-  totalSummary: null
+  totalSummary: null,
+  selectedItem: null
 };
 
 //*******************************************************************************
@@ -47,6 +49,11 @@ export default function reducer(state = budgetTableInitialState, action = {}) {
         sections: action.sections
        };
 
+    case PREFIX + REPLACE_SELECTED_ITEM:
+      return {
+        ...state,
+        selectedItem: action.item
+      }
     default:
       return state;
   }
@@ -278,6 +285,15 @@ class BudgetTableActions {
     };
   };
 
+  selectItem = (item) => {
+    return (dispatch, getState) => {
+      dispatch({
+        type: this._withPrefix(REPLACE_SELECTED_ITEM),
+        item: JSON.parse(JSON.stringify(item))
+      });      
+    }
+  }
+
   goto_editItem(itemId) {
     return async dispatch => {
       //dispatch(routing.goto_EditItem(ROUTE_NAMES.serviceTypeView, itemId));
@@ -286,7 +302,7 @@ class BudgetTableActions {
 
   goto_addItem() {
     return async dispatch => {
-      //dispatch(routing.goto_AddItem(ROUTE_NAMES.serviceTypeView));
+      dispatch(routing.goto_AddItem(ROUTE_NAMES.budgetView));
     };
   }
 

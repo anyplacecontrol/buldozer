@@ -97,7 +97,8 @@ export class MainMenu extends React.Component {
           item.path === routeNames.ROUTE_NAMES.expenseCategories ||
           item.path === routeNames.ROUTE_NAMES.expenseItems ||
           item.path === routeNames.ROUTE_NAMES.expenseItemView ||
-          item.path === routeNames.ROUTE_NAMES.budgetTable                     
+          item.path === routeNames.ROUTE_NAMES.budgetTable ||                    
+          item.path === routeNames.ROUTE_NAMES.budgetView
           )
       )
         continue;

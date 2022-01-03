@@ -39,7 +39,8 @@ import { manifestationView } from "../../pages/manifestationView/manifestationVi
 import { expenseCategoryView } from "../../pages/expenseCategoryView/expenseCategoryView";
 import { expenseItemView } from "../../pages/expenseItemView/expenseItemView";
 import { login } from "../../pages/login/login";
-import { budgetTable } from "../../pages/budgetTable/budgetTable"
+import { budgetTable } from "../../pages/budgetTable/budgetTable";
+import { budgetView } from "../../pages/budgetView/budgetView";
 import * as authApi from "../../api/authApi";
 
 class App_ extends React.Component {
@@ -353,6 +354,15 @@ class App_ extends React.Component {
                               }}
                             />
                           ) : null}
+                          {userRole === "admin" ? (
+                            <Route
+                              path={ROUTE_NAMES.budgetView}
+                              render={() => {
+                                const Component = budgetView;
+                                return <Component />;
+                              }}
+                            />
+                          ) : null}                          
                         </Switch>
                       </div>
                     </div>

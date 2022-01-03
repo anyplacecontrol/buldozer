@@ -57,6 +57,9 @@ export class _budgetTable extends React.Component {
     this.setState({ expandedSections: newState });
   };
 
+  onAddClick = () => {
+    this.props.dispatch(budgetTableActions.goto_addItem());
+  }
   //-----------------------------------------------------------------------------
   renderSections = () => {
     if (!this.props.sections) return null;
@@ -169,7 +172,11 @@ export class _budgetTable extends React.Component {
   render() {
     return (
       <div>
-        <button style={{ float: "right" }} className="add animated">
+        <button
+          style={{ float: "right" }}
+          className="add animated"
+          onClick={this.onAddClick}
+        >
           Добавить статью бюджета
         </button>
 

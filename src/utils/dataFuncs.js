@@ -513,13 +513,16 @@ export function getUserRole() {
 
 export function getValueByCurrency(allValues, currency) {  
   let result = "";
-  for (let i = 0; i < allValues.length; i++) {
-    let valueObj = allValues[i];
-    if (valueObj.currency.name == currency) {
-      result = valueObj.amount;
-      break;
-    }
-  }
+  try {
+    for (let i = 0; i < allValues.length; i++) {
+      let valueObj = allValues[i];
+      if (valueObj.currency.name == currency) {
+        result = valueObj.amount;
+        break;
+      }
+    } 
+  } catch (error) {    
+  }  
   return result;
 }
 

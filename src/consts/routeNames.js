@@ -20,6 +20,7 @@ export const ROUTE_NAMES = {
     statsMutualSettlement: "/statsMutualSettlement",
 
     budgetTable: "/budgetTable",
+      budgetView: "/budgetView",
     expenseCategories: "/expenseCategories",
       expenseCategoryView: "/expenseCategoryView",
     expenseItems: "/expenseItems",
