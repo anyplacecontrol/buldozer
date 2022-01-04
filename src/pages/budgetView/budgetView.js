@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { budgetTableActions } from "./../../redux/modules/budgetTableRedux";
+import { budgetItemViewActions } from "./../../redux/modules/budgetItemViewRedux";
 import { Filter } from "../../components/TableControls/Filter";
 import * as uiActions from "../../redux/modules/uiRedux";
 import { AlertPanel } from "../../components/TableControls/AlertPanel";
@@ -43,8 +44,11 @@ export class _budgetView extends React.Component {
     this.props.dispatch(routing.goto_Back());
   };
 
-  onItemClick = item => {
-    this.props.dispatch(budgetTableActions.selectItem(item));
+  onItemClick = id => {
+    if (!id)
+      this.props.dispatch(budgetItemViewActions.resetState())
+    else
+      this.props.dispatch(budgetItemViewActions.fetchItem(id));
   };
 
   //-----------------------------------------------------------------------------
@@ -61,7 +65,7 @@ export class _budgetView extends React.Component {
               key={index1 + "-" + index2}
               item={item}
               total={total}
-              onItemClick={() => this.onItemClick(item)}
+              onItemClick={() => this.onItemClick(item.id)}
             />
           );
       });

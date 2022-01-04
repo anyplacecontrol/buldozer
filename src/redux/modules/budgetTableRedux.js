@@ -6,10 +6,13 @@ import * as routing from "./routingRedux";
 import * as uiActions from "./uiRedux";
 import * as dataFuncs from "../../utils/dataFuncs";
 import { restaurantsActions } from "./restaurantsRedux";
+import { expenseCategoriesActions } from "./expenseCategoriesRedux";
+import { expenseItemsActions } from "./expenseItemsRedux";
+import { manifestationsActions } from "./manifestationsRedux";
+import {budgetItemViewActions} from "./budgetItemViewRedux";
 
 //*******************************************************************************
 const PREFIX = "budgetTable/";
-const REPLACE_SELECTED_ITEM = "REPLACE_SELECTED_ITEM";
 
 //*******************************************************************************
 
@@ -19,7 +22,10 @@ export const budgetTableInitialState = {
   sortOrder: "descending",
   sections: [],
   totalSummary: null,
-  selectedItem: null
+  selectedItem: {
+    id: -1,
+    expenseCategory: null
+  }
 };
 
 //*******************************************************************************
@@ -48,12 +54,7 @@ export default function reducer(state = budgetTableInitialState, action = {}) {
         sortOrder: action.sortOrder,
         sections: action.sections
        };
-
-    case PREFIX + REPLACE_SELECTED_ITEM:
-      return {
-        ...state,
-        selectedItem: action.item
-      }
+    
     default:
       return state;
   }
@@ -89,8 +90,50 @@ class BudgetTableActions {
         resolve();
       });
 
+      let p2 = new Promise(async (resolve, reject) => {
+        if (
+          !getState().expenseCategories.items ||
+          getState().expenseCategories.items.length === 0
+        ) {
+          try {
+            await dispatch(
+              expenseCategoriesActions.fetchItems(0, false, false, null, true, true)
+            );
+          } catch (e) {}
+        }
+        resolve();
+      });
+      
+      let p3 = new Promise(async (resolve, reject) => {
+        if (
+          !getState().manifestations.items ||
+          getState().manifestations.items.length === 0
+        ) {
+          try {
+            await dispatch(
+              manifestationsActions.fetchItems(0, false, false, null, true, true)
+            );
+          } catch (e) {}
+        }
+        resolve();
+      });
+
+      let p4 = new Promise(async (resolve, reject) => {
+        if (
+          !getState().expenseItems.items ||
+          getState().expenseItems.items.length === 0
+        ) {
+          try {
+            await dispatch(
+              expenseItemsActions.fetchItems(0, false, false, null, true, true)
+            );
+          } catch (e) {}
+        }
+        resolve();
+      });
+
       dispatch(uiActions.showBackdrop(true));
-      await Promise.all([p1]);
+      await Promise.all([p1, p2, p3, p4]);
       dispatch(uiActions.showBackdrop(false));
 
       let filterItems = [
@@ -246,12 +289,7 @@ class BudgetTableActions {
         sortBy: newSortBy,
         sortOrder: newSortOrder,
         sections: sortedSections
-      });
-
-      // await dispatch({
-      //   type: this._withPrefix(BaseTableTypes.FETCH_COMPLETE),
-      //   sections: sortedSections
-      // });
+      });     
     };
   };
 
@@ -284,24 +322,10 @@ class BudgetTableActions {
       });
     };
   };
-
-  selectItem = (item) => {
-    return (dispatch, getState) => {
-      dispatch({
-        type: this._withPrefix(REPLACE_SELECTED_ITEM),
-        item: JSON.parse(JSON.stringify(item))
-      });      
-    }
-  }
-
-  goto_editItem(itemId) {
-    return async dispatch => {
-      //dispatch(routing.goto_EditItem(ROUTE_NAMES.serviceTypeView, itemId));
-    };
-  }
-
+  
   goto_addItem() {
     return async dispatch => {
+      dispatch(budgetItemViewActions.resetState());
       dispatch(routing.goto_AddItem(ROUTE_NAMES.budgetView));
     };
   }

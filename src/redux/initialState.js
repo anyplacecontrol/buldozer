@@ -35,6 +35,7 @@ import {expenseItemsInitialState} from "./modules/expenseItemsRedux";
 import {expenseItemViewInitialState} from "./modules/expenseItemViewRedux";
 
 import {budgetTableInitialState} from "./modules/budgetTableRedux";
+import {budgetItemViewInitialState} from  "./modules/budgetItemViewRedux";
 
 export const initialState = {
   ui: uiInitialState,
@@ -73,5 +74,6 @@ export const initialState = {
   expenseItems: expenseItemsInitialState,
   expenseItemView: expenseItemViewInitialState,
 
-  budgetTable: budgetTableInitialState
+  budgetTable: budgetTableInitialState,
+  budgetItemView: budgetItemViewInitialState
 };

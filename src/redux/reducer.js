@@ -36,6 +36,7 @@ import expenseItems from "./modules/expenseItemsRedux";
 import expenseItemView from "./modules/expenseItemViewRedux";
 
 import budgetTable from "./modules/budgetTableRedux";
+import budgetItemView from "./modules/budgetItemViewRedux";
 
 const reducers = {
   ui,
@@ -73,7 +74,8 @@ const reducers = {
   expenseItems,
   expenseItemView,
 
-  budgetTable
+  budgetTable,
+  budgetItemView
 };
 
 export default combineReducers(reducers);

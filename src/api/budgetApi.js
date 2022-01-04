@@ -28,19 +28,27 @@ export async function getItems(filter) {
   result.sections = result.json.data;
   result.totalSummary = result.json.totalSummary;
 
-  //DELETE this code
-  let ind = 1;
-  for (let i = 0; i < result.sections.length; i++) {
-    for (let j = 0; j < result.sections[i].items.length; j++) {
-      result.sections[i].items[j].id = ind;
-      ind = ind + 1;
-    }
-  }
   return result;
 }
 
 //--------------------------------------------------------------------------------
 
+export async function getItem(id) {
+  
+  let result = await baseAPI.getFilteredItems(
+    budget_endPoint + "/" + id,
+    null,
+    0,
+    1000,
+    null,
+    "",
+    null
+  );
+  
+  return result.json.data;
+}
+
+//--------------------------------------------------------------------------------
 export async function deleteItem(Obj) {
   //return await baseAPI.deleteItem(Obj.id, budgetDelete_endPoint);
 }
