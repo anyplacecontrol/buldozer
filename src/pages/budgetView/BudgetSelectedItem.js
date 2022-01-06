@@ -4,7 +4,12 @@ import { getValueByCurrency } from "../../utils/dataFuncs";
 import { connect } from "react-redux";
 import { SelectBox } from "../../components/SelectBox/SelectBox";
 import * as consts from "../../consts/constants";
-import { budgetItemViewActions } from "./../../redux/modules/budgetItemViewRedux";
+import {
+  budgetItemViewActions,
+  allCurrencies,
+  allPaymentTypes
+} from "./../../redux/modules/budgetItemViewRedux";
+import * as dataFuncs from "../../utils/dataFuncs";
 
 export class _BudgetSelectedItem extends React.Component {
   renderExpenseCategoriesSelectBox = () => {
@@ -113,6 +118,172 @@ export class _BudgetSelectedItem extends React.Component {
     );
   };
   //-------------------------------------------------------------------------------------
+  renderSums = fieldName => {
+    //Для существующих статей нельзя редактировать сумму, а можно только обновленную сумму
+    if (!this.props.selectedItem || !this.props.selectedItem.expenses)
+      return null;
+
+    return this.props.selectedItem.expenses.map((expense, index) => {
+      let isReadOnly = this.props.selectedItem.id != 0 && fieldName == "amount";
+      return (
+        <div key={fieldName + index} className="block-set-grid">
+          <div className="block-set-grid-inner">
+            <input
+              className="block-set__input animated"
+              type="text"
+              readOnly={isReadOnly}
+              value={expense[fieldName] ? expense[fieldName] : 0}
+              onChange={e => {
+                if (isReadOnly) return null;
+
+                return this.props.dispatch(
+                  budgetItemViewActions.changeArrayValue(
+                    fieldName,
+                    index,
+                    e.target.value
+                  )
+                );
+              }}
+            ></input>
+            <div className="brand-value-text">{expense.currency.name}</div>
+          </div>
+        </div>
+      );
+    });
+  };
+
+  //-------------------------------------------------------------------------------------
+  renderInputs = (arrayName, fieldName) => {
+    if (!this.props.selectedItem || !this.props.selectedItem[arrayName])
+      return null;
+
+    return this.props.selectedItem[arrayName].map((arrayItem, index) => {
+      let value = "";
+      let type = "text";
+      if (fieldName == "updatingAmountDate" || fieldName == "paymentDate") {
+        value = dataFuncs.formatDate(arrayItem[fieldName]);
+        type = "date";
+      } else value = arrayItem[fieldName];
+
+      return (
+        <input
+          key={fieldName + index}
+          className="block-set__input animated"
+          type={type}
+          value={value}
+          onChange={e => {
+            return this.props.dispatch(
+              budgetItemViewActions.changeArrayValue(
+                arrayName,
+                fieldName,
+                index,
+                e.target.value
+              )
+            );
+          }}
+        ></input>
+      );
+    });
+  };
+
+  //-------------------------------------------------------------------------------------
+  renderIncomeSums = () => {
+    if (!this.props.selectedItem || !this.props.selectedItem.incomes)
+      return null;
+
+    return this.props.selectedItem.incomes.map((income, index1) => {
+      let itemsArr = allCurrencies.map((item, index2) => {
+        return {
+          text: item.name,
+          onClick: () => {
+            this.props.dispatch(
+              budgetItemViewActions.changeArrayValue(
+                "incomes",
+                "currency",
+                index1,
+                item
+              )
+            );
+          }
+        };
+      });
+
+      let currentText;
+      if (income.currency != null) currentText = income.currency.name;
+      else currentText = consts.chooseStr;
+
+      return (
+        <div
+          key={"incomeSum" + index1}
+          className="block-set-grid"
+          style={{ zIndex: this.props.selectedItem.incomes.length - index1 }}
+        >
+          <div className="block-set-grid-inner">
+            <input
+              className="block-set__input animated"
+              type="text"
+              value={income.amount}
+              onChange={e => {
+                return this.props.dispatch(
+                  budgetItemViewActions.changeArrayValue(
+                    "incomes",
+                    "amount",
+                    index1,
+                    e.target.value
+                  )
+                );
+              }}
+            />
+            <SelectBox
+              className="w100"
+              text={currentText}
+              items={[...itemsArr]}
+            />
+          </div>
+        </div>
+      );
+    });
+  };
+  //-------------------------------------------------------------------------------------
+  renderIncomePaymentTypes = () => {
+    if (!this.props.selectedItem || !this.props.selectedItem.incomes)
+      return null;
+
+    return this.props.selectedItem.incomes.map((income, index) => {
+      let itemsArr = allPaymentTypes.map((item, index1) => {
+        return {
+          text: item.name,
+          onClick: () => {
+            this.props.dispatch(
+              budgetItemViewActions.changeArrayValue(
+                "incomes",
+                "paymentType",
+                index,
+                item
+              )
+            );
+          }
+        };
+      });
+
+      let currentText;
+      if (income.paymentType != null) currentText = income.paymentType.name;
+      else currentText = consts.chooseStr;
+
+      return (
+        <SelectBox
+          key={"incomePayType" + index}
+          style={{ zIndex: this.props.selectedItem.incomes.length - index }}
+          className="w100"
+          text={currentText}
+          items={[...itemsArr]}
+        />
+      );
+    });
+  };
+
+  //-------------------------------------------------------------------------------------
+
   render() {
     return (
       <div className="block-sets">
@@ -270,139 +441,27 @@ export class _BudgetSelectedItem extends React.Component {
           <div className="block-set__inner flex w100 animated">
             <div className="payment-grid">
               <div className="payment-grid-inner">
+                {this.props.selectedItem.id != 0 ? (
+                  <div className="payment-grid-item">
+                    <div className="brand-sub-title">Старая сумма</div>
+                    {this.renderSums("amount")}
+                  </div>
+                ) : null}
+
                 <div className="payment-grid-item">
-                  <div className="brand-sub-title">Сумма *</div>
-                  <div className="block-set-grid">
-                    <div className="block-set-grid-inner">
-                      <input
-                        className="block-set__input animated"
-                        type="text"
-                        value="15 000"
-                      ></input>
-                      <div className="brand-value-text">ГРН</div>
-                    </div>
-                  </div>
-                  <div className="block-set-grid">
-                    <div className="block-set-grid-inner">
-                      <input
-                        className="block-set__input animated"
-                        type="text"
-                        value="5 000"
-                      ></input>
-                      <div className="brand-value-text">USD</div>
-                    </div>
-                  </div>
-                  <div className="block-set-grid">
-                    <div className="block-set-grid-inner">
-                      <input
-                        className="block-set__input animated"
-                        type="text"
-                        value="0"
-                      ></input>
-                      <div className="brand-value-text">EUR</div>
-                    </div>
-                  </div>
-                  <div className="block-set-grid">
-                    <div className="block-set-grid-inner">
-                      <input
-                        className="block-set__input animated"
-                        type="text"
-                        value="20 000"
-                      ></input>
-                      <div className="brand-value-text">ГРН (бартер)</div>
-                    </div>
-                  </div>
+                  <div className="brand-sub-title">Новая сумма *</div>
+                  {this.renderSums("updatedAmount")}
                 </div>
-                <div className="payment-grid-item">
-                  <div className="brand-sub-title">Обновленная сумма</div>
-                  <div className="block-set-grid">
-                    <div className="block-set-grid-inner">
-                      <input
-                        className="block-set__input animated"
-                        type="text"
-                        value="20 000"
-                      ></input>
-                      <div className="brand-value-text">ГРН</div>
-                    </div>
-                  </div>
-                  <div className="block-set-grid">
-                    <div className="block-set-grid-inner">
-                      <input
-                        className="block-set__input animated"
-                        type="text"
-                        value="0 000"
-                      ></input>
-                      <div className="brand-value-text">USD</div>
-                    </div>
-                  </div>
-                  <div className="block-set-grid">
-                    <div className="block-set-grid-inner">
-                      <input
-                        className="block-set__input animated"
-                        type="text"
-                        value="0 000"
-                      ></input>
-                      <div className="brand-value-text">EUR</div>
-                    </div>
-                  </div>
-                  <div className="block-set-grid">
-                    <div className="block-set-grid-inner">
-                      <input
-                        className="block-set__input animated"
-                        type="text"
-                        value="30 000"
-                      ></input>
-                      <div className="brand-value-text">ГРН (бартер)</div>
-                    </div>
-                  </div>
-                </div>
+
                 <div className="payment-grid-item">
                   <div className="brand-sub-title">Дата обновления суммы</div>
-                  <input
-                    className="block-set__input animated"
-                    type="text"
-                    value="10 Окт, 2021, 14:38"
-                  />
-                  <input
-                    className="block-set__input animated"
-                    type="text"
-                    value=""
-                  />
-                  <input
-                    className="block-set__input animated"
-                    type="text"
-                    value=""
-                  />
-                  <input
-                    className="block-set__input animated"
-                    type="text"
-                    value="10 Окт, 2021, 14:38"
-                  />
+                  {this.renderInputs("expenses", "updatingAmountDate")}
                 </div>
                 <div className="payment-grid-item">
                   <div className="brand-sub-title">
                     Сотрудник утвердивший обновление
                   </div>
-                  <input
-                    className="block-set__input animated"
-                    type="text"
-                    value="Кучменко Д.М."
-                  />
-                  <input
-                    className="block-set__input animated"
-                    type="text"
-                    value=""
-                  />
-                  <input
-                    className="block-set__input animated"
-                    type="text"
-                    value=""
-                  />
-                  <input
-                    className="block-set__input animated"
-                    type="text"
-                    value="Кучменко Д.М."
-                  />
+                  {this.renderInputs("expenses", "updatingAmountUser")}
                 </div>
               </div>
             </div>
@@ -418,139 +477,31 @@ export class _BudgetSelectedItem extends React.Component {
                 <div className="payment-grid-inner">
                   <div className="payment-grid-item">
                     <div className="brand-sub-title">Оплаченная сумма</div>
-                    <div className="block-set-grid">
-                      <div className="block-set-grid-inner">
-                        <input
-                          className="block-set__input animated"
-                          type="text"
-                          value="10 000"
-                        />
-                        <div className="select animated" style={{ zIndex: 5 }}>
-                          <div className="select__text animated">ГРН</div>
-                          <div className="select__list animated">
-                            <div className="select__list--item animated">
-                              ГРН
-                            </div>
-                            <div className="select__list--item animated">
-                              USD
-                            </div>
-                            <div className="select__list--item animated">
-                              EUR
-                            </div>
-                            <div className="select__list--item animated">
-                              ГРН (бартер)
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="block-set-grid">
-                      <div className="block-set-grid-inner">
-                        <input
-                          className="block-set__input animated"
-                          type="text"
-                          value="3 000"
-                        />
-                        <div className="select animated" style={{ zIndex: 4 }}>
-                          <div className="select__text animated">ГРН</div>
-                          <div className="select__list animated">
-                            <div className="select__list--item animated">
-                              ГРН
-                            </div>
-                            <div className="select__list--item animated">
-                              USD
-                            </div>
-                            <div className="select__list--item animated">
-                              EUR
-                            </div>
-                            <div className="select__list--item animated">
-                              ГРН (бартер)
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    {this.renderIncomeSums()}
                   </div>
                   <div className="payment-grid-item">
                     <div className="brand-sub-title">Тип оплаты</div>
-                    <div className="select animated" style={{ zIndex: 3 }}>
-                      <div className="select__text animated">Наличными</div>
-                      <div className="select__list animated">
-                        <div className="select__list--item animated">
-                          Lorem ipsum.
-                        </div>
-                        <div className="select__list--item animated">
-                          Incidunt, mollitia?
-                        </div>
-                        <div className="select__list--item animated">
-                          Hic, quod?
-                        </div>
-                        <div className="select__list--item animated">
-                          Tempora, unde.
-                        </div>
-                        <div className="select__list--item animated">
-                          Nam, reprehenderit.
-                        </div>
-                        <div className="select__list--item animated">
-                          Quisquam, totam.
-                        </div>
-                      </div>
-                    </div>
-                    <div className="select animated" style={{ zIndex: 2 }}>
-                      <div className="select__text animated">Наличными</div>
-                      <div className="select__list animated">
-                        <div className="select__list--item animated">
-                          Lorem ipsum.
-                        </div>
-                        <div className="select__list--item animated">
-                          Incidunt, mollitia?
-                        </div>
-                        <div className="select__list--item animated">
-                          Hic, quod?
-                        </div>
-                        <div className="select__list--item animated">
-                          Tempora, unde.
-                        </div>
-                        <div className="select__list--item animated">
-                          Nam, reprehenderit.
-                        </div>
-                        <div className="select__list--item animated">
-                          Quisquam, totam.
-                        </div>
-                      </div>
-                    </div>
+                    {this.renderIncomePaymentTypes()}
                   </div>
                   <div className="payment-grid-item">
                     <div className="brand-sub-title">Дата оплаты</div>
-                    <input
-                      className="block-set__input animated"
-                      type="text"
-                      value="10 Окт, 2021, 14:38"
-                    />
-                    <input
-                      className="block-set__input animated"
-                      type="text"
-                      value="10 Окт, 2021, 14:38"
-                    />
+                    {this.renderInputs("incomes", "paymentDate")}
                   </div>
                   <div className="payment-grid-item">
                     <div className="brand-sub-title">
                       Сотрудник, получивший наличные
                     </div>
-                    <input
-                      className="block-set__input animated"
-                      type="text"
-                      value="Кучменко Д.М."
-                    />
-                    <input
-                      className="block-set__input animated"
-                      type="text"
-                      value="Кучменко Д.М."
-                    />
+                    {this.renderInputs("incomes", "employeeReceivingCash")}
                   </div>
                 </div>
               </div>
-              <button className="btn-secondary" type="button">
+              <button
+                className="btn-secondary"
+                type="button"
+                onClick={() =>
+                  this.props.dispatch(budgetItemViewActions.addIncome())
+                }
+              >
                 + Добавить оплату
               </button>
             </div>

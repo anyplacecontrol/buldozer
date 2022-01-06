@@ -224,6 +224,37 @@ export function timestampToShortDate(timestamp) {
   return formattedTime;
 }
 
+export function formatDate(dateStr) {
+  // let currentDay = new Date();
+  // let year = currentDay.getFullYear();
+  // const months = [
+  //   "01",
+  //   "02",
+  //   "02",
+  //   "04",
+  //   "05",
+  //   "06",
+  //   "07",
+  //   "08",
+  //   "09",
+  //   "10",
+  //   "11",
+  //   "12"
+  // ];
+  // let month =  months[currentDay.getMonth()];
+  // let day = currentDay.getDate();
+  // if (day.toString().length == 1) day="0"+day.toString();
+  // currentDay = year + "-" + month + "-" + day;
+
+  if (!dateStr || dateStr == "")
+     return "дд.мм.ггг"//currentDay;
+
+  let Tsymbol = dateStr.indexOf("T");
+  if (Tsymbol>0)
+    return dateStr.substring(0,Tsymbol);
+  return dateStr;
+}
+
 export function timestampToDate(timestamp) {
   const time = new Date(timestamp * 1000);
   const months = [

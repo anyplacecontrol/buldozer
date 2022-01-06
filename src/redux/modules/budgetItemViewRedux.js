@@ -10,6 +10,21 @@ const CHANGE_MANIFESTATION = "CHANGE_MANIFESTATION";
 const CHANGE_EXPENSE_ITEM = "CHANGE_EXPENSE_ITEM";
 const CHANGE_IS_ACTIVE = "CHANGE_IS_ACTIVE";
 const CHANGE_COMMENT = "CHANGE_COMMENT";
+const CHANGE_EXPENSE_VALUE = "CHANGE_EXPENSE_VALUE";
+const CHANGE_INCOME_VALUE = "CHANGE_INCOME_VALUE";
+const ADD_INCOME = "ADD_INCOME";
+
+export const allCurrencies = [
+  { name: "ГРН", id: 1 },
+  { name: "USD", id: 2 },
+  { name: "EUR", id: 3 },
+  { name: "ГРН (бартер)", id: 4 }
+];
+export const allPaymentTypes = [
+  { name: "Наличными", id: 1 },
+  { name: "Безналичный", id: 2 },
+  { name: "Бартер", id: 3 }
+];
 
 //*******************************************************************************
 
@@ -21,7 +36,26 @@ export const budgetItemViewInitialState = {
   isActive: false,
   paymentStatus: "",
   createdUser: null,
-  comment: ""
+  comment: "",
+  expenses: [
+    {
+      updatedAmount: 0,
+      currency: allCurrencies[0]
+    },
+    {
+      updatedAmount: 0,
+      currency: allCurrencies[1]
+    },
+    {
+      updatedAmount: 0,
+      currency: allCurrencies[2]
+    },
+    {
+      updatedAmount: 0,
+      currency: allCurrencies[3]
+    }
+  ],
+  incomes: []
 };
 
 //*******************************************************************************
@@ -68,6 +102,37 @@ export default function reducer(
         ...state,
         comment: action.payload
       };
+
+    case PREFIX + CHANGE_EXPENSE_VALUE: {
+      let expenses = JSON.parse(JSON.stringify(state.expenses));
+      expenses[action.index][action.fieldName] = action.value;
+      return {
+        ...state,
+        expenses: expenses
+      };
+    }
+    case PREFIX + CHANGE_INCOME_VALUE: {
+      let incomes = JSON.parse(JSON.stringify(state.incomes));
+      incomes[action.index][action.fieldName] = action.value;
+      return {
+        ...state,
+        incomes: incomes
+      };
+    }
+
+    case PREFIX + ADD_INCOME: {
+      return {
+        ...state,
+        incomes: [
+          ...state.incomes,
+          {
+            amount: 0,
+            currency: allCurrencies[0],
+            paymentType: allPaymentTypes[0]
+          }
+        ]
+      };
+    }
 
     default:
       return state;
@@ -171,6 +236,22 @@ class BudgetTableActions {
     };
   };
 
+  addIncome = () => {
+    return {
+      type: this._withPrefix(ADD_INCOME)
+    };
+  };
+
+  changeArrayValue = (arrayName, fieldName, index, value) => {
+    let type = CHANGE_EXPENSE_VALUE;
+    if (arrayName == "incomes") type = CHANGE_INCOME_VALUE;
+    return {
+      type: this._withPrefix(type),
+      fieldName: fieldName,
+      index: index,
+      value: value
+    };
+  };
   //------------------------------------------------------------------------------
   // ABSTRACT FUNCS REALIZATION
 
