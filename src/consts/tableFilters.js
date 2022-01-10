@@ -260,21 +260,21 @@ export const FILTER_ISACTIVE_STATS = {
 //Бюджет
 
 export const FILTER_RESTAURANT = _addDefaultValue({
-  type: "multiSelectBox",
-  apiParamName: "Restaurants",
+  type: "selectBox",
+  apiParamName: "restaurantId",
   labelText: "Ресторан",
   items: [], //items are store objects
   accessorText: item => item.name,
   accessorApi: item => item.id,
-  value: []
+  value: { name: " Все", id: 0 }
 });
 
 export const FILTER_BUDGET_TYPE = _addDefaultValue({
   type: "selectBox",
-  apiParamName: "BudgetType",
+  apiParamName: "budgetTypeId",
   labelText: "Тип бюджета",
   items: [ ],
   accessorText: item => item.name,
   accessorApi: item => item.id,
-  value: []
+  value: { name: " Все", id: 0 }
 });

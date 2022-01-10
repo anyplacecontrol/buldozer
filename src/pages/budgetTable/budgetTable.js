@@ -73,6 +73,7 @@ export class _budgetTable extends React.Component {
           items={section.items}
           isExpanded={isExpanded}
           onTotalClick={() => this.onTotalClick(index, isExpanded)}
+          dispatch = {this.props.dispatch}
         />
       );
     });

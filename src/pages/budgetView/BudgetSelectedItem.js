@@ -10,6 +10,8 @@ import {
   allPaymentTypes
 } from "./../../redux/modules/budgetItemViewRedux";
 import * as dataFuncs from "../../utils/dataFuncs";
+import { allBudgetTypes } from "../../redux/modules/budgetTableRedux";
+import { DateRangeBox } from "../../components/DateRangeBox/DateRangeBox";
 
 export class _BudgetSelectedItem extends React.Component {
   renderExpenseCategoriesSelectBox = () => {
@@ -138,6 +140,7 @@ export class _BudgetSelectedItem extends React.Component {
 
                 return this.props.dispatch(
                   budgetItemViewActions.changeArrayValue(
+                    "expenses",
                     fieldName,
                     index,
                     e.target.value
@@ -282,6 +285,127 @@ export class _BudgetSelectedItem extends React.Component {
     });
   };
 
+  renderSummary = fieldName => {
+    if (!this.props.selectedItem[fieldName]) return null;
+
+    return (
+      <>
+        <div className="payment-info-value">
+          {getValueByCurrency(this.props.selectedItem[fieldName], "ГРН") + "₴"}
+        </div>
+        <div className="payment-info-value">
+          {getValueByCurrency(this.props.selectedItem[fieldName], "USD") + "$"}
+        </div>
+        <div className="payment-info-value">
+          {getValueByCurrency(this.props.selectedItem[fieldName], "EUR") + "€"}
+        </div>
+        <div className="payment-info-value">
+          {getValueByCurrency(
+            this.props.selectedItem[fieldName],
+            "ГРН (бартер)"
+          ) + "₴"}
+        </div>
+      </>
+    );
+  };
+
+  //-------------------------------------------------------------------------------------
+  renderRestaurantsSelectBox = () => {
+    let nullItem = {
+      text: consts.noStr,
+      onClick: () => {
+        this.props.dispatch(budgetItemViewActions.changeRestaurant(null));
+      }
+    };
+
+    let itemsArr = this.props.allRestaurants.map((restaurant, index) => {
+      return {
+        text: restaurant.name,
+        onClick: () => {
+          this.props.dispatch(
+            budgetItemViewActions.changeRestaurant(restaurant)
+          );
+        }
+      };
+    });
+
+    let currentText;
+    if (this.props.selectedItem.restaurant != null)
+      currentText = this.props.selectedItem.restaurant.name;
+    else currentText = consts.chooseStr;
+
+    return (
+      <SelectBox
+        style={{ zIndex: 8 }}
+        className="w100"
+        text={currentText}
+        items={[nullItem, ...itemsArr]}
+      />
+    );
+  };
+
+  //-------------------------------------------------------------------------------------
+  renderBudgetTypes = () => {
+    let nullItem = {
+      text: consts.noStr,
+      onClick: () => {
+        this.props.dispatch(budgetItemViewActions.changeBudgetType(null));
+      }
+    };
+
+    let itemsArr = allBudgetTypes.map((budgetType, index) => {
+      return {
+        text: budgetType.name,
+        onClick: () => {
+          this.props.dispatch(
+            budgetItemViewActions.changeBudgetType(budgetType)
+          );
+        }
+      };
+    });
+
+    let currentText;
+    if (this.props.selectedItem.budgetType != null)
+      currentText = this.props.selectedItem.budgetType.name;
+    else currentText = consts.chooseStr;
+
+    return (
+      <SelectBox
+        style={{ zIndex: 7 }}
+        className="w100"
+        text={currentText}
+        items={[nullItem, ...itemsArr]}
+      />
+    );
+  };
+  //-------------------------------------------------------------------------------------
+
+  renderPeriodPicker = () => {
+    let startDate = this.props.selectedItem.periodFromDate
+      ? new Date(this.props.selectedItem.periodFromDate)
+      : null;
+    let endDate = this.props.selectedItem.periodToDate
+      ? new Date(this.props.selectedItem.periodToDate)
+      : null;
+    return (
+      <div style={{ zIndex: 9 }}>
+        <DateRangeBox
+          onValueChange={(dummy, data) => {
+            this.props.dispatch(budgetItemViewActions.changePeriod(data));
+          }}
+          className="filter__calendar w100r animated"
+          filterItem={{
+            type: "dateRange",
+            value: {
+              startDate: startDate,
+              endDate: endDate
+            }
+          }}
+        />
+      </div>
+    );
+  };
+
   //-------------------------------------------------------------------------------------
 
   render() {
@@ -292,14 +416,11 @@ export class _BudgetSelectedItem extends React.Component {
             <div className="block-set__title animated">Описание</div>
             <div className="buttons__right flex animated">
               <button
-                className="buttons__main button--cancel animated"
-                type="button"
-              >
-                Отменить
-              </button>
-              <button
                 className="buttons__main button--save animated"
                 type="button"
+                onClick={() =>
+                  this.props.dispatch(budgetItemViewActions.updateItem())
+                }
               >
                 Сохранить
               </button>
@@ -307,6 +428,36 @@ export class _BudgetSelectedItem extends React.Component {
           </div>
           <div className="block-set__inner flex w100 animated">
             <div className="block-set__item flex animated">
+              {/* Отчетный период */}
+              <div className="block-set__item--inner flex w100 animated">
+                <div className="block-set__sub-title flex w100 animated">
+                  Отчетный период *
+                </div>
+                <div className="block-set__content flex w100 animated">
+                  {this.renderPeriodPicker()}
+                </div>
+              </div>
+
+              {/* Ресторан */}
+              <div className="block-set__item--inner flex w100 animated">
+                <div className="block-set__sub-title flex w100 animated">
+                  Ресторан *
+                </div>
+                <div className="block-set__content flex w100 animated">
+                  {this.renderRestaurantsSelectBox()}
+                </div>
+              </div>
+
+              {/* Тип бюджета */}
+              <div className="block-set__item--inner flex w100 animated">
+                <div className="block-set__sub-title flex w100 animated">
+                  Тип бюджета *
+                </div>
+                <div className="block-set__content flex w100 animated">
+                  {this.renderBudgetTypes()}
+                </div>
+              </div>
+
               {/* Категория затрат */}
               <div className="block-set__item--inner flex w100 animated">
                 <div className="block-set__sub-title flex w100 animated">
@@ -334,32 +485,6 @@ export class _BudgetSelectedItem extends React.Component {
                 </div>
                 <div className="block-set__content flex w100 animated">
                   {this.renderExpenseItemsSelectBox()}
-                </div>
-              </div>
-
-              {/* Активность */}
-              <div className="block-set__item--inner flex w100 animated">
-                <div className="block-set__sub-title flex w100 animated">
-                  Активировать
-                </div>
-                <div className="block-set__content flex w100 animated">
-                  <div className="block-set__info flex animated">
-                    <div
-                      className={
-                        this.props.selectedItem.isActive
-                          ? "block-set__tumbler active animated"
-                          : "block-set__tumbler animated"
-                      }
-                      onClick={() =>
-                        this.props.dispatch(
-                          budgetItemViewActions.triggerIsActive()
-                        )
-                      }
-                    />
-                    <div className="block-set__info--title animated">
-                      {this.props.selectedItem.isActive ? "Да" : "Нет"}
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
@@ -431,6 +556,32 @@ export class _BudgetSelectedItem extends React.Component {
                   />
                 </div>
               </div>
+
+              {/* Активность */}
+              <div className="block-set__item--inner flex w100 animated">
+                <div className="block-set__sub-title flex w100 animated">
+                  Активировать
+                </div>
+                <div className="block-set__content flex w100 animated">
+                  <div className="block-set__info flex animated">
+                    <div
+                      className={
+                        this.props.selectedItem.isActive
+                          ? "block-set__tumbler active animated"
+                          : "block-set__tumbler animated"
+                      }
+                      onClick={() =>
+                        this.props.dispatch(
+                          budgetItemViewActions.triggerIsActive()
+                        )
+                      }
+                    />
+                    <div className="block-set__info--title animated">
+                      {this.props.selectedItem.isActive ? "Да" : "Нет"}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <div className="block-set__title-box">
@@ -453,10 +604,13 @@ export class _BudgetSelectedItem extends React.Component {
                   {this.renderSums("updatedAmount")}
                 </div>
 
-                <div className="payment-grid-item">
-                  <div className="brand-sub-title">Дата обновления суммы</div>
-                  {this.renderInputs("expenses", "updatingAmountDate")}
-                </div>
+                {this.props.selectedItem.id != 0 ? (
+                  <div className="payment-grid-item">
+                    <div className="brand-sub-title">Дата обновления суммы</div>
+                    {this.renderInputs("expenses", "updatingAmountDate")}
+                  </div>
+                ) : null}
+                
                 <div className="payment-grid-item">
                   <div className="brand-sub-title">
                     Сотрудник утвердивший обновление
@@ -476,7 +630,7 @@ export class _BudgetSelectedItem extends React.Component {
               <div className="payment-grid">
                 <div className="payment-grid-inner">
                   <div className="payment-grid-item">
-                    <div className="brand-sub-title">Оплаченная сумма</div>
+                    <div className="brand-sub-title">Оплаченная сумма *</div>
                     {this.renderIncomeSums()}
                   </div>
                   <div className="payment-grid-item">
@@ -484,12 +638,12 @@ export class _BudgetSelectedItem extends React.Component {
                     {this.renderIncomePaymentTypes()}
                   </div>
                   <div className="payment-grid-item">
-                    <div className="brand-sub-title">Дата оплаты</div>
+                    <div className="brand-sub-title">Дата оплаты *</div>
                     {this.renderInputs("incomes", "paymentDate")}
                   </div>
                   <div className="payment-grid-item">
                     <div className="brand-sub-title">
-                      Сотрудник, получивший наличные
+                      Сотрудник, получивший наличные *
                     </div>
                     {this.renderInputs("incomes", "employeeReceivingCash")}
                   </div>
@@ -511,19 +665,13 @@ export class _BudgetSelectedItem extends React.Component {
               <div className="payment-info-item">
                 <div className="payment-info-title">Осталось оплатить:</div>
                 <div className="payment-info-values">
-                  <div className="payment-info-value">₴5 000</div>
-                  <div className="payment-info-value">$2 000</div>
-                  <div className="payment-info-value">€0</div>
-                  <div className="payment-info-value">₴20 000 (бартер)</div>
+                  {this.renderSummary("needToPay")}
                 </div>
               </div>
               <div className="payment-info-item">
                 <div className="payment-info-title">Всего оплачено:</div>
                 <div className="payment-info-values">
-                  <div className="payment-info-value">₴10 000</div>
-                  <div className="payment-info-value">$3 000</div>
-                  <div className="payment-info-value">€0</div>
-                  <div className="payment-info-value">₴10 000 (бартер)</div>
+                  {this.renderSummary("paid")}
                 </div>
               </div>
             </div>
@@ -585,14 +733,11 @@ export class _BudgetSelectedItem extends React.Component {
           <div className="block-set__inner flex w100 animated --buttons">
             <div className="buttons__right flex animated">
               <button
-                className="buttons__main button--cancel animated"
-                type="button"
-              >
-                Отменить
-              </button>
-              <button
                 className="buttons__main button--save animated"
                 type="button"
+                onClick={() =>
+                  this.props.dispatch(budgetItemViewActions.updateItem())
+                }
               >
                 Сохранить
               </button>
@@ -613,7 +758,8 @@ _BudgetSelectedItem.propTypes = {
   selectedItem: PropTypes.object,
   allExpenseCategories: PropTypes.arrayOf(PropTypes.object),
   allManifestations: PropTypes.arrayOf(PropTypes.object),
-  allExpenseItems: PropTypes.arrayOf(PropTypes.object)
+  allExpenseItems: PropTypes.arrayOf(PropTypes.object),
+  allRestaurants: PropTypes.arrayOf(PropTypes.object)
 };
 
 function mapStateToProps(state) {
@@ -621,7 +767,8 @@ function mapStateToProps(state) {
     selectedItem: state.budgetItemView,
     allExpenseCategories: state.expenseCategories.items,
     allManifestations: state.manifestations.items,
-    allExpenseItems: state.expenseItems.items
+    allExpenseItems: state.expenseItems.items,
+    allRestaurants: state.restaurants.items
   };
 }
 

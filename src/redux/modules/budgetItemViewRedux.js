@@ -1,6 +1,9 @@
 import * as budgetApi from "../../api/budgetApi";
 import { BaseTableTypes, showException } from "./baseTableRedux";
 import * as uiActions from "./uiRedux";
+import { validateBudgetItemView } from "../../utils/viewValidators";
+import { budgetTableActions } from "./budgetTableRedux";
+import { formatDateObj } from "../../utils/dataFuncs";
 
 //*******************************************************************************
 const PREFIX = "budgetItemView/";
@@ -13,6 +16,10 @@ const CHANGE_COMMENT = "CHANGE_COMMENT";
 const CHANGE_EXPENSE_VALUE = "CHANGE_EXPENSE_VALUE";
 const CHANGE_INCOME_VALUE = "CHANGE_INCOME_VALUE";
 const ADD_INCOME = "ADD_INCOME";
+const RESET_STATE_TO_FILTERS = "RESET_STATE_TO_FILTERS";
+const CHANGE_PERIOD = "CHANGE_PERIOD";
+const CHANGE_RESTAURANT = "CHANGE_RESTAURANT";
+const CHANGE_BUDGET_TYPE = "CHANGE_BUDGET_TYPE";
 
 export const allCurrencies = [
   { name: "ГРН", id: 1 },
@@ -67,6 +74,35 @@ export default function reducer(
   switch (action.type) {
     case PREFIX + BaseTableTypes.RESET_STATE:
       return { ...budgetItemViewInitialState };
+
+    case PREFIX + RESET_STATE_TO_FILTERS: {
+      return {
+        ...budgetItemViewInitialState,
+        periodFromDate: action.periodFromDate,
+        periodToDate: action.periodToDate,
+        restaurant: action.restaurant,
+        budgetType: action.budgetType
+      };
+    }
+
+    case PREFIX + CHANGE_PERIOD:
+      return {
+        ...state,
+        periodFromDate: action.periodFromDate,
+        periodToDate: action.periodToDate
+      };
+
+    case PREFIX + CHANGE_RESTAURANT:
+      return {
+        ...state,
+        restaurant: action.restaurant
+      };
+
+    case PREFIX + CHANGE_BUDGET_TYPE:
+      return {
+        ...state,
+        budgetType: action.budgetType
+      };
 
     case PREFIX + REPLACE_ITEM:
       return {
@@ -126,6 +162,7 @@ export default function reducer(
         incomes: [
           ...state.incomes,
           {
+            id: 0,
             amount: 0,
             currency: allCurrencies[0],
             paymentType: allPaymentTypes[0]
@@ -145,12 +182,44 @@ class BudgetTableActions {
   // ABSTRACT ACTIONS REALIZATION
 
   resetState() {
-    return async (dispatch, getState) => {
-      await dispatch({
-        type: this._withPrefix(BaseTableTypes.RESET_STATE)
+    return {
+      type: this._withPrefix(BaseTableTypes.RESET_STATE)
+    };
+  }
+
+  resetStateToFilters() {
+    return (dispatch, getState) => {
+      let filterItems = getState().budgetTable.filterItems;
+      let periodFromDate = null;
+      let periodToDate = null;
+      if (
+        filterItems[0] &&
+        filterItems[0].value &&
+        filterItems[0].value.startDate &&
+        filterItems[0].value.endDate
+      ) {
+        periodFromDate =
+          formatDateObj(filterItems[0].value.startDate) + "T00:00:00.000Z";
+        periodToDate =
+          formatDateObj(filterItems[0].value.endDate) + "T00:00:00.000Z";
+      }
+      let restaurant = null;
+      if (filterItems[1] && filterItems[1].value && filterItems[1].value.id > 0)
+        restaurant = filterItems[1].value;
+      let budgetType = null;
+      if (filterItems[2] && filterItems[2].value && filterItems[2].value.id > 0)
+        budgetType = filterItems[2].value;
+
+      dispatch({
+        type: this._withPrefix(RESET_STATE_TO_FILTERS),
+        periodFromDate,
+        periodToDate,
+        restaurant,
+        budgetType
       });
     };
   }
+  
 
   fetchItem = id => {
     return async (dispatch, getState) => {
@@ -252,6 +321,98 @@ class BudgetTableActions {
       value: value
     };
   };
+
+  changePeriod(data) {
+    let periodFromDate = null;
+    let periodToDate = null;
+    if ( data && data.startDate)      
+      periodFromDate =
+        formatDateObj(data.startDate) + "T00:00:00.000Z";
+    if ( data && data.endDate)      
+      periodToDate =
+        formatDateObj(data.endDate) + "T00:00:00.000Z";
+    
+    return {
+      type: this._withPrefix(CHANGE_PERIOD),
+      periodFromDate,
+      periodToDate
+    };
+  }
+
+  changeBudgetType(data) {
+    let budgetType = null;
+    if (data && data.id > 0)
+      budgetType = data;
+
+    return {
+      type: this._withPrefix(CHANGE_BUDGET_TYPE),
+      budgetType
+    };
+  }
+
+  changeRestaurant(data) {
+    let restaurant = null;
+    if (data && data.id > 0)
+    restaurant = data;
+
+    return {
+      type: this._withPrefix(CHANGE_RESTAURANT),
+      restaurant
+    };
+  }
+
+  // *** Update/Add
+  updateItem = () => {
+    return async (dispatch, getState) => {
+      let item = this._getStateSlice(getState());
+
+      let isCreateNew = item.id == 0;
+      let itemObj;
+
+      try {
+        //new object returned
+        itemObj = validateBudgetItemView(item);
+      } catch (e) {
+        // dispatch(this.setValidated());
+        setTimeout(() => {
+          dispatch(uiActions.ShowAlert(e, uiActions.ALERT_ERROR));
+        }, 500);
+        return;
+      }
+
+      dispatch(uiActions.showBackdrop(true));
+
+      let fetchedData;
+      try {
+        if (isCreateNew) fetchedData = await budgetApi.addItem(itemObj);
+        else {
+          fetchedData = await budgetApi.updateItem(itemObj);
+        }
+
+        dispatch(uiActions.showBackdrop(false));
+      } catch (e) {
+        dispatch(uiActions.showBackdrop(false));
+        setTimeout(() => {
+          dispatch(showException(e, false));
+        }, 500);
+        return;
+      }
+      
+      await dispatch(budgetTableActions.replaceFiltersFromItem(item));
+      await dispatch(this.resetStateToFilters());
+      await dispatch(budgetTableActions.fetchItems());
+
+      let message = "Запись успешно обновлена";
+      if (isCreateNew) message = "Запись успешно создана";
+
+      //we need delay, because fetch after goto_Page clears alerts
+
+      setTimeout(() => {
+        dispatch(uiActions.ShowAlert(message, uiActions.ALERT_SUCCESS));
+      }, 500);
+    };
+  };
+
   //------------------------------------------------------------------------------
   // ABSTRACT FUNCS REALIZATION
 

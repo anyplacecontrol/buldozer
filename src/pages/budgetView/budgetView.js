@@ -46,7 +46,7 @@ export class _budgetView extends React.Component {
 
   onItemClick = id => {
     if (!id)
-      this.props.dispatch(budgetItemViewActions.resetState())
+      this.props.dispatch(budgetItemViewActions.resetStateToFilters())
     else
       this.props.dispatch(budgetItemViewActions.fetchItem(id));
   };

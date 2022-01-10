@@ -9,12 +9,20 @@ import { restaurantsActions } from "./restaurantsRedux";
 import { expenseCategoriesActions } from "./expenseCategoriesRedux";
 import { expenseItemsActions } from "./expenseItemsRedux";
 import { manifestationsActions } from "./manifestationsRedux";
-import {budgetItemViewActions} from "./budgetItemViewRedux";
+import { budgetItemViewActions } from "./budgetItemViewRedux";
 
 //*******************************************************************************
 const PREFIX = "budgetTable/";
+const REPLACE_FILTERS_FROM_ITEM = "REPLACE_FILTERS_FROM_ITEM";
 
 //*******************************************************************************
+
+export const allBudgetTypes = [
+  { name: " Все", id: 0 },
+  { name: "Месячный бюджет", id: 1 },
+  { name: "Инвестиционный бюджет", id: 1 },
+  { name: "event", id: 3 }
+];
 
 export const budgetTableInitialState = {
   filterItems: [],
@@ -49,12 +57,24 @@ export default function reducer(state = budgetTableInitialState, action = {}) {
       return { ...state, filterItems: action.filterItems };
 
     case PREFIX + BaseTableTypes.CHANGE_SORT_MODE:
-      return { ...state, 
-        sortBy: action.sortBy, 
+      return {
+        ...state,
+        sortBy: action.sortBy,
         sortOrder: action.sortOrder,
         sections: action.sections
-       };
-    
+      };
+
+    case PREFIX + REPLACE_FILTERS_FROM_ITEM: {
+      if (state.filterItems.length < 3) return state;
+      let filterItems = [...state.filterItems]; 
+      filterItems[0] = { ...filterItems[0], value: {...action.period, key: "selection"} };
+      filterItems[1] = { ...filterItems[1], value: action.restaurant };
+      filterItems[2] = { ...filterItems[2], value: action.budgetType };      
+      return { ...state, 
+        filterItems: filterItems 
+      };
+    }
+
     default:
       return state;
   }
@@ -97,13 +117,20 @@ class BudgetTableActions {
         ) {
           try {
             await dispatch(
-              expenseCategoriesActions.fetchItems(0, false, false, null, true, true)
+              expenseCategoriesActions.fetchItems(
+                0,
+                false,
+                false,
+                null,
+                true,
+                true
+              )
             );
           } catch (e) {}
         }
         resolve();
       });
-      
+
       let p3 = new Promise(async (resolve, reject) => {
         if (
           !getState().manifestations.items ||
@@ -111,7 +138,14 @@ class BudgetTableActions {
         ) {
           try {
             await dispatch(
-              manifestationsActions.fetchItems(0, false, false, null, true, true)
+              manifestationsActions.fetchItems(
+                0,
+                false,
+                false,
+                null,
+                true,
+                true
+              )
             );
           } catch (e) {}
         }
@@ -140,16 +174,11 @@ class BudgetTableActions {
         { ...tableFilters.FILTER_ACTIVATION_DATE_STATS },
         {
           ...tableFilters.FILTER_RESTAURANT,
-          items: [...getState().restaurants.items]
+          items: [{ name: " Все", id: 0 }, ...getState().restaurants.items]
         },
         {
           ...tableFilters.FILTER_BUDGET_TYPE,
-          items: [
-            { name: " Все", id: 0 },
-            { name: "Месячный бюджет", id: 1 },
-            { name: "Инвестиционный бюджет", id: 1 },
-            { name: "event", id: 3 }
-          ]
+          items: allBudgetTypes
         }
       ];
 
@@ -210,7 +239,7 @@ class BudgetTableActions {
       }
 
       let currentSortBy = this.getSortBy(getState());
-      let sortedSections = this.sortItems(       
+      let sortedSections = this.sortItems(
         fetchedResponse.sections,
         currentSortBy,
         "descending"
@@ -276,7 +305,7 @@ class BudgetTableActions {
         else newSortOrder = "descending";
       }
 
-      if (!newSortBy) newSortBy = currentSortBy;     
+      if (!newSortBy) newSortBy = currentSortBy;
 
       let sortedSections = this.sortItems(
         this.getSections(getState()),
@@ -289,7 +318,7 @@ class BudgetTableActions {
         sortBy: newSortBy,
         sortOrder: newSortOrder,
         sections: sortedSections
-      });     
+      });
     };
   };
 
@@ -322,10 +351,26 @@ class BudgetTableActions {
       });
     };
   };
-  
+
+  replaceFiltersFromItem = item => {
+    return (dispatch, getState) => {
+      let period = { startDate: null, endDate: null };
+      if (item.periodFromDate) period.startDate = new Date(item.periodFromDate);
+      if (item.periodToDate) period.endDate = new Date(item.periodToDate);
+      let restaurant = item.restaurant;
+      let budgetType = item.budgetType;
+      dispatch({
+        type: this._withPrefix(REPLACE_FILTERS_FROM_ITEM),
+        period,
+        restaurant,
+        budgetType
+      });
+    };
+  };
+
   goto_addItem() {
     return async dispatch => {
-      dispatch(budgetItemViewActions.resetState());
+      dispatch(budgetItemViewActions.resetStateToFilters());
       dispatch(routing.goto_AddItem(ROUTE_NAMES.budgetView));
     };
   }

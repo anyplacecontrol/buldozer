@@ -1,13 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { getValueByCurrency } from "../../utils/dataFuncs";
+import { budgetTableActions } from "./../../redux/modules/budgetTableRedux";
+import { budgetItemViewActions } from "./../../redux/modules/budgetItemViewRedux";
 
 export class BudgetTableSection extends React.Component {
   renderNames = () => {
     return this.props.items.map((item, index) => {
       if (!item.expenseItem || !item.manifestation) return "?";
       return (
-        <button key={index} className="toggle-box-btn" type="button">
+        <button key={index} className="toggle-box-btn" type="button" onClick={async ()=>{
+          await this.props.dispatch(budgetTableActions.goto_addItem());
+          this.props.dispatch(budgetItemViewActions.fetchItem(item.id));
+        }}>
           {item.expenseItem.name + "/" + item.manifestation.name}
         </button>
       );
@@ -173,5 +178,6 @@ BudgetTableSection.propTypes = {
   items: PropTypes.arrayOf(PropTypes.object).isRequired,
   total: PropTypes.object.isRequired,
   isExpanded: PropTypes.bool,
-  onTotalClick: PropTypes.func.isRequired
+  onTotalClick: PropTypes.func.isRequired,
+  dispatch: PropTypes.func.isRequired
 };

@@ -223,29 +223,30 @@ export function timestampToShortDate(timestamp) {
 
   return formattedTime;
 }
+export function formatDateObj(dateObj) {  
+  let year = dateObj.getFullYear();
+  const months = [
+    "01",
+    "02",
+    "02",
+    "04",
+    "05",
+    "06",
+    "07",
+    "08",
+    "09",
+    "10",
+    "11",
+    "12"
+  ];
+  let month =  months[dateObj.getMonth()];
+  let day = dateObj.getDate();
+  if (day.toString().length == 1) day="0"+day.toString();
+  dateObj = year + "-" + month + "-" + day;
+  return dateObj;
+}
 
-export function formatDate(dateStr) {
-  // let currentDay = new Date();
-  // let year = currentDay.getFullYear();
-  // const months = [
-  //   "01",
-  //   "02",
-  //   "02",
-  //   "04",
-  //   "05",
-  //   "06",
-  //   "07",
-  //   "08",
-  //   "09",
-  //   "10",
-  //   "11",
-  //   "12"
-  // ];
-  // let month =  months[currentDay.getMonth()];
-  // let day = currentDay.getDate();
-  // if (day.toString().length == 1) day="0"+day.toString();
-  // currentDay = year + "-" + month + "-" + day;
-
+export function formatDate(dateStr) { 
   if (!dateStr || dateStr == "")
      return "дд.мм.ггг"//currentDay;
 
