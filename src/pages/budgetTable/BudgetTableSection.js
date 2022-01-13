@@ -9,10 +9,15 @@ export class BudgetTableSection extends React.Component {
     return this.props.items.map((item, index) => {
       if (!item.expenseItem || !item.manifestation) return "?";
       return (
-        <button key={index} className="toggle-box-btn" type="button" onClick={async ()=>{
-          await this.props.dispatch(budgetTableActions.goto_addItem());
-          this.props.dispatch(budgetItemViewActions.fetchItem(item.id));
-        }}>
+        <button
+          key={index}
+          className="toggle-box-btn"
+          type="button"
+          onClick={async () => {
+            await this.props.dispatch(budgetTableActions.goto_addItem());
+            this.props.dispatch(budgetItemViewActions.fetchItem(item.id));
+          }}
+        >
           {item.expenseItem.name + "/" + item.manifestation.name}
         </button>
       );
@@ -20,19 +25,34 @@ export class BudgetTableSection extends React.Component {
   };
 
   renderPrices = value => {
+    function getStyleByPrice(price) {
+      if (price && price[0] == "+") return { color: "green" };
+      if (price && price[0] == "-") return { color: "red" };
+      return {};
+    }
+
+    let valueUah = getValueByCurrency(value, "ГРН") + "₴";
+    let valueUsd = getValueByCurrency(value, "USD") + "$";
+    let valueEur = getValueByCurrency(value, "EUR") + "€";
+    let valueBarter = getValueByCurrency(value, "ГРН (бартер)") + "₴";
+    let styleUah = getStyleByPrice(valueUah);
+    let styleUsd = getStyleByPrice(valueUsd);
+    let styleEur = getStyleByPrice(valueEur);
+    let styleBarter = getStyleByPrice(valueBarter);
+
     return (
       <>
-        <div className="table-grid-item">
-          {getValueByCurrency(value, "ГРН") + "₴"}
+        <div className="table-grid-item" style={styleUah}>
+          {valueUah}
         </div>
-        <div className="table-grid-item">
-          {getValueByCurrency(value, "USD") + "$" }
+        <div className="table-grid-item" style={styleUsd}>
+          {valueUsd}
         </div>
-        <div className="table-grid-item">
-          {getValueByCurrency(value, "EUR") + "€"}
+        <div className="table-grid-item" style={styleEur}>
+          {valueEur}
         </div>
-        <div className="table-grid-item">
-          {getValueByCurrency(value, "ГРН (бартер)") + "₴"}
+        <div className="table-grid-item" style={styleBarter}>
+          {valueBarter}
         </div>
       </>
     );
@@ -57,10 +77,8 @@ export class BudgetTableSection extends React.Component {
     return this.props.items.map((item, index) => {
       if (!item[columnName]) return null;
       return (
-        <div key={index} className="toggle-box-body">          
-            <div className="text-ellipsis">
-              {item[columnName]}
-            </div>        
+        <div key={index} className="toggle-box-body">
+          <div className="text-ellipsis">{item[columnName]}</div>
         </div>
       );
     });
@@ -76,13 +94,9 @@ export class BudgetTableSection extends React.Component {
     return (
       <div className={cls}>
         {/* -- NOTE: Add class '--show' to '.table-tr' when clicking on the 'button.toggle-box-title'-- */}
-        <div className="table-td">
-          <div className="toggle-box --main">
-            <button
-              className="toggle-box-title"
-              type="button"
-              onClick={this.props.onTotalClick}
-            >
+        <div className="table-td" style={{ cursor: "pointer" }}>
+          <div className="toggle-box --main" onClick={this.props.onTotalClick}>
+            <button className="toggle-box-title" type="button">
               {total.expenseCategory.name}
             </button>
             <div className="toggle-box-body">{this.renderNames()}</div>
@@ -117,10 +131,10 @@ export class BudgetTableSection extends React.Component {
         {/* --Разница обн. бюдж-- */}
         <div className="table-td">
           <div className="toggle-box">
-            <div className="toggle-box-title" >
+            <div className="toggle-box-title">
               <div className="table-grid">
                 <div className="table-grid-inner">
-                {this.renderPrices(total.budgetsDifference)}
+                  {this.renderPrices(total.budgetsDifference)}
                 </div>
               </div>
             </div>
@@ -132,7 +146,7 @@ export class BudgetTableSection extends React.Component {
             <div className="toggle-box-title">
               <div className="table-grid">
                 <div className="table-grid-inner">
-                {this.renderPrices(total.paid)}
+                  {this.renderPrices(total.paid)}
                 </div>
               </div>
             </div>
@@ -144,29 +158,27 @@ export class BudgetTableSection extends React.Component {
             <div className="toggle-box-title">
               <div className="table-grid">
                 <div className="table-grid-inner">
-                {this.renderPrices(total.needToPay)}
+                  {this.renderPrices(total.needToPay)}
                 </div>
               </div>
             </div>
-            {this.renderItemPrices("needToPay")}        
+            {this.renderItemPrices("needToPay")}
           </div>
         </div>
         <div className="table-td">
           <div className="toggle-box">
             <button className="toggle-box-title" type="button">
-            {total.status}
+              {total.status}
             </button>
-            {this.renderItemsInfo("status")}            
+            {this.renderItemsInfo("status")}
           </div>
         </div>
         <div className="table-td">
           <div className="toggle-box">
             <button className="toggle-box-title" type="button">
-              <div className="text-ellipsis">
-              {total.person}               
-              </div>
+              <div className="text-ellipsis">{total.person}</div>
             </button>
-            {this.renderItemsInfo("person")} 
+            {this.renderItemsInfo("person")}
           </div>
         </div>
       </div>

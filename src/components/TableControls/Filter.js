@@ -197,7 +197,7 @@ export class Filter extends React.Component {
             className="filter__submit animated"
             onClick={this.props.onApplyFilterClick}
           >
-            {this.props.buttonText ? this.props.buttonText : "Применить"}
+            {this.props.buttonText ? this.props.buttonText : "Отфильтровать"}
           </div>
         </div>
       </div>

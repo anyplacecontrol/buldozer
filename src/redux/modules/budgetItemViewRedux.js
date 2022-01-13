@@ -20,6 +20,7 @@ const RESET_STATE_TO_FILTERS = "RESET_STATE_TO_FILTERS";
 const CHANGE_PERIOD = "CHANGE_PERIOD";
 const CHANGE_RESTAURANT = "CHANGE_RESTAURANT";
 const CHANGE_BUDGET_TYPE = "CHANGE_BUDGET_TYPE";
+const RESET_STATE_TO_NULL = "RESET_STATE_TO_NULL";
 
 export const allCurrencies = [
   { name: "ГРН", id: 1 },
@@ -74,6 +75,9 @@ export default function reducer(
   switch (action.type) {
     case PREFIX + BaseTableTypes.RESET_STATE:
       return { ...budgetItemViewInitialState };
+
+    case PREFIX + RESET_STATE_TO_NULL:
+      return null
 
     case PREFIX + RESET_STATE_TO_FILTERS: {
       return {
@@ -185,6 +189,12 @@ class BudgetTableActions {
     return {
       type: this._withPrefix(BaseTableTypes.RESET_STATE)
     };
+  }  
+
+  resetStateToNull() {    
+    return {
+      type: this._withPrefix(RESET_STATE_TO_NULL)
+    };
   }
 
   resetStateToFilters() {
@@ -209,7 +219,7 @@ class BudgetTableActions {
       let budgetType = null;
       if (filterItems[2] && filterItems[2].value && filterItems[2].value.id > 0)
         budgetType = filterItems[2].value;
-
+      
       dispatch({
         type: this._withPrefix(RESET_STATE_TO_FILTERS),
         periodFromDate,
@@ -399,7 +409,7 @@ class BudgetTableActions {
       }
       
       await dispatch(budgetTableActions.replaceFiltersFromItem(item));
-      await dispatch(this.resetStateToFilters());
+      await dispatch(this.resetStateToNull());
       await dispatch(budgetTableActions.fetchItems());
 
       let message = "Запись успешно обновлена";
@@ -413,6 +423,57 @@ class BudgetTableActions {
     };
   };
 
+  addFile = (event) => {
+    return async (dispatch, getState) => {
+      if (!event.target) return;
+      if (!event.target.files) return;
+
+      let selectedFile = event.target.files[0];
+      if (!selectedFile) return;
+
+      if (selectedFile.size > 10 * 1024 * 1024) {
+        alert("Файл превышает размер 10 Mb");
+        return;
+      }
+
+      try {
+        let id = getState().budgetItemView.id;
+        dispatch(uiActions.showBackdrop(true));
+        let response = await budgetApi.addFile(id, selectedFile);
+        if (response) {
+          alert("Файл успешно Загружен!");
+          dispatch(this.fetchItem(id));
+        }
+      } catch (e) {
+        console.log(e);
+        alert(e.message);
+      } finally {
+        dispatch(uiActions.showBackdrop(false));
+      }
+    };
+  }
+
+  deleteFile = (fileId) => {
+    return async (dispatch, getState) => {      
+      if (!confirm('Вы уверены, что хотите удалить файл?')) 
+        return;
+ 
+      try {
+        let id = getState().budgetItemView.id;
+        dispatch(uiActions.showBackdrop(true));
+        let response = await budgetApi.deleteFile(fileId);
+        if (response) {
+          alert("Файл успешно Удален!");
+          dispatch(this.fetchItem(id));
+        }
+      } catch (e) {
+        console.log(e);
+        alert(e.message);
+      } finally {
+        dispatch(uiActions.showBackdrop(false));
+      }
+    };
+  }
   //------------------------------------------------------------------------------
   // ABSTRACT FUNCS REALIZATION
 

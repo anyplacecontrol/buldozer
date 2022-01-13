@@ -12,6 +12,7 @@ import {
 import * as dataFuncs from "../../utils/dataFuncs";
 import { allBudgetTypes } from "../../redux/modules/budgetTableRedux";
 import { DateRangeBox } from "../../components/DateRangeBox/DateRangeBox";
+import { BudgetFiles } from "./BudgetFiles";
 
 export class _BudgetSelectedItem extends React.Component {
   renderExpenseCategoriesSelectBox = () => {
@@ -409,6 +410,8 @@ export class _BudgetSelectedItem extends React.Component {
   //-------------------------------------------------------------------------------------
 
   render() {
+    if (!this.props.selectedItem) return null;
+
     return (
       <div className="block-sets">
         <div className="block-set__box flex animated">
@@ -610,7 +613,7 @@ export class _BudgetSelectedItem extends React.Component {
                     {this.renderInputs("expenses", "updatingAmountDate")}
                   </div>
                 ) : null}
-                
+
                 <div className="payment-grid-item">
                   <div className="brand-sub-title">
                     Сотрудник утвердивший обновление
@@ -676,60 +679,20 @@ export class _BudgetSelectedItem extends React.Component {
               </div>
             </div>
           </div>
+
           <div className="block-set__title-box">
             <div className="block-set__title animated">Приложения</div>
           </div>
           <div className="block-set__inner flex w100 animated">
-            <div className="documents">
-              <div className="document-box">
-                <button className="document-remove" type="button"></button>
-                <div className="document-item">
-                  <div className="document-buttons">
-                    <button className="document-button" type="button">
-                      Удалить
-                    </button>
-                    <button className="document-button" type="button">
-                      Скачать
-                    </button>
-                  </div>
-                  <div className="document-title">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Assumenda, soluta?
-                  </div>
-                </div>
-              </div>
-              <div className="document-box">
-                <button className="document-remove" type="button"></button>
-                <div className="document-item">
-                  <div className="document-buttons">
-                    <button className="document-button" type="button">
-                      Удалить
-                    </button>
-                    <button className="document-button" type="button">
-                      Скачать
-                    </button>
-                  </div>
-                  <div className="document-title">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Possimus, unde.
-                  </div>
-                </div>
-              </div>
-              <div className="document-box">
-                <input
-                  className="document-add-input"
-                  id="files"
-                  type="file"
-                  encType="multipart/form-data"
-                  accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-                />
-                <label className="document-add" htmlFor="files">
-                  <span className="document-add-icon"></span>
-                  <span className="document-add-text">Загрузить</span>
-                </label>
-              </div>
-            </div>
+          <div className="documents">
+            {this.props.selectedItem.id != 0 ? (
+              <BudgetFiles />
+            ) : (
+              "Файлы приложения можно добавлять после первого сохранения данной статьи расходов"
+            )}
           </div>
+          </div>
+
           <div className="block-set__inner flex w100 animated --buttons">
             <div className="buttons__right flex animated">
               <button

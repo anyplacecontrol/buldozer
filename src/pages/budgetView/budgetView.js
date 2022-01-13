@@ -32,7 +32,8 @@ export class _budgetView extends React.Component {
     );
   };
 
-  onApplyFilterClick = () => {
+  onApplyFilterClick = async () => {    
+    await this.props.dispatch(budgetItemViewActions.resetStateToNull());
     this.props.dispatch(budgetTableActions.fetchItems());
   };
 
@@ -45,10 +46,9 @@ export class _budgetView extends React.Component {
   };
 
   onItemClick = id => {
-    if (!id)
-      this.props.dispatch(budgetItemViewActions.resetStateToFilters())
-    else
-      this.props.dispatch(budgetItemViewActions.fetchItem(id));
+    this.props.dispatch(uiActions.HideAlert());
+    if (!id) this.props.dispatch(budgetItemViewActions.resetStateToFilters());
+    else this.props.dispatch(budgetItemViewActions.fetchItem(id));
   };
 
   //-----------------------------------------------------------------------------
@@ -59,7 +59,7 @@ export class _budgetView extends React.Component {
       let total = section.total;
       let items = section.items;
       items.map((item, index2) => {
-        if (!this.props.selectedItem || item.id != this.props.selectedItem.id)
+        // if (!this.props.selectedItem || item.id != this.props.selectedItem.id)
           JSXArr.push(
             <BudgetViewSection
               key={index1 + "-" + index2}
@@ -104,13 +104,13 @@ export class _budgetView extends React.Component {
         <button
           style={{ float: "left", marginTop: 25, marginBottom: 25 }}
           className="add animated"
-          onClick={()=>this.onItemClick(null)}
+          onClick={() => this.onItemClick(null)}
         >
           Создать новую статью
         </button>
 
         {/* ---Выбранная Секция --- */}
-        <BudgetSelectedItem/>
+        {this.props.selectedItem ? <BudgetSelectedItem /> : null}
 
         {/* ---Секции --- */}
         <div className="expenses-articles">{this.renderSections()}</div>

@@ -90,9 +90,32 @@ export class UserPermissions extends React.Component {
               <div className="block-set__sub-title flex w100 animated">
                 Контрагенты
               </div>
+              
               <div className="block-set__content flex w100 animated">
-                {this.renderRecipientsSelectBox()}
-              </div>
+               
+               <div className="block-set__content flex w100 animated">
+                 <div
+                   className="block-set__info flex animated"
+                   style={{ marginBottom: "10px" }}
+                 >
+                   <div
+                     className={
+                       this.props.user.useAllRecipients
+                         ? "block-set__tumbler active animated"
+                         : "block-set__tumbler animated"
+                     }
+                     onClick={this.props.onTriggerAllRecipients}
+                   />
+                   <div className="block-set__info--title animated">
+                     {"Все"}
+                   </div>
+                 </div>
+               </div>
+               {this.props.user.useAllRecipients
+                 ? null
+                 : this.renderRecipientsSelectBox()}
+             </div>           
+
             </div>
           </div>
         </div>
@@ -101,10 +124,11 @@ export class UserPermissions extends React.Component {
   }
 }
 
-UserPermissions.propTypes = {
+UserPermissions.propTypes = {  
   allUserRoles: PropTypes.arrayOf(PropTypes.object).isRequired,
   allRecipients: PropTypes.arrayOf(PropTypes.object).isRequired,
   user: userViewRedux.IUserView,
   onChangeRole: PropTypes.func.isRequired,
   onChangeRecipient: PropTypes.func.isRequired,
+  onTriggerAllRecipients: PropTypes.func.isRequired,
 };

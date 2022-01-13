@@ -4,6 +4,7 @@ import { fetchJSON, throwFetchError } from "../utils/fetchUtils.js";
 import * as serviceFuncs from "../utils/serviceFunctions";
 
 const budget_endPoint = "https://" + constants.apiDomain + "/budget/items";
+const budgetFile_endPoint = "https://" + constants.apiDomain + "/budget/items-files";
 
 //--------------------------------------------------------------------------------
 
@@ -76,4 +77,34 @@ export async function AddOrUpdateItem(Obj, endPoint, method) {
     return response;
 }
 
+
+
+export async function addFile(id, file) {
+
+  var formData = new FormData();  
+  formData.append("file", file);
+  formData.append("budgetItemId", id);
+
+  let response = await fetchJSON(budgetFile_endPoint, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",      
+    },
+    body: formData
+  });
+
+  return response;
+}
+
+export async function deleteFile(fileId) {
+    
+  let response = await fetchJSON(budgetFile_endPoint + "/" + fileId, {
+    method: "DELETE",
+    headers: {
+      Accept: "application/json",      
+    },  
+  });
+
+  return response;
+}
 //--------------------------------------------------------------------------------

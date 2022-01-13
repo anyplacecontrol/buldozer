@@ -82,6 +82,9 @@ export async function AddOrUpdateItem(Obj, endPoint, method) {
   if (Obj.createdUser) {
     delete delete cleanObj.password;
   }
+  if (cleanObj.useAllRecipients) {
+    delete cleanObj.recipients
+  } 
 
   let response = await fetchJSON(endPoint, {
     method: method,

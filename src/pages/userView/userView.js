@@ -45,6 +45,11 @@ export class userView_ extends React.Component {
     );
   };
 
+  onTriggerAllRecipients = () => {
+    this.props.dispatch(userViewActions.triggerTriggerAllRecipients());
+  };
+  
+
   render() {
     return (
       <BaseView
@@ -66,6 +71,7 @@ export class userView_ extends React.Component {
           allRecipients={this.props.allRecipients}
           onChangeRole = {this.onChangeRole}
           onChangeRecipient = {this.onChangeRecipient}
+          onTriggerAllRecipients = {this.onTriggerAllRecipients}
         />
 
         {this.props.user.createdUser ? (

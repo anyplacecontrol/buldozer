@@ -34,7 +34,8 @@ export const IUserView = PropTypes.shape({
   createdDate: PropTypes.string,
   createdUser: PropTypes.object,
   recipients: PropTypes.arrayOf(PropTypes.object),
-  role: IRole
+  role: IRole,
+  useAllRecipients: PropTypes.bool
 });
 
 //*******************************************************************************
@@ -48,6 +49,7 @@ const CHANGE_PASSWORD = PREFIX + "CHANGE_PASSWORD";
 const CHANGE_EMAIL = PREFIX + "CHANGE_EMAIL";
 const CHANGE_ROLE = PREFIX + "CHANGE_ROLE";
 const CHANGE_RECIPIENT = PREFIX + "CHANGE_RECIPIENT";
+const TRIGGER_ALL_RECIPIENTS = PREFIX + "TRIGGER_ALL_RECIPIENTS";
 
 //*******************************************************************************
 
@@ -63,7 +65,8 @@ export const userViewInitialState = {
   createdDate: null,
   createdUser: null,
   role: null,
-  recipients: []
+  recipients: [],
+  useAllRecipients: false
 };
 
 //*******************************************************************************
@@ -116,6 +119,12 @@ export default function reducer(state = userViewInitialState, action = {}) {
         email: action.payload
       };
 
+    case TRIGGER_ALL_RECIPIENTS:
+      return {
+        ...state,
+        useAllRecipients: !state.useAllRecipients
+      };
+
     case CHANGE_RECIPIENT: {
       let recipients = [];
       if (!action.isPresent) {
@@ -123,7 +132,7 @@ export default function reducer(state = userViewInitialState, action = {}) {
       } else {
         for (let i = 0; i < state.recipients.length; i++) {
           if (state.recipients[i].id != action.recipient.id)
-          recipients.push(state.recipients[i]);
+            recipients.push(state.recipients[i]);
         }
       }
       return {
@@ -198,6 +207,12 @@ class UserViewActions extends BaseViewActions {
       type: CHANGE_RECIPIENT,
       recipient,
       isPresent
+    };
+  };
+
+  triggerTriggerAllRecipients = () => {
+    return {
+      type: TRIGGER_ALL_RECIPIENTS
     };
   };
 

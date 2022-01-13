@@ -74,6 +74,8 @@ export async function AddOrUpdateItem(Obj, endPoint, method) {
   delete cleanObj.rowNumber;
   delete cleanObj.createdUser;  
   delete cleanObj.createdDate;
+  delete cleanObj.redeemerCertificates;
+  delete cleanObj.issuingCertificates
 
   await fetchJSON(endPoint, {
     method: method,
