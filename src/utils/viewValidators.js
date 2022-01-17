@@ -4,7 +4,7 @@ import * as consts from "../consts/constants";
 import { formatDateObj } from "../utils/dataFuncs";
 
 function isNumeric(n) {
-  if (n.toString().length>1 && n.toString()[0] == "0") return false;
+  if (n.toString().length > 1 && n.toString()[0] == "0") return false;
   return !isNaN(parseFloat(n)) && isFinite(n);
 }
 
@@ -357,8 +357,8 @@ export function validateBudgetItemView(viewObj) {
       if (!expense.updatingAmountDate || expense.updatingAmountDate == "")
         if (
           !(
-            viewObj.expenses[i].updatedAmount == 0 &&
-            (viewObj.expenses[i].amount == 0 || !viewObj.expenses[i].amount)
+            viewObj.expenses[i].updatedAmount == 0 
+            //&& (viewObj.expenses[i].amount == 0 || !viewObj.expenses[i].amount)
           )
         )
           throw "Дата для Бюджета статьи расходов в строке " +
