@@ -421,7 +421,7 @@ export class _BudgetSelectedItem extends React.Component {
               <button
                 className="buttons__main button--save animated"
                 type="button"
-                onClick={() =>                  
+                onClick={() =>
                   this.props.dispatch(budgetItemViewActions.resetStateToNull())
                 }
               >
@@ -557,7 +557,7 @@ export class _BudgetSelectedItem extends React.Component {
                 <div className="block-set__content flex w100 animated">
                   <textarea
                     placeholder=""
-                    className="block-set__text-area animated"
+                    className="block-set__text-area"
                     type="text"
                     value={this.props.selectedItem.comment || ""}
                     onChange={e =>
@@ -707,7 +707,7 @@ export class _BudgetSelectedItem extends React.Component {
             <button
                 className="buttons__main button--save animated"
                 type="button"
-                onClick={() =>                  
+                onClick={() =>
                   this.props.dispatch(budgetItemViewActions.resetStateToNull())
                 }
               >

@@ -105,7 +105,7 @@ export class CertificateRecipient extends React.Component {
               <div className="block-set__content flex w100 animated">
                 <textarea
                   placeholder=""
-                  className="block-set__text-area animated"
+                  className="block-set__text-area"
                   type="text"
                   value={this.props.certificate.recipientComment || ""}
                   onChange={e =>
