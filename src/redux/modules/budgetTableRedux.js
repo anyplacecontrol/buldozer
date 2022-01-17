@@ -21,7 +21,7 @@ export const allBudgetTypes = [
   { name: " Все", id: 0 },
   { name: "Месячный бюджет", id: 1 },
   { name: "Инвестиционный бюджет", id: 1 },
-  { name: "event", id: 3 }
+  { name: "Event", id: 3 }
 ];
 
 export const budgetTableInitialState = {
