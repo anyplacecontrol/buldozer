@@ -1,10 +1,11 @@
 import * as baseAPI from "./baseApi";
 import * as constants from "../consts/constants";
-import { fetchJSON, throwFetchError } from "../utils/fetchUtils.js";
+import { fetchJSON, fetchBlob, throwFetchError } from "../utils/fetchUtils.js";
 import * as serviceFuncs from "../utils/serviceFunctions";
 
 const budget_endPoint = "https://" + constants.apiDomain + "/budget/items";
 const budgetFile_endPoint = "https://" + constants.apiDomain + "/budget/items-files";
+const budgetExportExpenseItems = "https://" + constants.apiDomain + "/exports/budget/expense-items";
 
 //--------------------------------------------------------------------------------
 
@@ -108,3 +109,11 @@ export async function deleteFile(fileId) {
   return response;
 }
 //--------------------------------------------------------------------------------
+
+export async function exportExpenseItems() {
+  let response = await fetchBlob(budgetExportExpenseItems + "?offset=0&limit=1000", {
+    method: "GET",    
+  });
+
+  return response;
+}
