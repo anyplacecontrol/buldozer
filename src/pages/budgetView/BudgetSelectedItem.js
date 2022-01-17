@@ -135,7 +135,7 @@ export class _BudgetSelectedItem extends React.Component {
               className="block-set__input animated"
               type="text"
               readOnly={isReadOnly}
-              value={expense[fieldName] ? expense[fieldName] : 0}
+              value={expense[fieldName]}
               onChange={e => {
                 if (isReadOnly) return null;
 
@@ -421,6 +421,15 @@ export class _BudgetSelectedItem extends React.Component {
               <button
                 className="buttons__main button--save animated"
                 type="button"
+                onClick={() =>                  
+                  this.props.dispatch(budgetItemViewActions.resetStateToNull())
+                }
+              >
+                Отменить
+              </button>
+              <button
+                className="buttons__main button--save animated"
+                type="button"
                 onClick={() =>
                   this.props.dispatch(budgetItemViewActions.updateItem())
                 }
@@ -609,7 +618,7 @@ export class _BudgetSelectedItem extends React.Component {
 
                 {this.props.selectedItem.id != 0 ? (
                   <div className="payment-grid-item">
-                    <div className="brand-sub-title">Дата обновления суммы</div>
+                    <div className="brand-sub-title">Дата обновления суммы *</div>
                     {this.renderInputs("expenses", "updatingAmountDate")}
                   </div>
                 ) : null}
@@ -695,7 +704,16 @@ export class _BudgetSelectedItem extends React.Component {
 
           <div className="block-set__inner flex w100 animated --buttons">
             <div className="buttons__right flex animated">
-              <button
+            <button
+                className="buttons__main button--save animated"
+                type="button"
+                onClick={() =>                  
+                  this.props.dispatch(budgetItemViewActions.resetStateToNull())
+                }
+              >
+                Отменить
+              </button>
+             <button
                 className="buttons__main button--save animated"
                 type="button"
                 onClick={() =>

@@ -4,6 +4,7 @@ import * as consts from "../consts/constants";
 import { formatDateObj } from "../utils/dataFuncs";
 
 function isNumeric(n) {
+  if (n.toString().length>1 && n.toString()[0] == "0") return false;
   return !isNaN(parseFloat(n)) && isFinite(n);
 }
 
@@ -339,6 +340,10 @@ export function validateBudgetItemView(viewObj) {
   let expenses = [];
   for (let i = 0; i < viewObj.expenses.length; i++) {
     let expense = {};
+    //пустая строка вместо суммы для нового expense
+    if (viewObj.expenses[i].updatedAmount == "" && viewObj.id == 0)
+      viewObj.expenses[i].updatedAmount = 0;
+
     if (!isNumeric(viewObj.expenses[i].updatedAmount))
       throw "Сумма для Бюджета статьи расходов в строке " +
         (i + 1).toString() +
