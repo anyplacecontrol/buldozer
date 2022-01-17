@@ -7,6 +7,7 @@ import { budgetTableActions } from "./../../redux/modules/budgetTableRedux";
 import { Filter } from "../../components/TableControls/Filter";
 import * as uiActions from "../../redux/modules/uiRedux";
 import { AlertPanel } from "../../components/TableControls/AlertPanel";
+import * as constants from "../../consts/constants";
 
 export class _budgetTable extends React.Component {
   constructor(props) {
@@ -59,7 +60,7 @@ export class _budgetTable extends React.Component {
 
   onAddClick = () => {
     this.props.dispatch(budgetTableActions.goto_addItem());
-  }
+  };
   //-----------------------------------------------------------------------------
   renderSections = () => {
     if (!this.props.sections) return null;
@@ -73,7 +74,7 @@ export class _budgetTable extends React.Component {
           items={section.items}
           isExpanded={isExpanded}
           onTotalClick={() => this.onTotalClick(index, isExpanded)}
-          dispatch = {this.props.dispatch}
+          dispatch={this.props.dispatch}
         />
       );
     });
@@ -268,7 +269,14 @@ export class _budgetTable extends React.Component {
             </div>
           </div>
           <div className="table__tfoot flex animated">
-            <div className="export-list animated pointer">Экспорт CSV</div>
+            <div
+              className="export-list animated pointer"
+              onClick={() => {
+                this.props.dispatch(budgetTableActions.exportExpenseItems());
+              }}
+            >
+              Экспорт CSV
+            </div>
           </div>
         </div>
       </div>

@@ -20,7 +20,7 @@ const REPLACE_FILTERS_FROM_ITEM = "REPLACE_FILTERS_FROM_ITEM";
 export const allBudgetTypes = [
   { name: " Все", id: 0 },
   { name: "Месячный бюджет", id: 1 },
-  { name: "Инвестиционный бюджет", id: 1 },
+  { name: "Инвестиционный бюджет", id: 2 },
   { name: "Event", id: 3 }
 ];
 
@@ -375,6 +375,53 @@ class BudgetTableActions {
     };
   }
 
+  exportExpenseItems() {
+    return async (dispatch, getState) => {
+      let keepBackdropOpened = false;
+
+      dispatch(uiActions.showBackdrop(true));     
+
+      let fetchedBlob;
+      try {
+        dispatch(uiActions.showBackdrop(true));
+        fetchedBlob = await budgetApi.exportExpenseItems();
+      } catch (e) {
+        dispatch(showException(e, keepBackdropOpened));
+        if (!keepBackdropOpened) {
+          throw e;
+        }
+        return;
+      }
+
+      dispatch(uiActions.showBackdrop(false || keepBackdropOpened));
+
+      if (
+        !fetchedBlob 
+      ) {
+        let message =
+          "Problem in fetchItems. Empty data received for table export";
+
+        dispatch(
+          uiActions.ShowAlert(
+            message,
+            uiActions.ALERT_ERROR,
+            keepBackdropOpened
+          )
+        );
+
+        if (!keepBackdropOpened) {
+          throw message;
+        }
+
+        return;
+      }
+      
+      
+      var file = window.URL.createObjectURL(fetchedBlob);
+      window.location.assign(file);      
+
+    };
+  }
   //------------------------------------------------------------------------------
   // ABSTRACT FUNCS REALIZATION
 

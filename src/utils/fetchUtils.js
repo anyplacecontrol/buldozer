@@ -33,11 +33,11 @@ export async function handleFetchError(response) {
   }
 }
 
-export async function fetchJSON(url, init) {
+export async function fetchData(url, init, isBlob) {
   let json;
   let response;
   let token;
-  let method="";
+  let method = "";
   try {
     token = await authApi.getToken();
 
@@ -62,11 +62,16 @@ export async function fetchJSON(url, init) {
     }
 
     //we only get here if there is no error
-    json = await response.json();
-
-    return json;
+    if (!isBlob) {
+      json = await response.json();
+      return json;
+    }
+    else {
+      let blob = await response.blob();
+      return blob;
+    }
   } catch (err) {
-    if (!token || (!err.message && err.includes('Unauthenticated'))) {
+    if (!token || (!err.message && err.includes("Unauthenticated"))) {
       //Not Authorized
       window.location.replace("/");
       throw err;
@@ -96,6 +101,14 @@ export async function fetchJSON(url, init) {
 
     throwFetchError(errorBody, response, method + ":" + url);
   }
+}
+
+export async function fetchJSON(url, init) {
+  return await fetchData(url, init, false);
+}
+
+export async function fetchBlob(url, init) {
+  return await fetchData(url, init, true);
 }
 
 function ReplaceAll(Source, stringToFind, stringToReplace) {
