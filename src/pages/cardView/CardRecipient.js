@@ -37,7 +37,7 @@ export class CardRecipient extends React.Component {
   };
 
 
-  render() {    
+  render() {
     let userRole = dataFuncs.getUserRole();
 
     return (
@@ -51,7 +51,7 @@ export class CardRecipient extends React.Component {
               <div className="block-set__sub-title flex w100 animated">
                 Контрагент*
               </div>
-              <div className="block-set__content flex w100 animated">               
+              <div className="block-set__content flex w100 animated">
                 {userRole != "recipient" ? this.renderRecipientsSelectBox(userRole): (this.props.card.recipient && this.props.card.recipient.company ? this.props.card.recipient.company : "")}
               </div>
             </div>
@@ -69,7 +69,7 @@ export class CardRecipient extends React.Component {
               <div className="block-set__content flex w100 animated">
                 <textarea
                   placeholder=""
-                  className="block-set__text-area animated"
+                  className="block-set__text-area"
                   type="text"
                   value={this.props.card.recipientComment || ""}
                   onChange={e =>
@@ -87,7 +87,7 @@ export class CardRecipient extends React.Component {
 
 CardRecipient.propTypes = {
   card: ICardView,
-  allRecipients: PropTypes.arrayOf(IRecipientView).isRequired,  
+  allRecipients: PropTypes.arrayOf(IRecipientView).isRequired,
   onChangeRecipient: PropTypes.func.isRequired,
-  onRecipientCommentChange: PropTypes.func.isRequired,  
+  onRecipientCommentChange: PropTypes.func.isRequired,
 };

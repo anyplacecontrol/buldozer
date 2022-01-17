@@ -15,7 +15,7 @@ export class RestaurantGeneral extends React.Component {
           <div className="block-set__item flex animated">
 
            {/* Id */}
-           
+
               <div className="block-set__item--inner flex w100 animated">
                 <div className="block-set__sub-title flex w100 animated">
                   Id*
@@ -34,7 +34,7 @@ export class RestaurantGeneral extends React.Component {
                   />
                 </div>
               </div>
-            
+
 
             {/* Ресторан */}
             <div className="block-set__item--inner flex w100 animated">
@@ -134,7 +134,7 @@ export class RestaurantGeneral extends React.Component {
               <div className="block-set__content flex w100 animated">
                 <textarea
                   placeholder=""
-                  className="block-set__text-area animated"
+                  className="block-set__text-area"
                   type="text"
                   value={this.props.restaurant.comment || ""}
                   onChange={e => this.props.onChangeComment(e.target.value)}
