@@ -5,7 +5,8 @@ import * as serviceFuncs from "../utils/serviceFunctions";
 
 const budget_endPoint = "https://" + constants.apiDomain + "/budget/items";
 const budgetFile_endPoint = "https://" + constants.apiDomain + "/budget/items-files";
-const budgetExportExpenseItems = "https://" + constants.apiDomain + "/exports/budget/expense-items";
+const budgetExportExpenseItems_endPoint = "https://" + constants.apiDomain + "/exports/budget/expense-items";
+const budgetIncomes_endPoint = "https://" + constants.apiDomain + "/budget/items-incomes";
 
 //--------------------------------------------------------------------------------
 
@@ -79,6 +80,7 @@ export async function AddOrUpdateItem(Obj, endPoint, method) {
 }
 
 
+//--------------------------------------------------------------------------------
 
 export async function addFile(id, file) {
 
@@ -111,8 +113,22 @@ export async function deleteFile(fileId) {
 //--------------------------------------------------------------------------------
 
 export async function exportExpenseItems() {
-  let response = await fetchBlob(budgetExportExpenseItems + "?offset=0&limit=1000", {
+  let response = await fetchBlob(budgetExportExpenseItems_endPoint + "?offset=0&limit=1000", {
     method: "GET",    
+  });
+
+  return response;
+}
+
+//--------------------------------------------------------------------------------
+
+export async function deleteIncome(id) {
+    
+  let response = await fetchJSON(budgetIncomes_endPoint + "/" + id, {
+    method: "DELETE",
+    headers: {
+      Accept: "application/json",      
+    },  
   });
 
   return response;

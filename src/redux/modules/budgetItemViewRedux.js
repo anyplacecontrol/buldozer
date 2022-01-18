@@ -49,19 +49,23 @@ export const budgetItemViewInitialState = {
   expenses: [
     {
       updatedAmount: 0,
-      currency: allCurrencies[0]
+      currency: allCurrencies[0],
+      updatingAmountUser: "",
     },
     {
       updatedAmount: 0,
-      currency: allCurrencies[1]
+      currency: allCurrencies[1],
+      updatingAmountUser: "",
     },
     {
       updatedAmount: 0,
-      currency: allCurrencies[2]
+      currency: allCurrencies[2],
+      updatingAmountUser: "",
     },
     {
       updatedAmount: 0,
-      currency: allCurrencies[3]
+      currency: allCurrencies[3],
+      updatingAmountUser: "",
     }
   ],
   incomes: []
@@ -469,7 +473,7 @@ class BudgetTableActions {
         dispatch(uiActions.showBackdrop(true));
         let response = await budgetApi.deleteFile(fileId);
         if (response) {
-          alert("Файл успешно Удален!");
+          //alert("Файл успешно Удален!");
           dispatch(this.fetchItem(id));
         }
       } catch (e) {
@@ -489,8 +493,23 @@ class BudgetTableActions {
       if (!income) return;
 
       if (income.id && income.id > 0) {
-        //Delete via API
-        return;
+        if (
+          !confirm(
+            "Вы уверены, что хотите удалить оплату? Отменить удаление будет невозможно!"
+          )
+        )
+          return;
+
+        try {
+          dispatch(uiActions.showBackdrop(true));
+          let response = await budgetApi.deleteIncome(income.id);
+        } catch (e) {
+          console.log(e);
+          alert(e.message);
+          return;
+        } finally {
+          dispatch(uiActions.showBackdrop(false));
+        }
       }
 
       dispatch({
