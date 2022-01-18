@@ -375,16 +375,18 @@ class BudgetTableActions {
     };
   }
 
-  exportExpenseItems() {
+  exportItems() {
     return async (dispatch, getState) => {
       let keepBackdropOpened = false;
 
       dispatch(uiActions.showBackdrop(true));     
-
+     
       let fetchedBlob;
-      try {
+      try {        
         dispatch(uiActions.showBackdrop(true));
-        fetchedBlob = await budgetApi.exportExpenseItems();
+        let filterItems = this.getFilterItems(getState());
+        let filter = dataFuncs.createFilterObject(filterItems);  
+        fetchedBlob = await budgetApi.exportItems(filter);
       } catch (e) {
         dispatch(showException(e, keepBackdropOpened));
         if (!keepBackdropOpened) {

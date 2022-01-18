@@ -1,12 +1,20 @@
 import * as baseAPI from "./baseApi";
 import * as constants from "../consts/constants";
-import { fetchJSON, fetchBlob, throwFetchError } from "../utils/fetchUtils.js";
+import {
+  fetchJSON,
+  fetchBlob,
+  throwFetchError,
+  urlfy
+} from "../utils/fetchUtils.js";
 import * as serviceFuncs from "../utils/serviceFunctions";
 
 const budget_endPoint = "https://" + constants.apiDomain + "/budget/items";
-const budgetFile_endPoint = "https://" + constants.apiDomain + "/budget/items-files";
-const budgetExportExpenseItems_endPoint = "https://" + constants.apiDomain + "/exports/budget/expense-items";
-const budgetIncomes_endPoint = "https://" + constants.apiDomain + "/budget/items-incomes";
+const budgetFile_endPoint =
+  "https://" + constants.apiDomain + "/budget/items-files";
+const budgetExportItems_endPoint =
+  "https://" + constants.apiDomain + "/exports/budget/items";
+const budgetIncomes_endPoint =
+  "https://" + constants.apiDomain + "/budget/items-incomes";
 
 //--------------------------------------------------------------------------------
 
@@ -33,7 +41,6 @@ export async function getItems(filter) {
 //--------------------------------------------------------------------------------
 
 export async function getItem(id) {
-  
   let result = await baseAPI.getFilteredItems(
     budget_endPoint + "/" + id,
     null,
@@ -43,7 +50,7 @@ export async function getItem(id) {
     "",
     null
   );
-  
+
   return result.json.data;
 }
 
@@ -55,43 +62,41 @@ export async function addItem(Obj) {
 //--------------------------------------------------------------------------------
 
 export async function updateItem(Obj) {
-   let endPoint = budget_endPoint + "/" + Obj.id;
-   return await AddOrUpdateItem(Obj, endPoint, "PUT");
+  let endPoint = budget_endPoint + "/" + Obj.id;
+  return await AddOrUpdateItem(Obj, endPoint, "PUT");
 }
 
 //--------------------------------------------------------------------------------
 
 export async function AddOrUpdateItem(Obj, endPoint, method) {
-    if (!Obj) throwFetchError("argument Obj is empty", endPoint);
-    if (constants.isFakeData) {
-      await serviceFuncs.delayTime(constants.fakeDelay);
-      return;
-    }
-   
-    let response = await fetchJSON(endPoint, {
-      method: method,
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(Obj)
-    });
-    return response;
-}
+  if (!Obj) throwFetchError("argument Obj is empty", endPoint);
+  if (constants.isFakeData) {
+    await serviceFuncs.delayTime(constants.fakeDelay);
+    return;
+  }
 
+  let response = await fetchJSON(endPoint, {
+    method: method,
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(Obj)
+  });
+  return response;
+}
 
 //--------------------------------------------------------------------------------
 
 export async function addFile(id, file) {
-
-  var formData = new FormData();  
+  var formData = new FormData();
   formData.append("file", file);
   formData.append("budgetItemId", id);
 
   let response = await fetchJSON(budgetFile_endPoint, {
     method: "POST",
     headers: {
-      Accept: "application/json",      
+      Accept: "application/json"
     },
     body: formData
   });
@@ -100,22 +105,24 @@ export async function addFile(id, file) {
 }
 
 export async function deleteFile(fileId) {
-    
   let response = await fetchJSON(budgetFile_endPoint + "/" + fileId, {
     method: "DELETE",
     headers: {
-      Accept: "application/json",      
-    },  
+      Accept: "application/json"
+    }
   });
 
   return response;
 }
 //--------------------------------------------------------------------------------
 
-export async function exportExpenseItems() {
-  let response = await fetchBlob(budgetExportExpenseItems_endPoint + "?offset=0&limit=1000", {
-    method: "GET",    
-  });
+export async function exportItems(filter) {
+  let response = await fetchBlob(
+    budgetExportItems_endPoint + "?offset=0&limit=1000&filter=" + urlfy(filter),
+    {
+      method: "GET"
+    }
+  );
 
   return response;
 }
@@ -123,12 +130,11 @@ export async function exportExpenseItems() {
 //--------------------------------------------------------------------------------
 
 export async function deleteIncome(id) {
-    
   let response = await fetchJSON(budgetIncomes_endPoint + "/" + id, {
     method: "DELETE",
     headers: {
-      Accept: "application/json",      
-    },  
+      Accept: "application/json"
+    }
   });
 
   return response;

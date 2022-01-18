@@ -272,7 +272,7 @@ export class _budgetTable extends React.Component {
             <div
               className="export-list animated pointer"
               onClick={() => {
-                this.props.dispatch(budgetTableActions.exportExpenseItems());
+                this.props.dispatch(budgetTableActions.exportItems());
               }}
             >
               Экспорт CSV
