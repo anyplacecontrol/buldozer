@@ -21,6 +21,7 @@ const CHANGE_PERIOD = "CHANGE_PERIOD";
 const CHANGE_RESTAURANT = "CHANGE_RESTAURANT";
 const CHANGE_BUDGET_TYPE = "CHANGE_BUDGET_TYPE";
 const RESET_STATE_TO_NULL = "RESET_STATE_TO_NULL";
+const DELETE_INCOME = "DELETE_INCOME";
 
 export const allCurrencies = [
   { name: "ГРН", id: 1 },
@@ -77,7 +78,7 @@ export default function reducer(
       return { ...budgetItemViewInitialState };
 
     case PREFIX + RESET_STATE_TO_NULL:
-      return null
+      return null;
 
     case PREFIX + RESET_STATE_TO_FILTERS: {
       return {
@@ -175,6 +176,17 @@ export default function reducer(
       };
     }
 
+    case PREFIX + DELETE_INCOME: {
+      let newIncomes = [];
+      for (let i = 0; i < state.incomes.length; i++) {
+        if (i != action.index) newIncomes.push(state.incomes[i]);
+      }
+      return {
+        ...state,
+        incomes: newIncomes
+      };
+    }
+
     default:
       return state;
   }
@@ -189,9 +201,9 @@ class BudgetTableActions {
     return {
       type: this._withPrefix(BaseTableTypes.RESET_STATE)
     };
-  }  
+  }
 
-  resetStateToNull() {    
+  resetStateToNull() {
     return {
       type: this._withPrefix(RESET_STATE_TO_NULL)
     };
@@ -219,7 +231,7 @@ class BudgetTableActions {
       let budgetType = null;
       if (filterItems[2] && filterItems[2].value && filterItems[2].value.id > 0)
         budgetType = filterItems[2].value;
-      
+
       dispatch({
         type: this._withPrefix(RESET_STATE_TO_FILTERS),
         periodFromDate,
@@ -229,7 +241,6 @@ class BudgetTableActions {
       });
     };
   }
-  
 
   fetchItem = id => {
     return async (dispatch, getState) => {
@@ -335,13 +346,11 @@ class BudgetTableActions {
   changePeriod(data) {
     let periodFromDate = null;
     let periodToDate = null;
-    if ( data && data.startDate)      
-      periodFromDate =
-        formatDateObj(data.startDate) + "T00:00:00.000Z";
-    if ( data && data.endDate)      
-      periodToDate =
-        formatDateObj(data.endDate) + "T00:00:00.000Z";
-    
+    if (data && data.startDate)
+      periodFromDate = formatDateObj(data.startDate) + "T00:00:00.000Z";
+    if (data && data.endDate)
+      periodToDate = formatDateObj(data.endDate) + "T00:00:00.000Z";
+
     return {
       type: this._withPrefix(CHANGE_PERIOD),
       periodFromDate,
@@ -351,8 +360,7 @@ class BudgetTableActions {
 
   changeBudgetType(data) {
     let budgetType = null;
-    if (data && data.id > 0)
-      budgetType = data;
+    if (data && data.id > 0) budgetType = data;
 
     return {
       type: this._withPrefix(CHANGE_BUDGET_TYPE),
@@ -362,8 +370,7 @@ class BudgetTableActions {
 
   changeRestaurant(data) {
     let restaurant = null;
-    if (data && data.id > 0)
-    restaurant = data;
+    if (data && data.id > 0) restaurant = data;
 
     return {
       type: this._withPrefix(CHANGE_RESTAURANT),
@@ -407,7 +414,7 @@ class BudgetTableActions {
         }, 500);
         return;
       }
-      
+
       await dispatch(budgetTableActions.replaceFiltersFromItem(item));
       await dispatch(this.resetStateToNull());
       await dispatch(budgetTableActions.fetchItems());
@@ -423,7 +430,7 @@ class BudgetTableActions {
     };
   };
 
-  addFile = (event) => {
+  addFile = event => {
     return async (dispatch, getState) => {
       if (!event.target) return;
       if (!event.target.files) return;
@@ -451,13 +458,12 @@ class BudgetTableActions {
         dispatch(uiActions.showBackdrop(false));
       }
     };
-  }
+  };
 
-  deleteFile = (fileId) => {
-    return async (dispatch, getState) => {      
-      if (!confirm('Вы уверены, что хотите удалить файл?')) 
-        return;
- 
+  deleteFile = fileId => {
+    return async (dispatch, getState) => {
+      if (!confirm("Вы уверены, что хотите удалить файл?")) return;
+
       try {
         let id = getState().budgetItemView.id;
         dispatch(uiActions.showBackdrop(true));
@@ -473,7 +479,26 @@ class BudgetTableActions {
         dispatch(uiActions.showBackdrop(false));
       }
     };
-  }
+  };
+
+  deleteIncome = incomeIndex => {
+    return async (dispatch, getState) => {
+      let incomes = getState().budgetItemView.incomes;
+      if (!incomes) return;
+      let income = incomes[incomeIndex];
+      if (!income) return;
+
+      if (income.id && income.id > 0) {
+        //Delete via API
+        return;
+      }
+
+      dispatch({
+        type: this._withPrefix(DELETE_INCOME),
+        index: incomeIndex
+      });
+    };
+  };
   //------------------------------------------------------------------------------
   // ABSTRACT FUNCS REALIZATION
 

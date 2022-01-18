@@ -9,7 +9,7 @@ import {
   budgetItemViewActions,
   allCurrencies,
   allPaymentTypes
-} from '../../redux/modules/budgetItemViewRedux';
+} from "../../redux/modules/budgetItemViewRedux";
 // eslint-disable-next-line import/no-duplicates
 import * as dataFuncs from "../../utils/dataFuncs";
 import { allBudgetTypes } from "../../redux/modules/budgetTableRedux";
@@ -17,7 +17,7 @@ import { DateRangeBox } from "../../components/DateRangeBox/DateRangeBox";
 import { BudgetFiles } from "./BudgetFiles";
 
 function isNotNull(val) {
-  return val != null
+  return val != null;
 }
 
 export class _BudgetSelectedItem extends React.Component {
@@ -77,7 +77,10 @@ export class _BudgetSelectedItem extends React.Component {
     });
 
     let currentText;
-    if (this.props.selectedItem && isNotNull(this.props.selectedItem.expenseItem))
+    if (
+      this.props.selectedItem &&
+      isNotNull(this.props.selectedItem.expenseItem)
+    )
       currentText = this.props.selectedItem.expenseItem.name;
     else currentText = consts.chooseStr;
 
@@ -129,10 +132,12 @@ export class _BudgetSelectedItem extends React.Component {
   //-------------------------------------------------------------------------------------
   renderSums = fieldName => {
     //Для существующих статей нельзя редактировать сумму, а можно только обновленную сумму
-    if (!this.props.selectedItem || !this.props.selectedItem.expenses) return null;
+    if (!this.props.selectedItem || !this.props.selectedItem.expenses)
+      return null;
 
     return this.props.selectedItem.expenses.map((expense, index) => {
-      let isReadOnly = this.props.selectedItem.id !== 0 && fieldName === "amount";
+      let isReadOnly =
+        this.props.selectedItem.id !== 0 && fieldName === "amount";
       return (
         <div key={fieldName + index} className="block-set-grid">
           <div className="block-set-grid-inner">
@@ -197,7 +202,8 @@ export class _BudgetSelectedItem extends React.Component {
 
   //-------------------------------------------------------------------------------------
   renderIncomeSums = () => {
-    if (!this.props.selectedItem || !this.props.selectedItem.incomes) return null;
+    if (!this.props.selectedItem || !this.props.selectedItem.incomes)
+      return null;
 
     return this.props.selectedItem.incomes.map((income, index1) => {
       let itemsArr = allCurrencies.map((item, index2) => {
@@ -226,8 +232,14 @@ export class _BudgetSelectedItem extends React.Component {
           className="w100"
           style={{ zIndex: this.props.selectedItem.incomes.length - index1 }}
         >
-          <div className='payment-grid-box'>
-            <button className='payment-grid-item-remove-btn' type='button'/>
+          <div className="payment-grid-box">
+            <button
+              className="payment-grid-item-remove-btn"
+              type="button"
+              onClick={() =>
+                this.props.dispatch(budgetItemViewActions.deleteIncome(index1))
+              }
+            />
             <div className="block-set-grid">
               <div className="block-set-grid-inner">
                 <input
@@ -375,7 +387,8 @@ export class _BudgetSelectedItem extends React.Component {
     });
 
     let currentText;
-    if (isNotNull(this.props.selectedItem.budgetType)) currentText = this.props.selectedItem.budgetType.name;
+    if (isNotNull(this.props.selectedItem.budgetType))
+      currentText = this.props.selectedItem.budgetType.name;
     else currentText = consts.chooseStr;
 
     return (
@@ -427,7 +440,7 @@ export class _BudgetSelectedItem extends React.Component {
             <div className="block-set__title animated">Описание</div>
             <div className="buttons__right flex animated">
               <button
-                className="buttons__main button--save animated"
+                className="btn-secondary"
                 type="button"
                 onClick={() =>
                   this.props.dispatch(budgetItemViewActions.resetStateToNull())
@@ -625,7 +638,9 @@ export class _BudgetSelectedItem extends React.Component {
 
                 {this.props.selectedItem.id === 0 ? null : (
                   <div className="payment-grid-item">
-                    <div className="brand-sub-title">Дата обновления суммы *</div>
+                    <div className="brand-sub-title">
+                      Дата обновления суммы *
+                    </div>
                     {this.renderInputs("expenses", "updatingAmountDate")}
                   </div>
                 )}
@@ -710,7 +725,7 @@ export class _BudgetSelectedItem extends React.Component {
           <div className="block-set__inner flex w100 animated --buttons">
             <div className="buttons__right flex animated">
               <button
-                className="buttons__main button--save animated"
+                className="btn-secondary"
                 type="button"
                 onClick={() =>
                   this.props.dispatch(budgetItemViewActions.resetStateToNull())
@@ -732,7 +747,7 @@ export class _BudgetSelectedItem extends React.Component {
         </div>
         {/* - On click show Add / Edit article form-- */}
         <div className="buttons__top flex w100 animated">
-          <div className="buttons__right flex animated"/>
+          <div className="buttons__right flex animated" />
         </div>
       </div>
     );
