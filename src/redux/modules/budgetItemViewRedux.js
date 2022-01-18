@@ -174,7 +174,8 @@ export default function reducer(
             id: 0,
             amount: 0,
             currency: allCurrencies[0],
-            paymentType: allPaymentTypes[0]
+            paymentType: allPaymentTypes[0],
+            employeeReceivingCash: ""
           }
         ]
       };
