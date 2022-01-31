@@ -91,9 +91,9 @@ export class MainMenu extends React.Component {
         (item.path === routeNames.ROUTE_NAMES.users ||
           item.path === routeNames.ROUTE_NAMES.userView ||
           item.path === routeNames.ROUTE_NAMES.userRoles ||
-          item.path === routeNames.ROUTE_NAMES.manifestations ||
-          item.path === routeNames.ROUTE_NAMES.manifestationView 
-          // item.path === routeNames.ROUTE_NAMES.expenseCategoryView ||
+          // item.path === routeNames.ROUTE_NAMES.manifestations ||
+          // item.path === routeNames.ROUTE_NAMES.manifestationView 
+          // // item.path === routeNames.ROUTE_NAMES.expenseCategoryView ||
           // item.path === routeNames.ROUTE_NAMES.expenseCategories ||
           // item.path === routeNames.ROUTE_NAMES.expenseItems ||
           // item.path === routeNames.ROUTE_NAMES.expenseItemView ||
