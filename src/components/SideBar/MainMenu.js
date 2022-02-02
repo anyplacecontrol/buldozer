@@ -99,16 +99,19 @@ export class MainMenu extends React.Component {
           // item.path === routeNames.ROUTE_NAMES.expenseItemView ||
           // item.path === routeNames.ROUTE_NAMES.budgetTable ||
           // item.path === routeNames.ROUTE_NAMES.budgetView
-          )
-      )
+        )
+      ) {
         continue;
+      }
+
       if (
         userRole === "recipient" &&
         item.path != routeNames.ROUTE_NAMES.cards &&
         item.path != routeNames.ROUTE_NAMES.cardView &&
         item.path != routeNames.ROUTE_NAMES.cardView
-      )
+      ) {
         continue;
+      }
 
       //if item does not contain sub-items
       if (!item.items && !item.isHidden) {

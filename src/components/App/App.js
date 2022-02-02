@@ -1,13 +1,13 @@
 import React from "react";
 import PropTypesView from "prop-types";
-import { connect } from "react-redux";
-import { Route, Switch, Redirect } from "react-router";
-import { hot } from "react-hot-loader";
-import { ROUTE_NAMES } from "../../consts/routeNames";
-import { SideBar } from "../SideBar/SideBar";
-import { Header } from "../Header/Header";
-import { Footer } from "../Footer/Footer";
-import { Backdrop } from "../../components/Backdrop/Backdrop";
+import {connect} from "react-redux";
+import {Route, Switch, Redirect} from "react-router";
+import {hot} from "react-hot-loader";
+import {ROUTE_NAMES} from "../../consts/routeNames";
+import {SideBar} from "../SideBar/SideBar";
+import {Header} from "../Header/Header";
+import {Footer} from "../Footer/Footer";
+import {Backdrop} from "../../components/Backdrop/Backdrop";
 import * as routing from "../../redux/modules/routingRedux";
 import * as authRedux from "../../redux/modules/authRedux";
 import * as dataFuncs from "../../utils/dataFuncs";
@@ -29,18 +29,18 @@ import {
   expenseCategories,
   expenseItems
 } from "../../pages/tablePages/tablePages";
-import { cardView } from "../../pages/cardView/cardView";
-import { certificateView } from "../../pages/certificateView/certificateView";
-import { recipientView } from "../../pages/recipientView/recipientView";
-import { restaurantView } from "../../pages/restaurantView/restaurantView";
-import { userView } from "../../pages/userView/userView";
-import { serviceTypeView } from "../../pages/serviceTypeView/serviceTypeView";
-import { manifestationView } from "../../pages/manifestationView/manifestationView";
-import { expenseCategoryView } from "../../pages/expenseCategoryView/expenseCategoryView";
-import { expenseItemView } from "../../pages/expenseItemView/expenseItemView";
-import { login } from "../../pages/login/login";
-import { budgetTable } from "../../pages/budgetTable/budgetTable";
-import { budgetView } from "../../pages/budgetView/budgetView";
+import {cardView} from "../../pages/cardView/cardView";
+import {certificateView} from "../../pages/certificateView/certificateView";
+import {recipientView} from "../../pages/recipientView/recipientView";
+import {restaurantView} from "../../pages/restaurantView/restaurantView";
+import {userView} from "../../pages/userView/userView";
+import {serviceTypeView} from "../../pages/serviceTypeView/serviceTypeView";
+import {manifestationView} from "../../pages/manifestationView/manifestationView";
+import {expenseCategoryView} from "../../pages/expenseCategoryView/expenseCategoryView";
+import {expenseItemView} from "../../pages/expenseItemView/expenseItemView";
+import {login} from "../../pages/login/login";
+import {budgetTable} from "../../pages/budgetTable/budgetTable";
+import {budgetView} from "../../pages/budgetView/budgetView";
 import * as authApi from "../../api/authApi";
 
 class App_ extends React.Component {
@@ -63,13 +63,13 @@ class App_ extends React.Component {
     return (
       <>
         {//hack for electron for url from file://....index.html instead of http://localhost/
-        window.location.pathname.includes("index.html") && (
-          <div>
-            <Redirect to="/" />
-          </div>
-        )}
+          window.location.pathname.includes("index.html") && (
+            <div>
+              <Redirect to="/"/>
+            </div>
+          )}
 
-        {this.props.isLoading && <Backdrop />}
+        {this.props.isLoading && <Backdrop/>}
 
         <Switch>
           {/* ------Login ----- */}
@@ -78,7 +78,7 @@ class App_ extends React.Component {
             path={ROUTE_NAMES.login}
             render={() => {
               const Component = login;
-              return <Component />;
+              return <Component/>;
             }}
           />
 
@@ -91,11 +91,11 @@ class App_ extends React.Component {
                     id="wrapper"
                     className={this.props.isSidebarMinimized ? "active" : ""}
                   >
-                    <SideBar isMinimized={this.props.isSidebarMinimized} />
+                    <SideBar isMinimized={this.props.isSidebarMinimized}/>
 
                     {/* -- Main content container-- */}
                     <div className="site-middle animated">
-                      <Header header={this.props.header} />
+                      <Header header={this.props.header}/>
 
                       <div className="site-middle__inner ph-35 animated">
                         <Switch>
@@ -104,75 +104,75 @@ class App_ extends React.Component {
                             path={ROUTE_NAMES.cards}
                             render={() => {
                               const Component = cards;
-                              return <Component />;
+                              return <Component/>;
                             }}
                           />
                           <Route
                             path={ROUTE_NAMES.cardView}
                             render={() => {
                               const Component = cardView;
-                              return <Component />;
+                              return <Component/>;
                             }}
                           />
                           {/* ------Certificates----- */}
-                          {userRole != "recipient" ? (
+                          {userRole !== "recipient" ? (
                             <Route
                               path={ROUTE_NAMES.certificates}
                               render={() => {
                                 const Component = certificates;
-                                return <Component />;
+                                return <Component/>;
                               }}
                             />
                           ) : null}
 
-                          {userRole != "recipient" ? (
+                          {userRole !== "recipient" ? (
                             <Route
                               path={ROUTE_NAMES.certificateView}
                               render={() => {
                                 const Component = certificateView;
-                                return <Component />;
+                                return <Component/>;
                               }}
                             />
                           ) : null}
 
                           {/* ------Restaurants ----- */}
-                          {userRole != "recipient" ? (
+                          {userRole !== "recipient" ? (
                             <Route
                               path={ROUTE_NAMES.restaurants}
                               render={() => {
                                 const Component = restaurants;
-                                return <Component />;
+                                return <Component/>;
                               }}
                             />
                           ) : null}
 
-                          {userRole != "recipient" ? (
+                          {userRole !== "recipient" ? (
                             <Route
                               path={ROUTE_NAMES.restaurantView}
                               render={() => {
                                 const Component = restaurantView;
-                                return <Component />;
+                                return <Component/>;
                               }}
                             />
                           ) : null}
 
                           {/* ------Recipients ----- */}
-                          {userRole != "recipient" ? (
+                          {userRole !== "recipient" ? (
                             <Route
                               path={ROUTE_NAMES.recipients}
                               render={() => {
                                 const Component = recipients;
-                                return <Component />;
+                                return <Component/>;
                               }}
                             />
                           ) : null}
 
-                          {userRole != "recipient" ? (
+                          {userRole !== "recipient" ? (
                             <Route
                               path={ROUTE_NAMES.recipientView}
                               render={() => {
                                 const Component = recipientView;
-                                return <Component />;
+                                return <Component/>;
                               }}
                             />
                           ) : null}
@@ -183,7 +183,7 @@ class App_ extends React.Component {
                               path={ROUTE_NAMES.users}
                               render={() => {
                                 const Component = users;
-                                return <Component />;
+                                return <Component/>;
                               }}
                             />
                           ) : null}
@@ -193,7 +193,7 @@ class App_ extends React.Component {
                               path={ROUTE_NAMES.userView}
                               render={() => {
                                 const Component = userView;
-                                return <Component />;
+                                return <Component/>;
                               }}
                             />
                           ) : null}
@@ -203,172 +203,172 @@ class App_ extends React.Component {
                               path={ROUTE_NAMES.userRoles}
                               render={() => {
                                 const Component = userRoles;
-                                return <Component />;
+                                return <Component/>;
                               }}
                             />
                           ) : null}
 
                           {/* ------Виды услуг----- */}
-                          {userRole != "recipient" ? (
+                          {userRole !== "recipient" ? (
                             <Route
                               path={ROUTE_NAMES.serviceTypes}
                               render={() => {
                                 const Component = serviceTypes;
-                                return <Component />;
+                                return <Component/>;
                               }}
                             />
                           ) : null}
 
-                          {userRole != "recipient" ? (
+                          {userRole !== "recipient" ? (
                             <Route
                               path={ROUTE_NAMES.serviceTypeView}
                               render={() => {
                                 const Component = serviceTypeView;
-                                return <Component />;
+                                return <Component/>;
                               }}
                             />
                           ) : null}
 
                           {/* ------Статистика рест. эмитеты----- */}
-                          {userRole != "recipient" ? (
+                          {userRole !== "recipient" ? (
                             <Route
                               path={ROUTE_NAMES.statsIssuingRestaurants}
                               render={() => {
                                 const Component = statsIssuingRestaurants;
-                                return <Component />;
+                                return <Component/>;
                               }}
                             />
                           ) : null}
 
                           {/* ------Статистика рест. погас----- */}
-                          {userRole != "recipient" ? (
+                          {userRole !== "recipient" ? (
                             <Route
                               path={ROUTE_NAMES.statsRedeemerRestaurants}
                               render={() => {
                                 const Component = statsRedeemerRestaurants;
-                                return <Component />;
+                                return <Component/>;
                               }}
                             />
                           ) : null}
 
                           {/* ------Статистика контрагенты----- */}
-                          {userRole != "recipient" ? (
+                          {userRole !== "recipient" ? (
                             <Route
                               path={ROUTE_NAMES.statsRecipients}
                               render={() => {
                                 const Component = statsRecipients;
-                                return <Component />;
+                                return <Component/>;
                               }}
                             />
                           ) : null}
 
                           {/* ------Статистика unused certificates----- */}
-                          {userRole != "recipient" ? (
+                          {userRole !== "recipient" ? (
                             <Route
                               path={ROUTE_NAMES.statsUnusedCertificates}
                               render={() => {
                                 const Component = statsUnusedCertificates;
-                                return <Component />;
+                                return <Component/>;
                               }}
                             />
                           ) : null}
 
                           {/* ------Статистика взаиморасчет----- */}
-                          {userRole != "recipient" ? (
+                          {userRole !== "recipient" ? (
                             <Route
                               path={ROUTE_NAMES.statsMutualSettlement}
                               render={() => {
                                 const Component = statsMutualSettlement;
-                                return <Component />;
+                                return <Component/>;
                               }}
                             />
                           ) : null}
 
                           {/* ------Проявления----- */}
-                          {userRole === "admin" ? (
+                          {userRole !== "recipient" ? (
                             <Route
                               path={ROUTE_NAMES.manifestations}
                               render={() => {
                                 const Component = manifestations;
-                                return <Component />;
+                                return <Component/>;
                               }}
                             />
                           ) : null}
-                          {userRole === "admin" ? (
+                          {userRole !== "recipient" ? (
                             <Route
                               path={ROUTE_NAMES.manifestationView}
                               render={() => {
                                 const Component = manifestationView;
-                                return <Component />;
+                                return <Component/>;
                               }}
                             />
                           ) : null}
 
                           {/* ----- Категории расходов ---- */}
-                          {userRole === "admin" ? (
+                          {userRole !== "recipient" ? (
                             <Route
                               path={ROUTE_NAMES.expenseCategories}
                               render={() => {
                                 const Component = expenseCategories;
-                                return <Component />;
+                                return <Component/>;
                               }}
                             />
                           ) : null}
-                          {userRole === "admin" ? (
+                          {userRole !== "recipient" ? (
                             <Route
                               path={ROUTE_NAMES.expenseCategoryView}
                               render={() => {
                                 const Component = expenseCategoryView;
-                                return <Component />;
+                                return <Component/>;
                               }}
                             />
                           ) : null}
 
                           {/* ----- Статьи расходов ---- */}
-                          {userRole === "admin" ? (
+                          {userRole !== "recipient" ? (
                             <Route
                               path={ROUTE_NAMES.expenseItems}
                               render={() => {
                                 const Component = expenseItems;
-                                return <Component />;
+                                return <Component/>;
                               }}
                             />
                           ) : null}
-                          {userRole === "admin" ? (
+                          {userRole !== "recipient" ? (
                             <Route
                               path={ROUTE_NAMES.expenseItemView}
                               render={() => {
                                 const Component = expenseItemView;
-                                return <Component />;
+                                return <Component/>;
                               }}
                             />
                           ) : null}
 
                           {/* ----- Бюджет ---- */}
-                          {userRole === "admin" ? (
+                          {userRole !== "recipient" ? (
                             <Route
                               path={ROUTE_NAMES.budgetTable}
                               render={() => {
                                 const Component = budgetTable;
-                                return <Component />;
+                                return <Component/>;
                               }}
                             />
                           ) : null}
-                          {userRole === "admin" ? (
+                          {userRole !== "recipient" ? (
                             <Route
                               path={ROUTE_NAMES.budgetView}
                               render={() => {
                                 const Component = budgetView;
-                                return <Component />;
+                                return <Component/>;
                               }}
                             />
-                          ) : null}                          
+                          ) : null}
                         </Switch>
                       </div>
                     </div>
                   </div>
 
-                  <Footer />
+                  <Footer/>
                 </>
               );
             }}

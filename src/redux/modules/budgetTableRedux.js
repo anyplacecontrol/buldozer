@@ -66,12 +66,12 @@ export default function reducer(state = budgetTableInitialState, action = {}) {
 
     case PREFIX + REPLACE_FILTERS_FROM_ITEM: {
       if (state.filterItems.length < 3) return state;
-      let filterItems = [...state.filterItems]; 
+      let filterItems = [...state.filterItems];
       filterItems[0] = { ...filterItems[0], value: {...action.period, key: "selection"} };
       filterItems[1] = { ...filterItems[1], value: action.restaurant };
-      filterItems[2] = { ...filterItems[2], value: action.budgetType };      
-      return { ...state, 
-        filterItems: filterItems 
+      filterItems[2] = { ...filterItems[2], value: action.budgetType };
+      return { ...state,
+        filterItems: filterItems
       };
     }
 
@@ -379,13 +379,13 @@ class BudgetTableActions {
     return async (dispatch, getState) => {
       let keepBackdropOpened = false;
 
-      dispatch(uiActions.showBackdrop(true));     
-     
+      dispatch(uiActions.showBackdrop(true));
+
       let fetchedBlob;
-      try {        
+      try {
         dispatch(uiActions.showBackdrop(true));
         let filterItems = this.getFilterItems(getState());
-        let filter = dataFuncs.createFilterObject(filterItems);  
+        let filter = dataFuncs.createFilterObject(filterItems);
         fetchedBlob = await budgetApi.exportItems(filter);
       } catch (e) {
         dispatch(showException(e, keepBackdropOpened));
@@ -398,7 +398,7 @@ class BudgetTableActions {
       dispatch(uiActions.showBackdrop(false || keepBackdropOpened));
 
       if (
-        !fetchedBlob 
+        !fetchedBlob
       ) {
         let message =
           "Problem in fetchItems. Empty data received for table export";
@@ -417,10 +417,10 @@ class BudgetTableActions {
 
         return;
       }
-      
-      
+
+
       var file = window.URL.createObjectURL(fetchedBlob);
-      window.location.assign(file);      
+      window.location.assign(file);
 
     };
   }
